@@ -1,6 +1,6 @@
 # LTWEB_Nhom5_CT4
 Thành viên:
-# Hồ Kim Trí
-# Lương Sỹ Nam
-# Lê Minh Phương
-# Võ Hoàng Anh
+# Hồ Kim Trí        22110252
+# Lương Sỹ Nam      22110185
+# Lê Minh Phương    22110206
+# Võ Hoàng Anh      22110104
