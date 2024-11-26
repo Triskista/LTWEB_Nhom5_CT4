@@ -36,7 +36,7 @@ public class User implements Serializable {
 	@Column(name="UserName", columnDefinition = "NVARCHAR(100) NOT NULL")
 	private String username;
 	
-	@Column(name="Password", columnDefinition = "NVARCHAR(100) NOT NULL")
+	@Column(name="Password", columnDefinition = "NVARCHAR(200) NOT NULL")
 	private String password;
 	
 	@Column(name="Email", columnDefinition = "NVARCHAR(200) NOT NULL")
