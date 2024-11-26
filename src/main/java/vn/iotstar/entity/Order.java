@@ -1,48 +1,31 @@
 package vn.iotstar.entity;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.Date;
+import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Orders")
-public class Order implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "OrderId")
-    private int OrderId;
-    
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "YYYY-MM-DD hh:mm:ss")
-    @Column(name = "Date")
-    private Date Date;
-    
-    @Column(name = "TotalPrice")
-    private float TotalPrice;
-    
-    // Thêm mối quan hệ Many-to-One với bảng User
+    private Integer orderId;
+
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    @Column(nullable = false)
+    private Double totalPrice;
+
     @ManyToOne
-    @JoinColumn(name = "UserId", referencedColumnName = "UserId", nullable = false)
-    private User UserId; // Tham chiếu đối tượng User
-    
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
 }

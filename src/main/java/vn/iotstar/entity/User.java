@@ -1,54 +1,43 @@
 package vn.iotstar.entity;
 
-import java.io.Serializable;
-import java.sql.Date;
+import jakarta.persistence.*;
+import lombok.*;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedQuery;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Entity
-@Table(name="USERS")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "Users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userId;
 
-public class User implements Serializable {
+    @Column(nullable = false, unique = true)
+    private String username;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="UserId")
-	private int userid;
-	
-	@Column(name="UserName", columnDefinition = "NVARCHAR(100) NOT NULL")
-	private String username;
-	
-	@Column(name="Password", columnDefinition = "NVARCHAR(200) NOT NULL")
-	private String password;
-	
-	@Column(name="Email", columnDefinition = "NVARCHAR(200) NOT NULL")
-	private String email;
-	
-	@Column(name="Phone", columnDefinition = "NVARCHAR(200) NOT NULL")
-	private String phone;
-	
-	@ManyToOne
-    @JoinColumn(name = "RoleId", referencedColumnName = "RoleId")  
-    private int roleid;
-	
-	@Column(name="Status")
-	private int status;
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "roleId", nullable = false)
+    private Role role;
+
+    @Column(nullable = false)
+    private Boolean status;
+
+    public User(String username, String password, String email, String phone, Role role, Boolean status) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.role = role;
+        this.status = status;
+    }
 }
