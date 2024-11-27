@@ -10,7 +10,7 @@ import vn.iotstar.entity.OrderDetail;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-	List<OrderDetail> findByOrder_OrderId(Integer orderId);
-	List<OrderDetail> findByPriceBetween(Double minPrice, Double maxPrice);
+	List<OrderDetail> findByOrderId(Integer orderId);
+	//List<OrderDetail> findByPriceBetween(Double minPrice, Double maxPrice);
 	List<Order> findByDate(Date date);
 }

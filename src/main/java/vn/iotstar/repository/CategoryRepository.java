@@ -11,7 +11,7 @@ import vn.iotstar.entity.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-	Optional<Category> finByName(String categoryName);
+	Optional<Category> findByName(String categoryName);
 	List<Category> findByCateGoryNameContaining(String keyword, Pageable pageable);
 	List<Category> findAllByCategoryName(String categoryName);
 }
