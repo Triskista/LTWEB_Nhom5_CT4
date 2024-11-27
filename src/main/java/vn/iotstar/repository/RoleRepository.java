@@ -6,5 +6,4 @@ import vn.iotstar.entity.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-    // Thêm các phương thức tùy chỉnh nếu cần
 }

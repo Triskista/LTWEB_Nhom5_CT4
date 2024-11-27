@@ -32,7 +32,7 @@ public class Product {
     @JoinColumn(name = "categoryId", nullable = false)
     private Category category;
 
-    // Thêm constructor tùy chỉnh
+    // Thêm constructors tùy chỉnh 
     public Product(String productName, Float price, String description, Integer stock, String image, Category category) {
         this.productName = productName;
         this.price = price;
