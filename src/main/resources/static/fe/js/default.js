@@ -55,7 +55,30 @@ $(this).css('background-color','#ffffff');
 			$(".go-top").fadeOut(200);	
 		}
 	});
-	
+	$(document).ready(function () {
+	  $('.nav a').on('click', function (e) {
+	    e.preventDefault(); // Ngăn chặn hành động mặc định của liên kết.
+	    var target = $(this).attr('href'); // Lấy giá trị href (ví dụ: #carouselSection).
+	    if ($(target).length) {
+	      $('html, body').animate(
+	        {
+	          scrollTop: $(target).offset().top, // Tính vị trí mục tiêu và cuộn đến đó.
+	        },
+	        800 // Thời gian cuộn (tính bằng ms).
+	      );
+	    }
+
+	    // Đặt lại trạng thái active cho mục đã click.
+	    $('.nav li').removeClass('active'); // Bỏ class "active" khỏi tất cả các mục.
+	    $(this).parent().addClass('active'); // Thêm class "active" cho mục được click.
+	  });
+
+	  // Đóng menu nếu đang ở chế độ mobile.
+	  $('.btn-navbar').on('click', function () {
+	    $('.nav-collapse').toggleClass('collapse');
+	  });
+	});
+
 	// Scroll Page to Top when clicked on "go top" button
 	$(".brand, .go-top").click(function(event){
 		event.preventDefault();
