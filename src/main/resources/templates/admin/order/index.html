@@ -69,31 +69,18 @@
 												<th style="width: 150px;">Date</th>
 												<th style="width: 130px;">Total Price</th>
 												<th style="width: 100px;">User ID</th>
-												<th style="width: 100px;">Hành động</th>
+												<th style="width: 100px;">Action</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr role="row" class="odd">
-												<td>001</td>
-												<td>6/12/2024</td>
-												<td>$100</td>
-												<td>001</td>
+											<tr th:each="order : ${list}">
+												<td th:text="${order.orderId}"></td>
+												<td th:text="${order.date}"></td>
+												<td th:text="${order.totalPrice}"></td>
+												<td th:text="${order.totalPrice}"></td>
 												<td><a class="btn btn-primary btn-sm"
-													th:href="@{'/admin/order-detail-view/' + ${'001'}}">Xem
+													th:href="@{'/admin/order/order-detail-view/' + ${'001'}}">Xem
 														chi tiết</a></td>
-
-
-											</tr>
-											<tr role="row" class="even">
-												<td>002</td>
-												<td>6/12/2024</td>
-												<td>$800</td>
-												<td>002</td>
-												<td><a class="btn btn-primary btn-sm"
-													th:href="@{'/admin/order-detail-view/' + ${'002'}}">Xem
-														chi tiết</a></td>
-
-											</tr>
 										</tbody>
 										<tfoot>
 											<tr>
@@ -101,7 +88,7 @@
 												<th>Date</th>
 												<th>Total Price</th>
 												<th>User ID</th>
-												<th>Hành động</th>
+												<th>Action</th>
 											</tr>
 										</tfoot>
 									</table>

@@ -31,8 +31,6 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByDateContaining(date, pageable);
     }
 
-
-
    
     @Override
     public <S extends Order> S save(S order) {
