@@ -1,6 +1,7 @@
 package vn.iotstar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.List;
@@ -14,8 +15,9 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;
-
-    @Column(nullable = false, unique = true)
+    
+    @Column(name = "categoryName", columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "khong duoc rong")
     private String categoryName;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

@@ -1,6 +1,7 @@
 package vn.iotstar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
@@ -13,16 +14,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "username", columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "khong duoc rong")
     private String username;
 
-    @Column(nullable = false)
+    @Column(name = "password", columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "khong duoc rong")
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "khong duoc rong")
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "phone", columnDefinition = "nvarchar(10)")
+	@NotEmpty(message = "khong duoc rong")
     private String phone;
 
     @ManyToOne
