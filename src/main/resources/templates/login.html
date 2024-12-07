@@ -1,111 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Login to your TULIP account to access exclusive features and manage your profile.">
-  <title>Login - TULIP</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <style>
-    body {
-      background-color: #f9f9f9;
-      font-family: Arial, sans-serif;
-    }
-    #loginSection {
-      margin-top: 50px;
-    }
-    .cntr {
-      text-align: center;
-    }
-    .alert {
-      font-size: 14px;
-    }
-    .form-actions {
-      text-align: center;
-    }
-    .form-actions .btn {
-      min-width: 100px;
-    }
-    ul {
-      list-style-type: disc;
-      padding-left: 20px;
-    }
-    h4 {
-      color: #333;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description"
+	content="Login to your TULIP account to access exclusive features and manage your profile.">
+<title>Login - TULIP</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+body {
+	background-color: #f9f9f9;
+	font-family: Arial, sans-serif;
+}
+
+#loginSection {
+	margin-top: 50px;
+}
+
+.cntr {
+	text-align: center;
+}
+
+.alert {
+	font-size: 14px;
+}
+
+.form-actions {
+	text-align: center;
+}
+
+.form-actions .btn {
+	min-width: 100px;
+}
+
+ul {
+	list-style-type: disc;
+	padding-left: 20px;
+}
+
+h4 {
+	color: #333;
+}
+</style>
 </head>
 <body>
-  <!-- Login Section -->
-  <div id="loginSection" class="container">
-    <h1 class="cntr">Login</h1>
-    <div class="row">
-      <!-- Login Form -->
-      <div class="col-md-6">
-        <div class="alert alert-info">Please enter your login details to access your account.</div>
-        <form class="form-horizontal">
-          <fieldset>
-            <div class="form-group">
-              <label class="control-label col-sm-4" for="email">Eamil</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="email" placeholder="Enter your email">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="control-label col-sm-4" for="password">Password</label>
-              <div class="col-sm-8">
-                <input type="password" class="form-control" id="password" placeholder="Enter your password">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-4 col-sm-8">
-                <label class="checkbox-inline">
-                  <input type="checkbox" id="rememberMe" value="rememberMe"> Remember Me
-                </label>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Login</button>
-              <button type="reset" class="btn btn-default">Cancel</button>
-              <a href="/register" class="btn btn-success" style="margin-left: 10px;">Register</a>
-            </div>
-          </fieldset>
-        </form>
-      </div>
+	<!-- Login Section -->
+	<div id="loginSection" class="container">
+		<h1 class="cntr">Login</h1>
+		<div class="row">
+			<!-- Login Form -->
+			<div class="col-md-6">
+				<div class="alert alert-info">Please enter your login details
+					to access your account.</div>
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="email">Eamil</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="email"
+									placeholder="Enter your email">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="password">Password</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control" id="password"
+									placeholder="Enter your password">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-8">
+								<label class="checkbox-inline"> <input type="checkbox"
+									id="rememberMe" value="rememberMe"> Remember Me
+								</label>
+							</div>
+						</div>
+						<div class="form-actions">
+							<button id="Login" type="submit" class="btn btn-primary">Login</button>
+							<button type="reset" class="btn btn-default">Cancel</button>
+							<a href="/register" class="btn btn-success"
+								style="margin-left: 10px;">Register</a>
+						</div>
+					</fieldset>
+				</form>
+			</div>
 
-      <!-- Login Info -->
-      <div class="col-md-6">
-        <div>
-          <h4>Why Login?</h4>
-          <p>
-            By logging in, you gain access to your personal account dashboard where you can:
-          </p>
-          <ul>
-            <li>Manage your profile</li>
-            <li>Access exclusive content</li>
-            <li>Track your activities</li>
-          </ul>
-        </div>
-        <br>
-        <div>
-          <h4>Need Help?</h4>
-          <p>
-            If you're having trouble logging in, please contact our support team at:
-            <br>Email: <a href="mailto:support@tulipllc.com">support@tulipllc.com</a>
-            <br>Phone: 123-456-7890
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+			<!-- Login Info -->
+			<div class="col-md-6">
+				<div>
+					<h4>Why Login?</h4>
+					<p>By logging in, you gain access to your personal account
+						dashboard where you can:</p>
+					<ul>
+						<li>Manage your profile</li>
+						<li>Access exclusive content</li>
+						<li>Track your activities</li>
+					</ul>
+				</div>
+				<br>
+				<div>
+					<h4>Need Help?</h4>
+					<p>
+						If you're having trouble logging in, please contact our support
+						team at: <br>Email: <a href="mailto:support@tulipllc.com">support@tulipllc.com</a>
+						<br>Phone: 123-456-7890
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <!-- Footer -->
-  <footer class="text-center" style="margin-top: 20px; padding: 10px; background-color: #EEE; color: #333;">
-    © 2024 TULIP. All Rights Reserved.
-  </footer>
+	<!-- Footer -->
+	<footer class="text-center"
+		style="margin-top: 20px; padding: 10px; background-color: #EEE; color: #333;">
+		© 2024 TULIP. All Rights Reserved. </footer>
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<!-- Scripts -->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script src="js/mainjs.js"></script>
 </body>
 </html>
