@@ -2,13 +2,15 @@ package vn.iotstar.service;
 
 import vn.iotstar.entity.User;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
+	
 	User getUserById(Integer id);
 
 	User getUserByUsername(String username);
 
-	User getUserByEmail(String email);
+	Optional<User> getUserByEmail(String email);
 
 	User getUserByPhone(String phone);
 
