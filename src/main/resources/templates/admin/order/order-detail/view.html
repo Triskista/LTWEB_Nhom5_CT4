@@ -16,22 +16,9 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>
-					Quản Lý Đơn Hàng <small>Xem chi tiết các đơn hàng</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-					<li><a href="#">Quản lý</a></li>
-					<li class="active">Danh sách đơn hàng</li>
-				</ol>
-			</section>
-
-			<!-- Main content -->
-			<section class="content">
-
 				<div class="box">
 					<div class="box-header">
-						<h3 class="box-title">Danh Sách Đơn Hàng</h3>
+						<h3 class="box-title">Danh Sách Chi Tiết Hóa Đơn</h3>
 					</div>
 					<!-- /.box-header -->
 					<div class="box-body">
@@ -65,30 +52,48 @@
 										role="grid" aria-describedby="example1_info">
 										<thead>
 											<tr role="row">
+												<th style="width: 80px;">Order Detail ID</th>
+												<th style="width: 130px;">Price</th>
+												<th style="width: 100px;">Quantity</th>
+												<th style="width: 130px;">Total</th>
 												<th style="width: 80px;">Order ID</th>
-												<th style="width: 150px;">Date</th>
-												<th style="width: 130px;">Total Price</th>
-												<th style="width: 100px;">User ID</th>
-												<th style="width: 100px;">Action</th>
+												<th style="width: 80px;">Product ID</th>
+												<th style="width: 100px;">Hành động</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr  th:each="order : ${list}">
-												<td th:text="${order.orderId}"></td>
-												<td th:text="${order.date}"></td>
-												<td th:text="${order.totalPrice}"></td>
-												<td th:text="${order.user}"></td>
+											<tr role="row" class="odd">
+												<td>001</td>
+												<td>$100</td>
+												<td>2</td>
+												<td>$200</td>
+												<td>101</td>
+												<td>P001</td>
 												<td><a class="btn btn-primary btn-sm"
-													th:href="@{'/admin/order/order-detail-view/' + ${'001'}}">Xem
+													th:href="@{'/order-detail-view/' + ${'001'}}">Xem
 														chi tiết</a></td>
+											</tr>
+											<tr role="row" class="even">
+												<td>002</td>
+												<td>$50</td>
+												<td>5</td>
+												<td>$250</td>
+												<td>102</td>
+												<td>P002</td>
+												<td><a class="btn btn-primary btn-sm"
+													th:href="@{'/order-detail-view/' + ${'002'}}">Xem
+														chi tiết</a></td>
+											</tr>
 										</tbody>
 										<tfoot>
 											<tr>
+												<th>Order Detail ID</th>
+												<th>Price</th>
+												<th>Quantity</th>
+												<th>Total</th>
 												<th>Order ID</th>
-												<th>Date</th>
-												<th>Total Price</th>
-												<th>User ID</th>
-												<th>Action</th>
+												<th>Product ID</th>
+												<th>Hành động</th>
 											</tr>
 										</tfoot>
 									</table>
@@ -108,7 +113,7 @@
 												aria-controls="example1" data-dt-idx="0" tabindex="0">Trước</a></li>
 											<li class="paginate_button active"><a href="#"
 												aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
-											<li class="paginate_button "><a href="#"
+											<li class="paginate_button"><a href="#"
 												aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>
 											<li class="paginate_button next" id="example1_next"><a
 												href="#" aria-controls="example1" data-dt-idx="7"

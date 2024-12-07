@@ -12,6 +12,7 @@ import vn.iotstar.entity.Order;
 public interface OrderService {
 	// Lấy danh sách đơn hàng theo ngày
     List<Order> findByDate(Date date);
+    
 
     // Phân trang danh sách đơn hàng theo ngày
     Page<Order> findByDateContaining(Date date, Pageable pageable);
