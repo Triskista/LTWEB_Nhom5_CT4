@@ -97,6 +97,16 @@
 													aria-label="Category ID: activate to sort column ascending"
 													style="width: 100px;">Category ID</th>
 											</tr>
+											
+											<tr th:each="Product : ${list}">
+												<td th:text="${product.productId}"></td>
+												<td th:text="${product.productName}"></td>
+												<td th:text="${product.price}"></td>
+												<td th:text="${product.description}"></td>
+												<td th:text="${product.stock}"></td>
+												<td th:text="${product.image}"></td>
+												<td th:text="${product.categoryId}"></td>
+											</tr>
 										</thead>
 										<tbody>
 											<tr role="row" class="odd">
