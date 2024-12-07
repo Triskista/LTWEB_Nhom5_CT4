@@ -1,6 +1,7 @@
 package vn.iotstar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
@@ -12,20 +13,22 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
-
-    @Column(nullable = false)
+    
+    @Column(name = "productName", columnDefinition = "nvarchar(50)")
+	@NotEmpty(message = "khong duoc rong")
     private String productName;
 
-    @Column(nullable = false)
     private Float price;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "nvarchar(50)")
+	@NotEmpty(message = "khong duoc rong")
     private String description;
 
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(nullable = true)
+    @Column(name = "image", columnDefinition = "nvarchar(50)")
+	@NotEmpty(message = "khong duoc rong")
     private String image;
 
     @ManyToOne

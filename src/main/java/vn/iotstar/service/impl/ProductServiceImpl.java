@@ -122,4 +122,5 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllByOrderByProductNameAsc() {
         return productRepository.findAllByOrderByProductNameAsc();
     }
+
 }

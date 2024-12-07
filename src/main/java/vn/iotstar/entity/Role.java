@@ -1,6 +1,7 @@
 package vn.iotstar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
@@ -13,7 +14,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roleId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "roleName", columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "khong duoc rong")
     private String roleName;
 
     public Role(String roleName) {

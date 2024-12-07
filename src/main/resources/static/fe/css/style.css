@@ -37,7 +37,48 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
 #ourServices .thumbnail{background:#fff;}
 #ourServices .thumbnail:hover{color:#fff}
 
-#headerSection {background: url(../images/shadow.png) no-repeat center bottom #EEE;border-bottom: 1px solid #dedede; padding: 8px 0 0;}
+#headerSection {
+    background: url(../images/shadow.png) no-repeat center bottom #EEE;
+    border-bottom: 1px solid #dedede;
+    padding: 8px 20px 0; /* Thêm padding ngang (20px) để tạo không gian */
+    position: relative; /* Đặt vị trí tương đối để hỗ trợ các phần tử con với absolute */
+}
+
+.nav {
+    display: inline-block; /* Giữ menu ở một hàng ngang */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav li {
+    display: inline-block; /* Hiển thị các mục menu trên một hàng ngang */
+    margin-right: 20px; /* Khoảng cách giữa các mục menu */
+}
+
+.nav li a {
+    text-decoration: none;
+    color: #000; /* Màu chữ của các liên kết */
+    font-weight: bold;
+}
+
+.login-item {
+    position: fixed; /* Đặt Login cố định trên màn hình */
+    top: 0; /* Sát cạnh trên của màn hình */
+    right: 0; /* Sát cạnh phải của màn hình */
+    margin: 10px; /* Tạo khoảng cách nhỏ từ viền trên và phải */
+    z-index: 1000; /* Đảm bảo luôn hiển thị trên các phần tử khác */
+}
+
+.login-item a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000; /* Màu chữ cho liên kết Login */
+    padding: 5px 10px; /* Tạo vùng nhấn dễ dàng */
+    background: #EEE; /* Tùy chỉnh màu nền nếu cần */
+    border-radius: 5px; /* Làm mềm góc cạnh */
+}
+
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}
 .blockDtl {text-align:center}
