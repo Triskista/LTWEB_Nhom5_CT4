@@ -10,4 +10,20 @@ public class AdminController {
 	public String admin() {
 		return "admin/index";
 	}
+	@RequestMapping("admin/product-add")
+	public String add_product() {
+		return "admin/product/add";	
+	}
+	@RequestMapping("admin/seller-add")
+	public String add_seller() {
+		return "admin/seller/add";	
+	}
+	@RequestMapping("admin/customer-add")
+	public String add_customer() {
+		return "admin/customer/add";	
+	}
+	@RequestMapping("order-detail-view")
+	public String view_order() {
+		return "admin/order/view";	
+	}
 }

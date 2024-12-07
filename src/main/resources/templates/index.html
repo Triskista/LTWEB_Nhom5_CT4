@@ -21,28 +21,43 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 </head>
 <body data-spy="scroll" data-target=".navbar">
-	<div id="headerSection">
-	<div class="container">
-		<h1 class="brand cntr">TULIP</h1>
-		<div class="navbar">
-			<div class="nav-collapse">
-				<ul class="nav">
-					<li class="active"><a href="#carouselSection">Home	</a></li>
-					<li><a href="#ourServices">What we do?</a></li>
-					<li><a href="#portfolioSection">Portfolio</a></li>
-					<li><a href="#blogSection">Blog</a></li>
-					<li><a href="#contactSection">Support</a></li>
-					<li><a href="#LoginSection">Login</a></li>
-				</ul>
-			</div>
-			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-		</div>
-	</div>
-	</div>
+<div id="headerSection">
+  <div class="container">
+    <h1 class="brand cntr">TULIP</h1>
+    <div class="navbar">
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#carouselSection">Home</a></li>
+          <li><a href="#ourServices">What we do?</a></li>
+          <li><a href="#portfolioSection">Portfolio</a></li>
+          <li><a href="#blogSection">Blog</a></li>
+          <li><a href="#contactSection">Support</a></li>
+          <li class="login-item"><a href="#LoginSection">Login</a></li>                  
+        </ul>
+      </div>
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Thêm JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginLink = document.querySelector('.login-item a');
+    
+    if (loginLink) {
+      loginLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'login';
+      });
+    }
+  });
+</script>
+
 <!--Header Ends================================================ -->
 
 <div id="carouselSection" class="cntr"> 
@@ -887,70 +902,6 @@
 		</div> 
 </div> 
 <!-- Wrapper end -->
-<!-- Login Section -->
-<div id="loginSection">
-  <h1 class="cntr">Login</h1>
-  <div class="container">
-    <div class="row">
-      <!-- Login Form -->
-      <div class="span6">
-        <div class="alert alert-info">Please enter your login details to access your account.</div>
-        <form class="form-horizontal">
-          <fieldset>
-            <div class="control-group">
-              <label class="control-label" for="username">Username</label>
-              <div class="controls">
-                <input type="text" class="input-xlarge" id="username" placeholder="Enter your username">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="password">Password</label>
-              <div class="controls">
-                <input type="password" class="input-xlarge" id="password" placeholder="Enter your password">
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <label class="checkbox">
-                  <input type="checkbox" id="rememberMe" value="rememberMe"> Remember Me
-                </label>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Login</button>
-              <button type="reset" class="btn">Cancel</button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-
-      <!-- Login Info -->
-      <div class="span6">
-        <div>
-          <h4>Why Login?</h4>
-          <p>
-            By logging in, you gain access to your personal account dashboard where you can:
-          </p>
-          <ul>
-            <li>Manage your profile</li>
-            <li>Access exclusive content</li>
-            <li>Track your activities</li>
-          </ul>
-        </div>
-        <br>
-        <div>
-          <h4>Need Help?</h4>
-          <p>
-            If you're having trouble logging in, please contact our support team at:
-            <br>Email: <a href="mailto:support@tulipllc.com">support@tulipllc.com</a>
-            <br>Phone: 123-456-7890
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Login Section Ends -->
 
 <div id="footerSection">
 	<div class="container">
@@ -964,7 +915,6 @@
 		<a href="#portfolioSection">Portfolio</a>
 		<a href="#blogSection">Blog</a>
 		<a href="#contactSection">Support</a>
-		<a href="#LoginSection">Login</a>
 	</div>
 		<p><small>www.tuplipllc.com &copy; 2013 All rights reserved.</small></p>
 	</div>
