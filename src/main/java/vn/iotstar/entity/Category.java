@@ -20,7 +20,7 @@ public class Category {
 	@NotEmpty(message = "khong duoc rong")
     private String categoryName;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 
     public Category(String categoryName) {
