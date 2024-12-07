@@ -23,9 +23,5 @@ public class OrderController {
 		model.addAttribute("list", list);
 		return "admin/order/index";
 	}
-	@RequestMapping("/order-detail")
-	public String view() {
-		return "admin/order/order-detail/view";
-	}
 	
 }

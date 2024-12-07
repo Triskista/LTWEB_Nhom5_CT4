@@ -73,11 +73,11 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr  th:each="order : ${list}">
+											<tr th:each="order : ${list}">
 												<td th:text="${order.orderId}"></td>
 												<td th:text="${order.date}"></td>
 												<td th:text="${order.totalPrice}"></td>
-												<td th:text="${order.user}"></td>
+												<td th:text="${order.totalPrice}"></td>
 												<td><a class="btn btn-primary btn-sm"
 													th:href="@{'/admin/order/order-detail-view/' + ${'001'}}">Xem
 														chi tiết</a></td>
