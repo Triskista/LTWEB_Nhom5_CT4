@@ -22,8 +22,4 @@ public class AdminController {
 	public String add_customer() {
 		return "admin/customer/add";	
 	}
-	@RequestMapping("admin/orderdetail")
-	public String view_order() {
-		return "admin/orderdetail/view";	
-	}
 }

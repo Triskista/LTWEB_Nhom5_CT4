@@ -13,6 +13,7 @@ import vn.iotstar.service.OrderDetailService;
 
 
 @Controller
+
 @RequestMapping("/admin")
 public class OrderDetailController {
 	@Autowired
@@ -20,8 +21,8 @@ public class OrderDetailController {
 	@GetMapping("/orderdetail")
 	public String index(Model model) {
 		List<OrderDetail> list = this.orderdetailservice.findAll();
-		model.addAttribute("list", list);
-		return "admin/orderdetail/view";
+		model.addAttribute("orderdetaillist", list);
+		return "admin/orderdetail/index";
 	}
 	
 }

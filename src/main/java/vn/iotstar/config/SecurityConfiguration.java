@@ -34,8 +34,8 @@ public class SecurityConfiguration {
 	    return httpSecurity.csrf(csrf -> csrf.disable())
 	            .authorizeHttpRequests(auth -> auth
 	                    // Cấm truy cập cho những người có vai trò ADMIN cho một số đường dẫn
-	                    .requestMatchers("/admin").hasRole("ADMIN")  // Chỉ ADMIN có thể vào /admin
-	                    .requestMatchers("/admin/**").hasRole("ADMIN")
+	                    //.requestMatchers("/admin").hasRole("ADMIN")  // Chỉ ADMIN có thể vào /admin
+	                    //.requestMatchers("/admin/**").hasRole("ADMIN")
 	                   
 	                    // Permit all cho các đường dẫn còn lại
 	                    .anyRequest().permitAll()  // Cho phép tất cả các yêu cầu còn lại
