@@ -10,6 +10,12 @@ public class HomeController {
     public String showLoginPage() {
         return "login"; // Gọi file login.html trong src/main/resources/templates/
     }
+    
+    @GetMapping("/user/profile")
+    public String pro() {
+        return "profile"; // Gọi file login.html trong src/main/resources/templates/
+    }
+    
 
     @GetMapping("/register")
     public String showRegisterPage() {

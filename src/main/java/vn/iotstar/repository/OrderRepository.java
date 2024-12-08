@@ -13,7 +13,12 @@ import vn.iotstar.entity.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 	List<Order> findByDate(Date date);
-	Page<Order> findByDateContaining(Date date,Pageable pageable);
+
+	Page<Order> findByDateContaining(Date date, Pageable pageable);
+
 	List<Order> findByUserUsername(String userName);
-	Page<Order> findByUserUsernameContaining(String userName,Pageable pageable);
+	
+	List<Order> findByUserUsernameAndDate(String username, Date date);
+
+	Page<Order> findByUserUsernameContaining(String userName, Pageable pageable);
 }
