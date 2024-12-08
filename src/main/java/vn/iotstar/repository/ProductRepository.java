@@ -18,4 +18,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	Optional<Product> findByProductName(String productname);
 	Page<Product> findByProductNameContaining(String name,Pageable
 			pageable);
+	Product findByProductId(Integer productId);
 }

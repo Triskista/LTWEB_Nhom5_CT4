@@ -95,40 +95,19 @@
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Category ID: activate to sort column ascending"
-													style="width: 100px;">Category ID</th>
+													style="width: 100px;">Category Name</th>
+											</tr>
+											
+											<tr th:each="product : ${list}">
+												<td th:text="${product.productId}"></td>
+												<td th:text="${product.description}"></td>
+												<td th:text="${product.image}"></td>
+												<td th:text="${product.price}"></td>
+												<td th:text="${product.productName}"></td>		
+												<td th:text="${product.stock}"></td>											
+												<td th:text="${product.category.categoryName}"></td>
 											</tr>
 										</thead>
-										<tbody>
-											<tr role="row" class="odd">
-												<td class="sorting_1">001</td>
-												<td>Sample description for product 001</td>
-												<td><img src="image1.jpg" alt="Product 001"></td>
-												<td>$100</td>
-												<td>Sample Product 1</td>
-												<td>50</td>
-												<td>101</td>
-											</tr>
-											<tr role="row" class="even">
-												<td class="sorting_1">002</td>
-												<td>Sample description for product 002</td>
-												<td><img src="image2.jpg" alt="Product 002"></td>
-												<td>$200</td>
-												<td>Sample Product 2</td>
-												<td>30</td>
-												<td>102</td>
-											</tr>
-										</tbody>
-										<tfoot>
-											<tr>
-												<th rowspan="1" colspan="1">Product ID</th>
-												<th rowspan="1" colspan="1">Description</th>
-												<th rowspan="1" colspan="1">Images</th>
-												<th rowspan="1" colspan="1">Price</th>
-												<th rowspan="1" colspan="1">Product Name</th>
-												<th rowspan="1" colspan="1">Stock</th>
-												<th rowspan="1" colspan="1">Category ID</th>
-											</tr>
-										</tfoot>
 									</table>
 								</div>
 							</div>

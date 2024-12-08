@@ -21,27 +21,43 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 </head>
 <body data-spy="scroll" data-target=".navbar">
-	<div id="headerSection">
-	<div class="container">
-		<h1 class="brand cntr">TULIP</h1>
-		<div class="navbar">
-			<div class="nav-collapse">
-				<ul class="nav">
-					<li class="active"><a href="#carouselSection">Home	</a></li>
-					<li><a href="#ourServices">What we do?</a></li>
-					<li><a href="#portfolioSection">Portfolio</a></li>
-					<li><a href="#blogSection">Blog</a></li>
-					<li><a href="#contactSection">Support</a></li>
-				</ul>
-			</div>
-			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-		</div>
-	</div>
-	</div>
+<div id="headerSection">
+  <div class="container">
+    <h1 class="brand cntr">TULIP</h1>
+    <div class="navbar">
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="active"><a href="#carouselSection">Home</a></li>
+          <li><a href="#ourServices">What we do?</a></li>
+          <li><a href="#portfolioSection">Portfolio</a></li>
+          <li><a href="#blogSection">Blog</a></li>
+          <li><a href="#contactSection">Support</a></li>
+          <li class="login-item"><a href="#LoginSection">Login</a></li>                  
+        </ul>
+      </div>
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Thêm JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginLink = document.querySelector('.login-item a');
+    
+    if (loginLink) {
+      loginLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'login';
+      });
+    }
+  });
+</script>
+
 <!--Header Ends================================================ -->
 
 <div id="carouselSection" class="cntr"> 

@@ -84,11 +84,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        productRepository.deleteById(id);
-    }
-
-    @Override
     public void delete(Product entity) {
         productRepository.delete(entity);
     }
@@ -99,8 +94,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findByProductNameContaining(String name) {
-        return productRepository.findByProductNameContainingIgnoreCase(name);
+    public List<Product> findByProductNameContaining(String productName) {
+        return productRepository.findByProductNameContainingIgnoreCase(productName);
     }
 
     @Override
@@ -122,5 +117,32 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllByOrderByProductNameAsc() {
         return productRepository.findAllByOrderByProductNameAsc();
     }
+
+	@Override
+	public Boolean create(Product product) {
+		try {
+			this.productRepository.save(product);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();		
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean delete(Integer id) {
+		try {
+			productRepository.delete(findByProductId(id));
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Product findByProductId(Integer id) {
+		return productRepository.findByProductId(id);
+	}
 
 }

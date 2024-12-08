@@ -14,6 +14,10 @@ public class AdminController {
 	public String add_product() {
 		return "admin/product/add";	
 	}
+	@RequestMapping("admin/product-edit")
+	public String edit_product() {
+		return "admin/product/edit";	
+	}
 	@RequestMapping("admin/seller-add")
 	public String add_seller() {
 		return "admin/seller/add";	

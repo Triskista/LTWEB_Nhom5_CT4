@@ -28,13 +28,13 @@ public interface ProductService {
 
     long count();
 
-    void deleteById(Integer id);
+    Boolean delete(Integer id);
 
     void delete(Product entity);
 
     Optional<Product> findByProductName(String productName);
 
-    List<Product> findByProductNameContaining(String name);
+    List<Product> findByProductNameContaining(String productName);
 
     Page<Product> findByProductNameContaining(String name, Pageable pageable);
 
@@ -43,4 +43,8 @@ public interface ProductService {
     List<Product> findAllByOrderByPriceAsc();
 
     List<Product> findAllByOrderByProductNameAsc();
+    
+    Boolean create(Product product);
+    
+    Product findByProductId(Integer id);
 }

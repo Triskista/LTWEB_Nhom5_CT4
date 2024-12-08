@@ -33,7 +33,8 @@
 					<div class="box-header">
 						<h3 class="box-title">Danh Sách Sản Phẩm</h3>
 						<div>
-							<a class="btn btn-success" href="product-add"> Thêm Mới Sản Phẩm </a>
+							<a class="btn btn-success" href="product-add"> Thêm Mới Sản
+								Phẩm </a>
 						</div>
 					</div>
 					<!-- /.box-header -->
@@ -96,16 +97,26 @@
 													rowspan="1" colspan="1"
 													aria-label="Category ID: activate to sort column ascending"
 													style="width: 100px;">Category Name</th>
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Action: activate to sort column ascending"
+													style="width: 50px;">Action</th>
 											</tr>
-											
+
 											<tr th:each="product : ${list}">
 												<td th:text="${product.productId}"></td>
 												<td th:text="${product.description}"></td>
 												<td th:text="${product.image}"></td>
 												<td th:text="${product.price}"></td>
-												<td th:text="${product.productName}"></td>		
-												<td th:text="${product.stock}"></td>											
+												<td th:text="${product.productName}"></td>
+												<td th:text="${product.stock}"></td>
 												<td th:text="${product.category.categoryName}"></td>
+												<td><a
+													th:href="@{/admin/product-edit/{productId}(productId=${product.productId})}"
+													class="btn btn-success"> Edit</a> <a
+													th:href="@{/admin/product-delete/{productId}(productId=${product.productId})}"
+													onclick="return confirm('Bạn có chắc chắn không')"
+													class="btn btn-danger"> Delete</a></td>
 											</tr>
 										</thead>
 									</table>
