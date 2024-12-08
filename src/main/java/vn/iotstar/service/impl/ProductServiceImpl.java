@@ -145,4 +145,9 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findByProductId(id);
 	}
 
+	@Override
+	public List<Product> searchProducts(String search) {
+	    return productRepository.findByProductNameContainingIgnoreCaseOrCategory_CategoryNameContainingIgnoreCase(search, search);
+	}
+
 }

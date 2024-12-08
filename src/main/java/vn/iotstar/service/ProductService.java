@@ -12,39 +12,42 @@ import vn.iotstar.entity.Product;
 
 public interface ProductService {
 
-    Product save(Product entity);
+	Product save(Product entity);
 
-    List<Product> findAll();
+	List<Product> findAll();
 
-    Page<Product> findAll(Pageable pageable);
+	Page<Product> findAll(Pageable pageable);
 
-    List<Product> findAll(Sort sort);
+	List<Product> findAll(Sort sort);
 
-    List<Product> findAllById(Iterable<Integer> ids);
+	List<Product> findAllById(Iterable<Integer> ids);
 
-    Optional<Product> findById(Integer id);
+	Optional<Product> findById(Integer id);
 
-    <S extends Product> Optional<S> findOne(Example<S> example);
+	<S extends Product> Optional<S> findOne(Example<S> example);
 
-    long count();
+	long count();
 
-    Boolean delete(Integer id);
+	Boolean delete(Integer id);
 
-    void delete(Product entity);
+	void delete(Product entity);
 
-    Optional<Product> findByProductName(String productName);
+	Optional<Product> findByProductName(String productName);
 
-    List<Product> findByProductNameContaining(String productName);
+	List<Product> findByProductNameContaining(String productName);
 
-    Page<Product> findByProductNameContaining(String name, Pageable pageable);
+	Page<Product> findByProductNameContaining(String name, Pageable pageable);
 
-    List<Product> findByPriceBetween(Float minPrice, Float maxPrice);
+	List<Product> findByPriceBetween(Float minPrice, Float maxPrice);
 
-    List<Product> findAllByOrderByPriceAsc();
+	List<Product> findAllByOrderByPriceAsc();
 
-    List<Product> findAllByOrderByProductNameAsc();
-    
-    Boolean create(Product product);
-    
-    Product findByProductId(Integer id);
+	List<Product> findAllByOrderByProductNameAsc();
+
+	Boolean create(Product product);
+
+	Product findByProductId(Integer id);
+
+	public List<Product> searchProducts(String search);
+
 }

@@ -21,61 +21,69 @@ import vn.iotstar.service.ProductService;
 @Controller
 @RequestMapping("/admin")
 public class ProductController {
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private CategoryService categoryService;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private CategoryService categoryService;
 
-    @GetMapping("/product")
-    public String index(Model model) {
-        List<Product> list = this.productService.findAll();
-        model.addAttribute("list", list);
-        return "admin/product/index";
-    }
+	@GetMapping("/product")
+	public String index(@RequestParam(value = "search", required = false) String search, Model model) {
+		List<Product> list;
 
-    @GetMapping("/product-add")
-    public String add(Model model) {
-        Product product = new Product(); // Khởi tạo đối tượng Product
-        List<Category> categories = categoryService.findAll(); // Lấy danh sách Category
-        model.addAttribute("product", product);
-        model.addAttribute("categories", categories);
-        return "admin/product/add";
-    }
+		if (search != null && !search.isEmpty()) {
+			// Tìm kiếm theo productName hoặc categoryName
+			list = productService.searchProducts(search);
+		} else {
+			list = productService.findAll();
+		}
 
-    @PostMapping("/product-add")
-    public String save(@ModelAttribute("product") Product product) {
-        if (this.productService.create(product)) {
-            return "redirect:/admin/product"; 
-        } else {
-            return "admin/product/add";
-        }
-    }
-    
-    @GetMapping("/product-edit/{productId}")
-    public String edit(Model model, @PathVariable("productId") Integer productId) {
-        Optional<Product> product = productService.findById(productId);
-        List<Category> categories = categoryService.findAll(); 
-        model.addAttribute("categories", categories);
-        model.addAttribute("product", product);
-        return "admin/product/edit"; 
-    }
-    
-    @PostMapping("/product-edit")
-    public String update(@ModelAttribute("product") Product product) {
-        if (this.productService.create(product)) {
-            return "redirect:/admin/product"; 
-        } else {
-            return "admin/product/add";
-        }
-    }
-    
-    @GetMapping("/product-delete/{productId}")
-    public String delete(@PathVariable("productId") Integer productId) {
-        if (this.productService.delete(productId)) {
-            return "redirect:/admin/product"; 
-        } else {
-            return "redirect:/admin/product";
-        }
-    }
+		model.addAttribute("list", list);
+		return "admin/product/index";
+	}
+
+	@GetMapping("/product-add")
+	public String add(Model model) {
+		Product product = new Product(); // Khởi tạo đối tượng Product
+		List<Category> categories = categoryService.findAll(); // Lấy danh sách Category
+		model.addAttribute("product", product);
+		model.addAttribute("categories", categories);
+		return "admin/product/add";
+	}
+
+	@PostMapping("/product-add")
+	public String save(@ModelAttribute("product") Product product) {
+		if (this.productService.create(product)) {
+			return "redirect:/admin/product";
+		} else {
+			return "admin/product/add";
+		}
+	}
+
+	@GetMapping("/product-edit/{productId}")
+	public String edit(Model model, @PathVariable("productId") Integer productId) {
+		Optional<Product> product = productService.findById(productId);
+		List<Category> categories = categoryService.findAll();
+		model.addAttribute("categories", categories);
+		model.addAttribute("product", product);
+		return "admin/product/edit";
+	}
+
+	@PostMapping("/product-edit")
+	public String update(@ModelAttribute("product") Product product) {
+		if (this.productService.create(product)) {
+			return "redirect:/admin/product";
+		} else {
+			return "admin/product/add";
+		}
+	}
+
+	@GetMapping("/product-delete/{productId}")
+	public String delete(@PathVariable("productId") Integer productId) {
+		if (this.productService.delete(productId)) {
+			return "redirect:/admin/product";
+		} else {
+			return "redirect:/admin/product";
+		}
+	}
 
 }
