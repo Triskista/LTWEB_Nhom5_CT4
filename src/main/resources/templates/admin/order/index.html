@@ -20,7 +20,8 @@
 					Quản Lý Đơn Hàng <small>Xem các đơn hàng</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang
+							chủ</a></li>
 					<li class="active">Danh sách đơn hàng</li>
 				</ol>
 			</section>
@@ -37,24 +38,21 @@
 						<div id="example1_wrapper"
 							class="dataTables_wrapper form-inline dt-bootstrap">
 							<div class="row">
+								
 								<div class="col-sm-6">
-									<div class="dataTables_length" id="example1_length">
-										<label>Hiển thị <select name="example1_length"
-											aria-controls="example1" class="form-control input-sm">
-												<option value="10">10</option>
-												<option value="25">25</option>
-												<option value="50">50</option>
-												<option value="100">100</option>
-										</select> mục
-										</label>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div id="example1_filter" class="dataTables_filter">
-										<label>Tìm kiếm:<input type="search"
-											class="form-control input-sm" placeholder=""
-											aria-controls="example1"></label>
-									</div>
+									<form th:action="@{/admin/order}" method="get">
+										<div>
+											<label for="username">Tìm theo Username:</label> <input
+												type="text" id="username" name="username"
+												placeholder="Nhập username">
+										</div>
+										<div>
+											<label for="date">Tìm theo Date:</label> <input type="date"
+												id="date" name="date">
+										</div>
+										<button type="submit">Tìm kiếm</button>
+									</form>
+
 								</div>
 							</div>
 							<div class="row">
@@ -68,53 +66,28 @@
 												<th style="width: 150px;">Date</th>
 												<th style="width: 130px;">Total Price</th>
 												<th style="width: 100px;">User Name</th>
-												<th style="width: 100px;">Action</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr  th:each="order : ${list}">
+											<tr th:each="order : ${list}">
 												<td th:text="${order.orderId}"></td>
 												<td th:text="${order.date}"></td>
 												<td th:text="${order.totalPrice}"></td>
 												<td th:text="${order.user.username}"></td>
-												<td><a class="btn btn-primary btn-sm"
-													th:href="@{'/admin/orderdetail'}">Xem
-														chi tiết</a></td>
 										</tbody>
 										<tfoot>
 											<tr>
 												<th>Order ID</th>
 												<th>Date</th>
 												<th>Total Price</th>
-												<th>User ID</th>
-												<th>Action</th>
+												<th>User Name</th>
 											</tr>
 										</tfoot>
 									</table>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-5">
-									<div class="dataTables_info" id="example1_info" role="status"
-										aria-live="polite">Hiển thị 1 đến 10 của 57 mục</div>
-								</div>
-								<div class="col-sm-7">
-									<div class="dataTables_paginate paging_simple_numbers"
-										id="example1_paginate">
-										<ul class="pagination">
-											<li class="paginate_button previous disabled"
-												id="example1_previous"><a href="#"
-												aria-controls="example1" data-dt-idx="0" tabindex="0">Trước</a></li>
-											<li class="paginate_button active"><a href="#"
-												aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
-											<li class="paginate_button "><a href="#"
-												aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>
-											<li class="paginate_button next" id="example1_next"><a
-												href="#" aria-controls="example1" data-dt-idx="7"
-												tabindex="0">Tiếp</a></li>
-										</ul>
-									</div>
-								</div>
+								
 							</div>
 						</div>
 					</div>

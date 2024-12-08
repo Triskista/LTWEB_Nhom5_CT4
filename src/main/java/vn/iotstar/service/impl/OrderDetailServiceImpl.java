@@ -59,4 +59,5 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public List<OrderDetail> getOrderDetailsWithinPriceRange(Double minPrice, Double maxPrice) {
         return orderDetailRepository.findByPriceBetween(minPrice, maxPrice);
     }
+    
 }

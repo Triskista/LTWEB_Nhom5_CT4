@@ -20,7 +20,8 @@
 					Quản Lý Chi Tiết Đơn Hàng <small>Xem chi tiết các đơn hàng</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang
+							chủ</a></li>
 					<li class="active">Danh sách chi tiết đơn hàng</li>
 				</ol>
 			</section>
@@ -37,24 +38,18 @@
 						<div id="example1_wrapper"
 							class="dataTables_wrapper form-inline dt-bootstrap">
 							<div class="row">
+								
 								<div class="col-sm-6">
-									<div class="dataTables_length" id="example1_length">
-										<label>Hiển thị <select name="example1_length"
-											aria-controls="example1" class="form-control input-sm">
-												<option value="10">10</option>
-												<option value="25">25</option>
-												<option value="50">50</option>
-												<option value="100">100</option>
-										</select> mục
-										</label>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div id="example1_filter" class="dataTables_filter">
-										<label>Tìm kiếm:<input type="search"
-											class="form-control input-sm" placeholder=""
-											aria-controls="example1"></label>
-									</div>
+									<form method="get" th:action="@{/admin/orderdetail}">
+										<div id="example1_filter" class="dataTables_filter">
+											<label>Tìm kiếm theo Order ID: <input type="number"
+												name="orderId" class="form-control input-sm"
+												placeholder="Nhập Order ID" value="" th:value="${orderId}">
+											</label>
+											<button type="submit" class="btn btn-primary btn-sm">Tìm
+												kiếm</button>
+										</div>
+									</form>
 								</div>
 							</div>
 							<div class="row">
@@ -96,27 +91,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-sm-5">
-									<div class="dataTables_info" id="example1_info" role="status"
-										aria-live="polite">Hiển thị 1 đến 10 của 57 mục</div>
-								</div>
-								<div class="col-sm-7">
-									<div class="dataTables_paginate paging_simple_numbers"
-										id="example1_paginate">
-										<ul class="pagination">
-											<li class="paginate_button previous disabled"
-												id="example1_previous"><a href="#"
-												aria-controls="example1" data-dt-idx="0" tabindex="0">Trước</a></li>
-											<li class="paginate_button active"><a href="#"
-												aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
-											<li class="paginate_button "><a href="#"
-												aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>
-											<li class="paginate_button next" id="example1_next"><a
-												href="#" aria-controls="example1" data-dt-idx="7"
-												tabindex="0">Tiếp</a></li>
-										</ul>
-									</div>
-								</div>
+								
 							</div>
 						</div>
 					</div>
