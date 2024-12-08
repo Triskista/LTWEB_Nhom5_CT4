@@ -2,7 +2,12 @@ package vn.iotstar.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import vn.iotstar.entity.Order;
 import vn.iotstar.entity.OrderDetail;
 import vn.iotstar.repository.OrderDetailRepository;
 import vn.iotstar.service.OrderDetailService;
@@ -19,7 +24,24 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return orderDetailRepository.findByOrder_OrderId(orderId);
     }
     
-    
+    @Override
+    public List<OrderDetail> findAll(Sort sort) {
+        // Trả về danh sách tất cả đơn hàng, sắp xếp theo yêu cầu
+        return orderDetailRepository.findAll(sort);
+    }
+    @Override
+    public Page<OrderDetail> findAll(Pageable pageable) {
+        // Trả về danh sách tất cả đơn hàng, phân trang
+        return orderDetailRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<OrderDetail> findAll() {
+        // Trả về danh sách tất cả đơn hàng
+        return orderDetailRepository.findAll();
+    }
+
+	
     //lấy đơn hàng chi tiết từ productid
     @Override
     public List<OrderDetail> getOrderDetailsByProductId(Integer productId) {
