@@ -17,12 +17,12 @@
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					Quản Lý Đơn Hàng <small>Xem các đơn hàng</small>
+					Quản Lý Chi Tiết Đơn Hàng <small>Xem chi tiết các đơn hàng</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang
 							chủ</a></li>
-					<li class="active">Danh sách đơn hàng</li>
+					<li class="active">Danh sách chi tiết đơn hàng</li>
 				</ol>
 			</section>
 
@@ -40,19 +40,16 @@
 							<div class="row">
 								
 								<div class="col-sm-6">
-									<form th:action="@{/admin/order}" method="get">
-										<div>
-											<label for="username">Tìm theo Username:</label> <input
-												type="text" id="username" name="username"
-												placeholder="Nhập username">
+									<form method="get" th:action="@{/admin/orderdetail}">
+										<div id="example1_filter" class="dataTables_filter">
+											<label>Tìm kiếm theo Order ID: <input type="number"
+												name="orderId" class="form-control input-sm"
+												placeholder="Nhập Order ID" value="" th:value="${orderId}">
+											</label>
+											<button type="submit" class="btn btn-primary btn-sm">Tìm
+												kiếm</button>
 										</div>
-										<div>
-											<label for="date">Tìm theo Date:</label> <input type="date"
-												id="date" name="date">
-										</div>
-										<button type="submit">Tìm kiếm</button>
 									</form>
-
 								</div>
 							</div>
 							<div class="row">
@@ -62,25 +59,32 @@
 										role="grid" aria-describedby="example1_info">
 										<thead>
 											<tr role="row">
+												<th style="width: 80px;">Order Detail ID</th>
+												<th style="width: 130px;">Price</th>
+												<th style="width: 100px;">Quantity</th>
+												<th style="width: 130px;">Total</th>
 												<th style="width: 80px;">Order ID</th>
-												<th style="width: 150px;">Date</th>
-												<th style="width: 130px;">Total Price</th>
-												<th style="width: 100px;">User Name</th>
+												<th style="width: 80px;">Product ID</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="order : ${list}">
-												<td th:text="${order.orderId}"></td>
-												<td th:text="${order.date}"></td>
-												<td th:text="${order.totalPrice}"></td>
-												<td th:text="${order.user.username}"></td>
+											<tr th:each="orderdetail : ${orderdetaillist}">
+												<td th:text="${orderdetail.orderDetailId}"></td>
+												<td th:text="${orderdetail.price}"></td>
+												<td th:text="${orderdetail.quantity}"></td>
+												<td th:text="${orderdetail.total}"></td>
+												<td th:text="${orderdetail.order.orderId}"></td>
+												<td th:text="${orderdetail.product.productId}"></td>
+											</tr>
 										</tbody>
 										<tfoot>
 											<tr>
+												<th>Order Detail ID</th>
+												<th>Price</th>
+												<th>Quantity</th>
+												<th>Total</th>
 												<th>Order ID</th>
-												<th>Date</th>
-												<th>Total Price</th>
-												<th>User Name</th>
+												<th>Product ID</th>
 											</tr>
 										</tfoot>
 									</table>

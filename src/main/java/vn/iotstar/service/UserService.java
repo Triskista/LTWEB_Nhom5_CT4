@@ -23,4 +23,5 @@ public interface UserService {
 	User saveUser(User user);
 
 	void deleteUser(Integer id);
+	List<User> findAll();
 }

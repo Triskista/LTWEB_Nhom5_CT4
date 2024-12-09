@@ -13,7 +13,6 @@ import lombok.*;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "Users")
 public class User implements UserDetails {
     /**
@@ -48,14 +47,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Boolean status;
 
-    public User(String username, String password, String email, String phone, Role role, Boolean status) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.role = role;
-        this.status = status;
-    }
+	/*
+	 * public User(String username, String password, String email, String phone,
+	 * Role role, Boolean status) { this.username = username; this.password =
+	 * password; this.email = email; this.phone = phone; this.role = role;
+	 * this.status = status; }
+	 */
     
     
     @Override
@@ -91,4 +88,18 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+	public User(Integer userId, String username, String password, String email, String phone, Role role, Boolean status) {
+		super();
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.role = role;
+		this.status = status;
+	}
+    
+    
 }
