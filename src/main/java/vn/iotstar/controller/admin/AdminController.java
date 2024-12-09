@@ -27,20 +27,21 @@ import vn.iotstar.service.UserService;
 @Controller
 @RequestMapping("/")
 public class AdminController {
-	
+
 	@Autowired
-    private UserService userService;
+	private UserService userService;
+
 	@GetMapping("admin2")
 	public RedirectView adminAccess(HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();
-		String email="";
+		String email = "";
 		for (Cookie cookie : cookies) {
-            // Kiểm tra nếu cookie có tên là "username"
-            if ("userEmail".equals(cookie.getName())) {
-                // Trả về giá trị của cookie "username"
-            	email = cookie.getValue();
-            }
-        }
+			// Kiểm tra nếu cookie có tên là "username"
+			if ("userEmail".equals(cookie.getName())) {
+				// Trả về giá trị của cookie "username"
+				email = cookie.getValue();
+			}
+		}
 		if (email == null || email.isEmpty()) {
 			return new RedirectView("/error"); // Handle missing email
 		}
@@ -53,21 +54,19 @@ public class AdminController {
 
 	private RedirectView handleUserAccess(User user, HttpServletRequest request) {
 		// Check if user is admin or not then redirect to another page
-		
-		if(user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-			return new RedirectView(request.getContextPath() + "admin");
-		}
-		else {
-			return new RedirectView(request.getContextPath() + "user/index");
-		}
-	}
 
+		if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+			return new RedirectView(request.getContextPath() + "admin");
+		} else if (user.getRole() != null && user.getRole().getRoleName().equals("USER"))
+			return new RedirectView(request.getContextPath() + "user/index");
+		else
+			return new RedirectView(request.getContextPath() + "seller");
+	}
 
 	@RequestMapping("admin")
 	public String admint() {
 		return "admin/index";
 	}
-
 
 	@RequestMapping("user/product-add")
 	public String add_product() {
@@ -76,8 +75,9 @@ public class AdminController {
 
 	@RequestMapping("admin/product-edit")
 	public String edit_product() {
-		return "admin/product/edit";	
+		return "admin/product/edit";
 	}
+
 	@RequestMapping("admin/seller-add")
 	public String add_seller() {
 		return "admin/seller/add";
@@ -88,6 +88,4 @@ public class AdminController {
 		return "admin/customer/add";
 	}
 
-
-		
 }

@@ -25,7 +25,7 @@ $(document).ready(function() {
 			var json = JSON.stringify(data, null, 4);
 			// $('#profile').html(json);
 			$('#email').html(data.email);
-			//document.cookie = `userEmail=${data.email}; path=/;`;
+			document.cookie = `userEmail=${data.email}; path=/;`;
 			//console.log("SUCCESS : ", data);
 			//alert('Hello ' + data.email + '! You have successfully accessed to /api/profile.');
 		},
@@ -202,3 +202,10 @@ $(document).ready(function() {
 		});
 	});
 });
+
+
+
+
+
+
+

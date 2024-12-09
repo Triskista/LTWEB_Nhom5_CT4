@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="seller/fragments/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="seller/fragments/header :: header"></div>
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="seller/fragments/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Thêm sản phẩm mới</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form role="form" method="post" th:action="@{/seller/product-add}"
+						th:object="${product}">
+						<div class="box-body">
+							<!-- Product Name -->
+							<div class="form-group">
+								<label for="productName">Product Name</label> <input type="text"
+									class="form-control" id="productName" th:field="*{productName}"
+									placeholder="Enter product name" required>
+							</div>
+
+							<!-- Description -->
+							<div class="form-group">
+								<label for="productDescription">Description</label>
+								<textarea class="form-control" id="productDescription"
+									th:field="*{description}"
+									placeholder="Enter product description" rows="3" required></textarea>
+							</div>
+
+							<!-- Price -->
+							<div class="form-group">
+								<label for="productPrice">Price</label> <input type="number"
+									class="form-control" id="productPrice" th:field="*{price}"
+									placeholder="Enter product price" step="0.01" required>
+							</div>
+
+							<!-- Stock -->
+							<div class="form-group">
+								<label for="productStock">Stock</label> <input type="number"
+									class="form-control" id="productStock" th:field="*{stock}"
+									placeholder="Enter stock quantity" required>
+							</div>
+
+							<!-- Category -->
+							<div class="form-group">
+								<label for="productCategory">Category</label> <select
+									class="form-control" id="productCategory"
+									th:field="*{category.categoryId}" required>
+									<option value="" disabled selected>Select Category</option>
+									<option th:each="category : ${categories}"
+										th:value="${category.categoryId}"
+										th:text="${category.categoryName}"></option>
+								</select>
+							</div>
+
+							<!-- Image -->
+							<div class="form-group">
+								<label for="productImage">Image</label> <input type="file"
+									id="productImage" th:field="*{image}" required>
+								<p class="help-block">Upload an image for the product.</p>
+							</div>
+						</div>
+						<!-- /.box-body -->
+
+						<!-- Submit Button -->
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary">Add
+								Product</button>
+						</div>
+					</form>
+
+
+				</div>
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div th:replace="seller/fragments/footer :: footer"></div>
+
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="seller/fragments/script :: script"></div>
+</body>
+</html>
