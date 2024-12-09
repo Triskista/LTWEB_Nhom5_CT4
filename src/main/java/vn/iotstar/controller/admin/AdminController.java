@@ -20,6 +20,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import vn.iotstar.entity.Role;
 import vn.iotstar.entity.User;
 import vn.iotstar.service.UserService;
@@ -62,10 +63,33 @@ public class AdminController {
 		}
 	}
 
-
 	@RequestMapping("admin")
-	public String admint() {
-		return "admin/index";
+	public String adminDashboard(HttpServletRequest request, Model model) {
+		// Lấy tất cả các cookie từ request
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+        	Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
+            
+            User user = u.get();
+            String username = user.getUsername2();
+            model.addAttribute("username", username);
+        } else {
+            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+        }
+
+        return "admin/index"; // Trả về trang index.html
 	}
 
 
@@ -87,7 +111,4 @@ public class AdminController {
 	public String add_customer() {
 		return "admin/customer/add";
 	}
-
-
-		
 }
