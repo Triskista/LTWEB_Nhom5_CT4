@@ -30,7 +30,7 @@ public class Product {
 	@NotEmpty(message = "khong duoc rong")
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Lấy dữ liệu khi cần (tối ưu hiệu năng)
+    @ManyToOne(fetch = FetchType.EAGER) // Lấy dữ liệu khi cần (tối ưu hiệu năng)
     @JoinColumn(name = "categoryId", referencedColumnName = "categoryId", nullable = false)
     private Category category;
 
