@@ -30,7 +30,7 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
 .nav li{display:inline-block; float:none;}
 .nav a {padding: 3px 18px; text-transform: uppercase;font-size: 14px; display: inline-block; color:#222; font-family: 'HelveticaBold';}
 
-#contactSection, #portfolioSection, #ourServices, #blogSection{padding:130px 0 44px; }
+#contactSection, #CategorySection, #ourServices, #blogSection{padding:130px 0 44px; }
 .txtR{text-align:right}
 #blogSection{background: #e6e6e6;}
 #ourServices{background: #e6e6e6;text-align: center;border-top: 1px solid #ddd;}
@@ -40,44 +40,84 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
 #headerSection {
     background: url(../images/shadow.png) no-repeat center bottom #EEE;
     border-bottom: 1px solid #dedede;
-    padding: 8px 20px 0; /* Thêm padding ngang (20px) để tạo không gian */
-    position: relative; /* Đặt vị trí tương đối để hỗ trợ các phần tử con với absolute */
+    padding: 8px 20px 0; 
+    position: relative;
 }
 
 .nav {
-    display: inline-block; /* Giữ menu ở một hàng ngang */
+    display: inline-block;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
 .nav li {
-    display: inline-block; /* Hiển thị các mục menu trên một hàng ngang */
+    display: inline-block;
     margin-right: 20px; /* Khoảng cách giữa các mục menu */
 }
 
 .nav li a {
     text-decoration: none;
-    color: #000; /* Màu chữ của các liên kết */
+    color: #000;
     font-weight: bold;
 }
 
-.login-item {
-    position: fixed; /* Đặt Login cố định trên màn hình */
-    top: 0; /* Sát cạnh trên của màn hình */
-    right: 0; /* Sát cạnh phải của màn hình */
-    margin: 10px; /* Tạo khoảng cách nhỏ từ viền trên và phải */
-    z-index: 1000; /* Đảm bảo luôn hiển thị trên các phần tử khác */
-}
-
-.login-item a {
+.login-item, .cart-item {
+    position: fixed; /* Giữ cố định trên màn hình */
+    top: 0;
+    right: 10px; /* Di chuyển gần về bên phải */
+    margin: 10px;
+    z-index: 1000;
+    padding: 5px 10px;
+    background: #EEE;
+    border-radius: 5px;
+    font-size: 14px;
     text-decoration: none;
-    font-weight: bold;
-    color: #000; /* Màu chữ cho liên kết Login */
-    padding: 5px 10px; /* Tạo vùng nhấn dễ dàng */
-    background: #EEE; /* Tùy chỉnh màu nền nếu cần */
-    border-radius: 5px; /* Làm mềm góc cạnh */
 }
+
+/* Biểu tượng Cart ở góc phải màn hình */
+.cart-item {
+  position: fixed;
+  top: 10px; /* Điều chỉnh khoảng cách từ đầu trang */
+  right: 50px; /* Cách biểu tượng người dùng 50px */
+  z-index: 1000;
+  padding: 5px 10px;
+  background: #EEE;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* User Profile ở góc phải màn hình */
+.user-profile {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  padding: 5px;
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Căn chỉnh biểu tượng và khoảng cách giữa các thành phần */
+.navbar .cart-item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .user-profile a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}
