@@ -30,7 +30,7 @@ public class StarShopApplication {
     public CommandLineRunner run(OrderService orderService) {
         return (args) -> {
             // Kiểm tra phương thức save (tạo đơn hàng mới)
-            orderService.findByUserUsername("admin").forEach(order -> System.out.println("Đơn hàng của John Doe: " + order));
+            //orderService.findByUserUsername("admin").forEach(order -> System.out.println("Đơn hàng của John Doe: " + order));
 
         };
     }
