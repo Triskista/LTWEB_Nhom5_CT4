@@ -11,8 +11,14 @@ public class HomeController {
         return "login"; // Gọi file login.html trong src/main/resources/templates/
     }
 
+
     @GetMapping("/register")
     public String showRegisterPage() {
         return "register"; // Gọi file register.html trong src/main/resources/templates/
+    }
+
+    @GetMapping("/user/index")
+    public String showUserIndexPage() {
+        return "user/index"; // Gọi file index.html trong src/main/resources/templates/user/
     }
 }

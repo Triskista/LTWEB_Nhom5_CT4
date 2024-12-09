@@ -75,14 +75,50 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
     text-decoration: none;
 }
 
+/* Biểu tượng Cart ở góc phải màn hình */
 .cart-item {
-    right: 90px; /* Căn chỉnh khoảng cách Cart cách Login */
+  position: fixed;
+  top: 10px; /* Điều chỉnh khoảng cách từ đầu trang */
+  right: 50px; /* Cách biểu tượng người dùng 50px */
+  z-index: 1000;
+  padding: 5px 10px;
+  background: #EEE;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
 }
 
-.cart-item:hover, 
-.login-item:hover {
-    background: #ddd; /* Thêm hiệu ứng hover */
+/* User Profile ở góc phải màn hình */
+.user-profile {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  padding: 5px;
 }
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Căn chỉnh biểu tượng và khoảng cách giữa các thành phần */
+.navbar .cart-item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .user-profile a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}
 .blockDtl {text-align:center}

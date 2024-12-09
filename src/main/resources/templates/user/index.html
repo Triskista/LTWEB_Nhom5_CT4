@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-	<link id="callCss" rel="stylesheet" th:href="@{fe/css/bootstrap.min.css}" type="text/css" media="screen" charset="utf-8" />
-	<link id="callCss" rel="stylesheet" th:href="@{fe/css/style.css}" type="text/css" media="screen" charset="utf-8" />
-	<link th:href="@{fe/css/bootstrap-responsive.min.css}" rel="stylesheet">
-	<link rel="stylesheet" th:href="@{fe/font-awesome/css/font-awesome.min.css}">
+	<link id="callCss" rel="stylesheet" href="/fe/css/bootstrap.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/fe/css/style.css" type="text/css" media="screen" />
+	<link href="/fe/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/fe/font-awesome/css/font-awesome.min.css">
 	<!--[if IE 7]>
 	  <link rel="stylesheet" th:href="@{fe/font-awesome/css/font-awesome-ie7.css}">
 	<![endif]-->
@@ -32,31 +32,20 @@
           <li><a href="#CategorySection">Category</a></li>
           <li><a href="#blogSection">Blog</a></li>
           <li><a href="#contactSection">Support</a></li>
-          <li class="login-item"><a href="#LoginSection">Login</a></li>                  
         </ul>
       </div>
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+      <div class="cart-item">
+        <a href="#CartSection">🛒 Cart</a>
+      </div>
+      <div class="user-profile">
+        <a href="#ProfileSection">
+          <img src="/fe/images/carousel/miku.jpg" alt="User Profile" class="user-icon" />
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Thêm JavaScript -->
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const loginLink = document.querySelector('.login-item a');
-    
-    if (loginLink) {
-      loginLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        window.location.href = 'user/index';
-      });
-    }
-  });
-</script>
 
 <!--Header Ends================================================ -->
 
@@ -64,19 +53,20 @@
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
 				<div class="item active">
-					<a class="cntr" href="#"><img th:src="@{fe/images/carousel/1.png}" alt=""></a>
+					<a class="cntr" href="#"><img src="/fe/images/carousel/1.png" alt=""></a>
 				</div>
 				<div class="item">
-					<a class="cntr" href="#"><img th:src="@{fe/images/carousel/2.png}" alt=""></a>
+					<a class="cntr" href="#"><img src="/fe/images/carousel/2.png" alt=""></a>
 				</div>
 				<div class="item">
-					<a class="cntr" href="#"><img th:src="@{fe/images/carousel/3.png}" alt=""></a>
+					<a class="cntr" href="#"><img src="/fe/images/carousel/3.png" alt=""></a>
 				</div>
 				<div  class="item">
-					<a class="cntr" href="#"><img th:src="@{fe/images/carousel/4.png}" alt=""></a>
+					<a class="cntr" href="#"><img src="/fe/images/carousel/4.png" alt=""></a>
 				</div>
 				<div class="item">
-					<a class="cntr" href="#"><img th:src="@{fe/images/carousel/5.png}" alt=""></a>
+					<a class="cntr" href="#"><img src="/fe/images/carousel/5.png" alt=""></a>
+
 				</div>
 			</div>
 			<a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
@@ -241,478 +231,59 @@
 </div>
 </div>
 
-<!-- Our Category======================================== -->
+<!-- CategorySection -->
 <div id="CategorySection">
-<h1 class="cntr">Our Category</h1>
-<div class="container">	
-	<ul class="nav nav-pills">
-	<li class="active"><a href="#all" data-toggle="tab">ALL</a></li>
-	<li class=""><a href="#new" data-toggle="tab">NEW</a></li>
-	<li class=""><a href="#popular" data-toggle="tab">POPULAR</a></li>
-	<li class=""><a href="#comingsoon" data-toggle="tab">COMING SOON</a></li>
-	</ul>
-<div class="clr"></div>
-<div class="tabbable tabs">
-<div class="tab-content label-primary">
-	<div class="tab-pane active" id="all">
-	<ul class="thumbnails">
-	<li class="span3">
-		<div class="thumbnail">
-			<div class="blockDtl">
-			<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-			<h4>Easy Interface</h4>
-			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-			</div>
-		</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>	
-	</ul>
-	<div class="pagination pull-right">
-	  <ul>
-		<li><a href="#">Prev</a></li>
-		<li><a href="#">1</a></li>
-		<li><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">Next</a></li>
-	  </ul>
-	</div>	
-	</div>
-	<div class="tab-pane" id="new">
-	<ul class="thumbnails">
-	<li class="span3">
-		<div class="thumbnail">
-			<div class="blockDtl">
-			<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-			<h4>Easy Interface</h4>
-			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-			</div>
-		</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/2.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>	
-	</ul>
-	
-	</div>
-	<div class="tab-pane" id="popular">
-	<ul class="thumbnails">
-	<li class="span3">
-		<div class="thumbnail">
-			<div class="blockDtl">
-			<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-			<h4>Easy Interface</h4>
-			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-			</div>
-		</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>	
-	</ul>
-	
+    <h1 class="cntr">OUR CATEGORY</h1>
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li class="active"><a href="#all" data-toggle="tab">ALL</a></li>
+            <li><a href="#new" data-toggle="tab">NEW</a></li>
+            <li><a href="#popular" data-toggle="tab">POPULAR</a></li>
+            <li><a href="#comingsoon" data-toggle="tab">COMING SOON</a></li>
+        </ul>
+        <div class="clr"></div>
+        <div class="tabbable tabs">
+            <div class="tab-content label-primary">
+                <div class="tab-pane active" id="all">
+                    <ul class="thumbnails">
+                        <!-- Thymeleaf Loop over Products -->
+                        <li class="span3" th:each="product : ${products}">
+                            <div class="thumbnail">
+                                <div class="blockDtl">
+                                    <!-- Product Image -->
+                                    <a href="#"><img th:src="@{'/fe/images/Category/' + ${product.image}}" alt="Product Image"></a>
+                                    <!-- Product Name -->
+                                    <h4 th:text="${product.productName}">Product Name</h4>
+                                    <!-- Product Description -->
+                                    <p th:text="${product.description}">Product Description</p>
+                                    <!-- Product Price -->
+                                    <p><strong th:text="${product.price}">Price</strong></p>
+                                    <!-- Add to Cart Button -->
+                                    <button class="btn btn-cart" type="button">
+                                        <i class="fa fa-shopping-cart"></i> Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- End of Product Loop -->
+                    </ul>
+                    <div class="pagination pull-right">
+                        <ul>
+                            <li><a href="#">Prev</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">Next</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End CategorySection -->
 
-	</div>
-	<div class="tab-pane" id="comingsoon">
-	<ul class="thumbnails">
-	<li class="span3">
-		<div class="thumbnail">
-			<div class="blockDtl">
-			<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-			<h4>Easy Interface</h4>
-			<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-			</div>
-		</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li><li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>
-		<li class="span3">
-			<div class="thumbnail">
-				<div class="blockDtl">
-				<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
-				<h4>Easy Interface</h4>
-				<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, </p>
-				</div>
-			</div>
-		</li>	
-	</ul>
-	
 
-	</div>
-</div>
-</div>
-</div>
-</div>
-<!-- ========================= -->
 <!-- Contact Section -->
 <div id="blogSection">
 <h1 class="cntr"> OUR BLOG</h1>
@@ -724,7 +295,7 @@
 		<h1><a href="#" rel="bookmark" title="Permanent Link to Cras in odio nisi">Cras in odio nisi</a></h1>
 		<p class="meta">Added by <a href="#" title="Posts by admin">admin</a> on <a href="#">November 14th, 2010</a>, filed under 
 		<a href="#" title="View all posts in Category 3" rel="category">Design </a></p>
-		<p><img th:src="@{fe/img/1.png}" class="attachment-wide wp-post-image" alt="78" title="78"></p>
+		<p><img src="/fe/img/1.png" class="attachment-wide wp-post-image" alt="78" title="78"></p>
 		<p>Vivamus commodo placerat libero, eget pulvinar felis lobortis in. Curabitur ac enim nibh. Cras in odio nisi. Fusce et augue velit. 
 		Nulla convallis, ipsum vitae tristique pretium, sapien odio viverra quam, eget mollis diam risus ut mi. Nullam ultrices ornare nisl,
 		 sagittis ullamcorper dolor rutrum vitae. Sed accumsan mauris eget elit dictum vitae dapibus nisl [...]</p>
@@ -738,7 +309,7 @@
 		<div class="inner">
 		<h1><a href="#" rel="bookmark" title="Permanent Link to Cras in odio nisi">Cras in odio nisi</a></h1>
 		<p class="meta">Added by <a href="#" title="Posts by admin">admin</a> on <a href="#">November 14th, 2010</a>, filed under <a href="#" title="View all posts in Category 3" rel="category">Category 3</a></p>
-		<p><img th:src="@{fe/img/2.png}" class="attachment-wide wp-post-image" alt="78" title="78"></p>
+		<p><img src="/fe/img/2.png" class="attachment-wide wp-post-image" alt="78" title="78"></p>
 		<p>Vivamus commodo placerat libero, eget pulvinar felis lobortis in. Curabitur ac enim nibh. Cras in odio nisi. Fusce et augue velit. 
 		Nulla convallis, ipsum vitae tristique pretium, sapien odio viverra quam, eget mollis diam risus ut mi. Nullam ultrices ornare nisl,
 		 sagittis ullamcorper dolor rutrum vitae. Sed accumsan mauris eget elit dictum vitae dapibus nisl [...]</p>
@@ -752,7 +323,7 @@
 		<div class="inner">
 		<h1><a href="#" rel="bookmark" title="Permanent Link to Cras in odio nisi">Cras in odio nisi</a></h1>
 		<p class="meta">Added by <a href="#" title="Posts by admin">admin</a> on <a href="#">November 14th, 2010</a>, filed under <a href="#" title="View all posts in Category 3" rel="category">Category 3</a></p>
-		<p><img th:src="@{fe/img/3.png}" class="attachment-wide wp-post-image" alt="78" title="78"></p>
+		<p><img src="/fe/img/3.png" class="attachment-wide wp-post-image" alt="78" title="78"></p>
 		<p>Vivamus commodo placerat libero, eget pulvinar felis lobortis in. Curabitur ac enim nibh. Cras in odio nisi. Fusce et augue velit. 
 		Nulla convallis, ipsum vitae tristique pretium, sapien odio viverra quam, eget mollis diam risus ut mi. Nullam ultrices ornare nisl,
 		 sagittis ullamcorper dolor rutrum vitae. Sed accumsan mauris eget elit dictum vitae dapibus nisl [...]</p>
@@ -792,7 +363,7 @@
 	<div id="clients">
 		<div class="thumbnail">
 			<div class="blockDtl">
-			<a href="#"><img th:src="@{fe/images/Category/1.jpg}" alt=""></a>
+			<a href="#"><img src="/fe/images/Category/1.jpg" alt=""></a>
 			<h4>Download</h4>
 			<a href="#">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, <br><strong>Download Now</strong></a>
 			</div>
@@ -925,12 +496,12 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-<script th:src="@{fe/js/jquery-1.9.1.min.js}"></script>
-<script th:src="@{fe/js/bootstrap.min.js}" type="text/javascript"></script>
-<script th:src="@{fe/js/jquery.scrollTo-1.4.3.1-min.js}" type="text/javascript"></script>
-<script th:src="@{fe/js/jquery.easing-1.3.min.js}"></script>
-<script th:src="@{fe/js/jquery.scrollTo-1.4.3.1-min.js}"></script>
-<script th:src="@{fe/js/default.js}"></script> 
+<script src="/fe/js/jquery-1.9.1.min.js"></script>
+<script src="/fe/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/fe/js/jquery.scrollTo-1.4.3.1-min.js" type="text/javascript"></script>
+<script src="/fe/js/jquery.easing-1.3.min.js"></script>
+<script src="/fe/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script src="/fe/js/default.js"></script> 
 <script type="text/javascript">
 
 	$('#testimonial').carousel({
