@@ -116,11 +116,37 @@ public class ProductController {
 	}
 
 	@GetMapping("/product-edit/{productId}")
-	public String edit(Model model, @PathVariable("productId") Integer productId) {
+	public String edit(HttpServletRequest request, Model model, @PathVariable("productId") Integer productId) {
 		Optional<Product> product = productService.findById(productId);
 		List<Category> categories = categoryService.findAll();
 		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
+		
+		// Lấy tất cả các cookie từ request
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+        	Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
+            
+            User user = u.get();
+            String username = user.getUsername2();
+            model.addAttribute("username", username);
+        } else {
+            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+        }
+		
+		
 		return "admin/product/edit";
 	}
 
