@@ -21,7 +21,15 @@ public class AuthenticationService {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
+	// Kiểm tra email đã tồn tại trong database
+    public boolean existsByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
 
+    // Kiểm tra số điện thoại đã tồn tại trong database
+    public boolean existsByPhone(String phone) {
+        return userRepository.findByPhone(phone) != null;
+    }
 	public User signup(RegisterUserModel input) {
 		User user = new User();
 		user.setUsername(input.getUserName());
