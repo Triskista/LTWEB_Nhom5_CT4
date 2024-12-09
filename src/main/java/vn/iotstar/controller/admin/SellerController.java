@@ -1,6 +1,7 @@
 package vn.iotstar.controller.admin;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,12 @@ public class SellerController {
 	@GetMapping("/seller")
 	public String index(Model model) {
 		List<User> list = userService.findAll();
-		model.addAttribute("list", list);
+		 List<User> list2 = new ArrayList<>();
+		for (User u : list) {
+			if(u.getRole() != null && u.getRole().getRoleName().equals("SELLER"))
+				list2.add(u);
+		}
+		model.addAttribute("list", list2);
 		return "admin/seller/index";
 	}
 }
