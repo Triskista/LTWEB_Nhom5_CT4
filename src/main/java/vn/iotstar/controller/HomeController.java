@@ -16,9 +16,7 @@ public class HomeController {
     public String showLoginPage() {
         return "login"; // Gọi file login.html trong src/main/resources/templates/
     }
-<<<<<<< HEAD
 
-=======
     
     @GetMapping("/user/profile")
     public String authenticatedUser(Model model) {
@@ -34,19 +32,16 @@ public class HomeController {
     }
 
     
->>>>>>> 2a694cb8e3638a1bbefbfcc7c814e2bab3139b97
 
     @GetMapping("/register")
     public String showRegisterPage() {
         return "register"; // Gọi file register.html trong src/main/resources/templates/
     }
-<<<<<<< HEAD
 
     @GetMapping("/user/index")
     public String showUserIndexPage() {
         return "user/index"; // Gọi file index.html trong src/main/resources/templates/user/
     }
-=======
     
     @GetMapping("/current-user")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
@@ -63,5 +58,4 @@ public class HomeController {
         return ResponseEntity.ok().body("Username: " + username + ", Roles: " + roles);
     }
 
->>>>>>> 2a694cb8e3638a1bbefbfcc7c814e2bab3139b97
 }
