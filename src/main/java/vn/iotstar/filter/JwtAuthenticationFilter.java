@@ -1,5 +1,8 @@
 package vn.iotstar.filter;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +25,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private final HandlerExceptionResolver handlerExceptionResolver;
 	private final JwtService jwtService;
 	private final UserDetailsService userDetailsService;
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+	
+	
+	
 	public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService,
 			HandlerExceptionResolver handlerExceptionResolver) {
 		this.jwtService = jwtService;
@@ -31,29 +38,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull FilterChain filterChain) throws ServletException, IOException {
-		final String authHeader = request.getHeader("Authorization");
-		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-			filterChain.doFilter(request, response);
-			return;
-		}
-		try {
-			final String jwt = authHeader.substring(7);
-			final String userEmail = jwtService.extractUsername(jwt);
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			if (userEmail != null && authentication == null) {
-				UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-				if (jwtService.isTokenValid(jwt, userDetails)) {
-					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
-							null, userDetails.getAuthorities());
-					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(authToken);
-				}
-			}
-			filterChain.doFilter(request, response);
-		} catch (Exception exception) {
-			handlerExceptionResolver.resolveException(request, response, null, exception);
-		}
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	        throws ServletException, IOException {
+	    logger.info("JwtAuthenticationFilter: Entering doFilterInternal");
+	    String authHeader = request.getHeader("Authorization");
+	    logger.info("JwtAuthenticationFilter: Authorization Header: {}", authHeader);
+	    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+	        logger.warn("JwtAuthenticationFilter: No Bearer token found");
+	        chain.doFilter(request, response);
+	        return;
+	    }
+	    String jwt = authHeader.substring(7);
+	    try {
+	        String userEmail = jwtService.extractUsername(jwt);
+	        logger.info("JwtAuthenticationFilter: Extracted username: {}", userEmail);
+	        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+	        if (userDetails == null) {
+	            logger.error("JwtAuthenticationFilter: userDetails is null for user: {}", userEmail);
+	            return;
+	        }
+	        logger.info("JwtAuthenticationFilter: User details loaded: {}", userDetails);
+	        if (jwtService.isTokenValid(jwt, userDetails)) {
+	            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+	                    userDetails, null, userDetails.getAuthorities());
+	            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+	            SecurityContextHolder.getContext().setAuthentication(authToken);
+	            logger.info("JwtAuthenticationFilter: Authentication successful.  Authorities: {}", userDetails.getAuthorities());
+	        } else {
+	            logger.warn("JwtAuthenticationFilter: Invalid JWT token");
+	        }
+	    } catch (Exception ex) {
+	        logger.error("JwtAuthenticationFilter: Error during authentication: ", ex);
+	    }
+	    chain.doFilter(request, response);
 	}
+
 }

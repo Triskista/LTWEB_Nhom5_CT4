@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
     
+    public UserServiceImpl() {
+    }
     @Override
     public User getUserById(Integer id) {
         Optional<User> user = userRepository.findById(id);
