@@ -73,14 +73,11 @@ public class AdminController {
 	public String add_product() {
 		return "admin/product/add";
 	}
-<<<<<<< HEAD
 
-=======
 	@RequestMapping("admin/product-edit")
 	public String edit_product() {
 		return "admin/product/edit";	
 	}
->>>>>>> 8beaa0ad3d8a8907c1de285983d276433bdc02d3
 	@RequestMapping("admin/seller-add")
 	public String add_seller() {
 		return "admin/seller/add";
@@ -88,13 +85,9 @@ public class AdminController {
 
 	@RequestMapping("admin/customer-add")
 	public String add_customer() {
-<<<<<<< HEAD
 		return "admin/customer/add";
 	}
 
 
-=======
-		return "admin/customer/add";	
-	}
->>>>>>> 8beaa0ad3d8a8907c1de285983d276433bdc02d3
+		
 }

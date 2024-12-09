@@ -28,7 +28,6 @@ public class SecurityConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
 
-<<<<<<< HEAD
     public SecurityConfiguration(AuthenticationProvider authenticationProvider,
                                   JwtAuthenticationFilter jwtAuthenticationFilter,
                                   UserDetailsService userDetailsService) {
@@ -61,24 +60,6 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
                 .build();
     }
-=======
-	// Configuring HttpSecurity
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-	    return httpSecurity.csrf(csrf -> csrf.disable())
-	            .authorizeHttpRequests(auth -> auth
-	                    // Cấm truy cập cho những người có vai trò ADMIN cho một số đường dẫn
-	                    //.requestMatchers("/admin").hasRole("ADMIN")  // Chỉ ADMIN có thể vào /admin
-	                    //.requestMatchers("/admin/**").hasRole("ADMIN")
-	                   
-	                    // Permit all cho các đường dẫn còn lại
-	                    .anyRequest().permitAll()  // Cho phép tất cả các yêu cầu còn lại
-	            )
-	            .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	            .authenticationProvider(authenticationProvider)
-	            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
-	}
->>>>>>> 8beaa0ad3d8a8907c1de285983d276433bdc02d3
 
 
     @Bean
