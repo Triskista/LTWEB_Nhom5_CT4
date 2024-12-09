@@ -59,7 +59,7 @@ public class AdminController {
 			return new RedirectView(request.getContextPath() + "admin");
 		}
 		else {
-			return new RedirectView(request.getContextPath() + "admin/product-add");
+			return new RedirectView(request.getContextPath() + "user/index");
 		}
 	}
 
@@ -93,7 +93,7 @@ public class AdminController {
 	}
 
 
-	@RequestMapping("admin/product-add")
+	@RequestMapping("user/product-add")
 	public String add_product() {
 		return "admin/product/add";
 	}
