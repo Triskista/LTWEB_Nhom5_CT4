@@ -8,24 +8,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import vn.iotstar.entity.Order;
+import vn.iotstar.entity.User;
 import vn.iotstar.service.OrderService;
+import vn.iotstar.service.UserService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
 public class OrderController {
     @Autowired
     private OrderService orderservice;
+    @Autowired
+	private UserService userService;
 
     @GetMapping("/order")
     public String index(
             @RequestParam(value = "username", required = false) String username,
             @RequestParam(value = "date", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-            Model model) {
+            HttpServletRequest request, Model model) {
 
         List<Order> list;
 
@@ -45,6 +52,31 @@ public class OrderController {
         }
 
         model.addAttribute("list", list);
+        
+     // Lấy tất cả các cookie từ request
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+        	Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
+            
+            User user = u.get();
+            String username2 = user.getUsername2();
+            model.addAttribute("username", username2);
+        } else {
+            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+        }
+        
         return "admin/order/index";
     }
 }

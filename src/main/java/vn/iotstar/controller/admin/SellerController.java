@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import vn.iotstar.entity.Product;
 import vn.iotstar.entity.Role;
@@ -33,7 +35,7 @@ public class SellerController {
 
 
 	@GetMapping("/seller")
-	public String index(Model model) {
+	public String index(HttpServletRequest request, Model model) {
 		List<User> list = userService.findAll();
 		List<User> list2 = new ArrayList<>();
 		for (User u : list) {
@@ -41,11 +43,61 @@ public class SellerController {
 				list2.add(u);
 		}
 		model.addAttribute("list", list2);
+		
+		// Lấy tất cả các cookie từ request
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+        	Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
+            
+            User user = u.get();
+            String username = user.getUsername2();
+            model.addAttribute("username", username);
+        } else {
+            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+        }
+		
 		return "admin/seller/index";
 	}
 
 	@GetMapping("/seller-add")
-	public String showRegisterPage(Model model) {
+	public String showRegisterPage(HttpServletRequest request, Model model) {
+		// Lấy tất cả các cookie từ request
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+        	Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
+            
+            User user = u.get();
+            String username = user.getUsername2();
+            model.addAttribute("username", username);
+        } else {
+            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+        }
+		
+		
 		model.addAttribute("user", new User()); // Thêm đối tượng user vào model
 		return "admin/seller/add"; // Gọi file register.html trong src/main/resources/templates/
 	}

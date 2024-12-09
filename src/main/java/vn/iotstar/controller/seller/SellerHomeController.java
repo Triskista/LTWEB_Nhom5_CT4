@@ -32,7 +32,32 @@ public class SellerHomeController {
 	private UserService userService;
 
 	@RequestMapping("")
-	public String admint() {
+	public String admint(HttpServletRequest request, Model model) {
+		// Lấy tất cả các cookie từ request
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+        	Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
+            
+            User user = u.get();
+            String username = user.getUsername2();
+            model.addAttribute("username", username);
+        } else {
+            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+        }
+		
+		
 		return "seller/index";
 	}
 

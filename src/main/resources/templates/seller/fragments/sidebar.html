@@ -4,21 +4,18 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img th:src="@{/assets/images/user2-160x160.jpg}" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
+				<img th:src="@{/assets/images/images.png}" class="img-circle"
+					alt="User Image">
+			</div>
+			<div class="pull-left info">
+				<!-- Dòng hiển thị tên người dùng -->
+				<span class="hidden-xs"> <span th:text="${username}">Tên người dùng</span>
+				</span> <br>
+				<!-- Ngắt dòng giữa tên người dùng và trạng thái -->
+
+				<!-- Dòng hiển thị trạng thái Online -->
+				<a href="#"> <i class="fa fa-circle text-success"></i> Online</a>
+			</div>
         </div>
       </form>
       <!-- /.search form -->
