@@ -116,7 +116,31 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
   align-items: center;
   justify-content: center;
 }
+#bảng category
+/* Thêm vào trong file CSS hoặc trong thẻ <style> của bạn */
 
+/* Điều chỉnh kích thước ảnh cho danh mục */
+#CategorySection .thumbnail img {
+    width: 100%; /* Hoặc bạn có thể đặt giá trị cụ thể như 200px */
+    height: auto; /* Đảm bảo tỷ lệ ảnh không bị biến dạng */
+    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung mà không bị kéo dài */
+    max-width: 300px; /* Đặt chiều rộng tối đa cho hình ảnh trong danh mục */
+    margin-bottom: 10px; /* Thêm khoảng cách giữa ảnh và tên danh mục */
+}
+
+/* Điều chỉnh kích thước ảnh cho sản phẩm */
+#CategorySection .thumbnails .span3 img {
+    width: 100px; /* Đặt chiều rộng ảnh sản phẩm */
+    height: 100px; /* Đặt chiều cao cho ảnh sản phẩm */
+    object-fit: cover; /* Đảm bảo ảnh không bị kéo dài, ảnh lấp đầy khung */
+    margin-bottom: 10px; /* Khoảng cách giữa ảnh và thông tin sản phẩm */
+}
+
+/* Kích thước ảnh khi hover (nếu muốn làm nổi bật khi di chuột lên hình ảnh) */
+#CategorySection .thumbnail img:hover {
+    transform: scale(1.1); /* Phóng to ảnh khi hover */
+    transition: transform 0.3s ease-in-out;
+}
 
 
 #welcomeSection{padding:44px 0}

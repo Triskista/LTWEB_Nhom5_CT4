@@ -167,5 +167,24 @@ $(function(){
 
 
 });
+// hiện sản phẩm 
+document.querySelectorAll('.nav-link').forEach(tab => {
+    tab.addEventListener('click', function(event) {
+        event.preventDefault();
+        const categoryName = this.getAttribute('data-category');
+
+        fetch(`/user/index/${categoryName}`)
+            .then(response => response.json())
+            .then(data => {
+                // Render sản phẩm từ dữ liệu trả về
+                updateProducts(data);
+            })
+            .catch(err => console.error('Error:', err));
+    });
+});
+
+function updateProducts(products) {
+    // Logic để cập nhật UI với danh sách sản phẩm mới
+}
 
 
