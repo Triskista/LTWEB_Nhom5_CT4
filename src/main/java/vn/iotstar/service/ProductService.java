@@ -49,5 +49,8 @@ public interface ProductService {
 	Product findByProductId(Integer id);
 
 	public List<Product> searchProducts(String search);
+	
+	Page<Product> searchProducts(String search, int pageNumber, int pageSize);
+    Page<Product> findAll(int pageNumber, int pageSize);
 
 }
