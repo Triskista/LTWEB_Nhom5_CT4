@@ -47,18 +47,14 @@ public interface ProductService {
     Boolean delete(Integer id);
 
     Product findByProductId(Integer id);
-
-<<<<<<< HEAD
-	public List<Product> searchProducts(String search);
 	
 	Page<Product> searchProducts(String search, int pageNumber, int pageSize);
     Page<Product> findAll(int pageNumber, int pageSize);
-=======
+
     List<Product> searchProducts(String search);
 
     List<Product> findByCategoryName(String categoryName);
 
     List<Product> findByCategoryId(Integer categoryId);
->>>>>>> 07b202e73e36251df281a67acdaf382eb5059b9c
 
 }
