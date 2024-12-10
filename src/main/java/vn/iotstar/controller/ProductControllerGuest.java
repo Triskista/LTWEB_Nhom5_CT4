@@ -25,7 +25,7 @@ import vn.iotstar.entity.User;
 import vn.iotstar.service.UserService;
 
 @Controller
-public class HomeController {
+public class ProductControllerGuest {
     @Autowired
     private CategoryService categoryService;
     
@@ -36,35 +36,8 @@ public class HomeController {
 	@Autowired
 	private UserService userService;
 	
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login"; // Gọi file login.html trong src/main/resources/templates/
-    }
-    
-    @GetMapping("/user/profile")
-    public String authenticatedUser(Model model) {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User currentUser = (User) authentication.getPrincipal();
-            model.addAttribute("user", currentUser);
-            return "profile";  // Trả về trang profile.html
-        } catch (Exception e) {
-            e.printStackTrace();  // In lỗi ra console để dễ dàng debug
-            return "error";  // Có thể trả về trang lỗi nếu có lỗi xảy ra
-        }
-    }
-
-    
-    @GetMapping("/register")
-    public String showRegisterPage() {
-        return "register"; // Gọi file register.html trong src/main/resources/templates/
-    }
-    @GetMapping("/user/product")
-    public String showProductPage() {
-        return "user/product"; // Gọi file register.html trong src/main/resources/templates/
-    }
-    @GetMapping("/user/index")
-    public String showUserIndexPage(
+    @GetMapping("/")
+    public String showGuestIndexPage(
             HttpServletRequest request, 
             @RequestParam(value = "search", required = false) String search, 
             Model model) {
@@ -106,31 +79,15 @@ public class HomeController {
                     }
                     model.addAttribute("productlist", products);
 
-                    return "user/index"; // Gọi template user/index.html
+                    return "index"; // Gọi template user/index.html
                 }
             }
         }
 
         return "403"; // Trả về trang 403 nếu không đủ điều kiện
     }
-    
-    @GetMapping("/current-user")
-    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
-        if (authentication == null) {
-            return ResponseEntity.status(403).body("No user is logged in.");
-        }
-        
-        // Lấy tên người dùng
-        String username = authentication.getName();
-        
-        // Lấy danh sách các role (authorities)
-        Object roles = authentication.getAuthorities();
-
-        return ResponseEntity.ok().body("Username: " + username + ", Roles: " + roles);
-    }
-    
-	@GetMapping("/user/index/{categoryName}")
-	public String indexByCategory(@PathVariable("categoryName") String categoryName,
+    @GetMapping("/{categoryName}")
+	public String indexByGuest(@PathVariable("categoryName") String categoryName,
 			@RequestParam(value = "search", required = false) String search, Model model) {
 		List<Product> products;
 

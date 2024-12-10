@@ -141,7 +141,57 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
     transform: scale(1.1); /* Phóng to ảnh khi hover */
     transition: transform 0.3s ease-in-out;
 }
+#Contract
+/* Basic styles for the Contact Section */
+#contactSection {
+    padding: 40px 0;
+    background-color: #f9f9f9;
+}
 
+.contact-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.contact-info h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.contact-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Flexbox layout for two contact info blocks */
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.span6 {
+    width: 48%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .span6 {
+        width: 100%;
+    }
+}
 
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}
