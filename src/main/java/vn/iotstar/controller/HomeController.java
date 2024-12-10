@@ -48,6 +48,7 @@ public class HomeController {
 
 	@Autowired
 	private UserService userService;
+
 	@Autowired
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	@Autowired
@@ -56,11 +57,11 @@ public class HomeController {
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
     @GetMapping("/login")
     public String showLoginPage() {
         return "login"; // Gọi file login.html trong src/main/resources/templates/
     }
-    
     
     
     @GetMapping("/register")
