@@ -376,7 +376,7 @@
                 <!-- Nút tiếp theo -->
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
                     <a class="page-link" 
-                       th:href="@{|user/index/?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
+                       th:href="@{|/user/index?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
                 </li>
             </ul>
         </div>
