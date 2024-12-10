@@ -96,6 +96,49 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
   z-index: 1000;
   padding: 5px;
 }
+.username {
+  position: fixed;
+  top: 50px; /* Vị trí sẽ ở dưới .user-profile */
+  right: 10px;
+  z-index: 999; /* Đảm bảo username sẽ ở dưới user-profile */
+  padding: 5px;
+  font-size: 16px; /* Cỡ chữ có thể thay đổi tùy ý */
+  background-color: transparent; /* Phông nền trong suốt */
+  border-radius: 5px;
+  color: black; /* Màu chữ cam */
+}
+
+
+
+.dropdown-menu {
+  display: none; /* Ẩn menu mặc định */
+  position: absolute; /* Định vị tương đối với phần tử cha (.user-profile) */
+  top: 100%; /* Đặt bên dưới biểu tượng */
+  left: -130px; /* Căn chỉnh sang phải */
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.dropdown-item {
+  background: none;
+  border: none;
+  color: orange; /* Màu chữ cam */
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%; /* Làm cho các nút lấp đầy chiều rộng của menu thả xuống */
+  text-align: left; /* Căn chỉnh văn bản sang trái */
+  display: block; /* Đảm bảo các nút hoạt động như các phần tử khối */
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Hiệu ứng hover */
+  border-radius: 5px;
+}
 
 .user-icon {
   width: 32px;
@@ -141,7 +184,57 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
     transform: scale(1.1); /* Phóng to ảnh khi hover */
     transition: transform 0.3s ease-in-out;
 }
+#Contract
+/* Basic styles for the Contact Section */
+#contactSection {
+    padding: 40px 0;
+    background-color: #f9f9f9;
+}
 
+.contact-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.contact-info h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+.contact-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Flexbox layout for two contact info blocks */
+.row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.span6 {
+    width: 48%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .span6 {
+        width: 100%;
+    }
+}
 
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}

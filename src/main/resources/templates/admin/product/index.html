@@ -127,7 +127,37 @@
 									</table>
 								</div>
 							</div>
-							<div class="row"></div>
+							<div class="row">
+								<div class="col-sm-12">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- Nút Previous -->
+											<li th:classappend="${currentPage == 0} ? 'disabled'"><a
+												th:if="${currentPage > 0}"
+												th:href="@{/admin/product?page={page}&size={size}(page=${currentPage - 1}, size=${size})}"
+												aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+											</a> <span th:if="${currentPage == 0}" aria-hidden="true">&laquo;</span>
+											</li>
+
+											<!-- Số trang -->
+											<li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+												th:classappend="${i == currentPage} ? 'active'"><a
+												th:href="@{/admin/product?page={page}&size={size}(page=${i}, size=${size})}"
+												th:text="${i + 1}"></a></li>
+
+											<!-- Nút Next -->
+											<li
+												th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+												<a th:if="${currentPage + 1 < totalPages}"
+												th:href="@{/admin/product?page={page}&size={size}(page=${currentPage + 1}, size=${size})}"
+												aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+											</a> <span th:if="${currentPage + 1 == totalPages}"
+												aria-hidden="true">&raquo;</span>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

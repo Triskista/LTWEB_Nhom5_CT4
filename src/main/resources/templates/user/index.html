@@ -41,11 +41,24 @@
 					<a href="/user/cart">🛒 Cart</a>
 				</div>
 				<div class="user-profile">
-					<a href="#ProfileSection"> <img
+					<a href="javascript:void(0);" class="user-icon-link"
+						onclick="toggleMenu()"> <img
 						src="/fe/images/carousel/miku.jpg" alt="User Profile"
 						class="user-icon" />
 					</a>
+					<div class="dropdown-menu" id="dropdown-menu">
+						<a href="/user/profile" class="dropdown-item">Profile</a>
+						<a id="logout" class="dropdown-item">Signout</a>
+						
+					</div>
 				</div>
+
+				<div class="username">
+					<span class="user-name" th:text="${userEmail}">Tên người
+						dùng</span>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
@@ -394,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
-<!-- End Category -->
+	<!-- End Category -->
 	<!-- Contact Section -->
 	<div id="contactSection">
 		<h1 class="cntr">Contact Us</h1>
@@ -478,14 +491,16 @@ document.addEventListener('DOMContentLoaded', function () {
 					target="_blank"></a>
 
 				<!-- Twitter Icon -->
-				<a class="twitter" href="https://x.com/Hkt124567892?t=75ZV1dDnDf-M8NrUyf-4fg&s=09" target="_blank"></a>
+				<a class="twitter"
+					href="https://x.com/Hkt124567892?t=75ZV1dDnDf-M8NrUyf-4fg&s=09"
+					target="_blank"></a>
 			</div>
 		</div>
 	</div>
 	<div id="footerMenu">
 		<a href="#carouselSection">Home </a> <a href="#ourServices">What
-			we do?</a> <a href="#CategorySection">Category</a> 
-		<a href="#contactSection">Support</a>
+			we do?</a> <a href="#CategorySection">Category</a> <a
+			href="#contactSection">Support</a>
 	</div>
 	<p>
 		<small>www.tuplipllc.com &copy; 2013 All rights reserved.</small>
@@ -515,5 +530,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	  interval: 7000
 	})
 </script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="/js/mainjs.js"></script>
 </body>
 </html>
