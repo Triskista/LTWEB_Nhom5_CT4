@@ -1,4 +1,4 @@
-package vn.iotstar.controller.admin;
+package vn.iotstar.controller.seller;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +23,8 @@ import vn.iotstar.service.ProductService;
 import vn.iotstar.service.UserService;
 
 @Controller
-@RequestMapping("/admin")
-public class ProductController {
+@RequestMapping("/seller")
+public class SellerProductController {
 	@Autowired
 	private ProductService productService;
 	@Autowired
@@ -58,18 +58,20 @@ public class ProductController {
 				}
 			}
 		}
-
 		if (userEmail != null) {
 			Optional<User> u = userService.getUserByEmail(userEmail);
 			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
 
 			User user = u.get();
-			String username = user.getUsername2();
-			model.addAttribute("username", username);
-		} else {
-			model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+			String username2 = user.getUsername2();
+			model.addAttribute("username", username2);
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/product/index"; // Trả về trang index.html
+			}
 		}
-		return "admin/product/index";
+
+		return "403";
+
 	}
 
 	@GetMapping("/product-add")
@@ -98,8 +100,8 @@ public class ProductController {
 			User user = u.get();
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/product/add"; // Trả về trang index.html
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/product/add"; // Trả về trang index.html
 			}
 		}
 
@@ -112,7 +114,7 @@ public class ProductController {
 		if (this.productService.create(product)) {
 			return "redirect:/admin/product";
 		} else {
-			return "admin/product/add";
+			return "seller/product/add";
 		}
 	}
 
@@ -142,29 +144,30 @@ public class ProductController {
 			User user = u.get();
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/product/edit"; // Trả về trang index.html
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/product/edit"; // Trả về trang index.html
 			}
 		}
 
 		return "403";
+
 	}
 
 	@PostMapping("/product-edit")
 	public String update(@ModelAttribute("product") Product product) {
 		if (this.productService.create(product)) {
-			return "redirect:/admin/product";
+			return "redirect:/seller/product";
 		} else {
-			return "admin/product/add";
+			return "seller/product/add";
 		}
 	}
 
 	@GetMapping("/product-delete/{productId}")
 	public String delete(@PathVariable("productId") Integer productId) {
 		if (this.productService.delete(productId)) {
-			return "redirect:/admin/product";
+			return "redirect:/seller/product";
 		} else {
-			return "redirect:/admin/product";
+			return "redirect:/seller/product";
 		}
 	}
 

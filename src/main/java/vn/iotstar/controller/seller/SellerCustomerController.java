@@ -1,5 +1,6 @@
-package vn.iotstar.controller.admin;
+package vn.iotstar.controller.seller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,37 +9,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import vn.iotstar.entity.OrderDetail;
 import vn.iotstar.entity.User;
-import vn.iotstar.service.OrderDetailService;
 import vn.iotstar.service.UserService;
 
 @Controller
-
-@RequestMapping("/admin")
-public class OrderDetailController {
-	@Autowired
-	private OrderDetailService orderdetailservice;
+@RequestMapping("/seller")
+public class SellerCustomerController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/orderdetail")
-	public String index(@RequestParam(value = "orderId", required = false) Integer orderId, HttpServletRequest request,
-			Model model) {
-		List<OrderDetail> list;
-		if (orderId != null) {
-			// Search by Order ID
-			list = orderdetailservice.getOrderDetailsByOrderId(orderId);
-		} else {
-			// If no search term is provided, return all records
-			list = orderdetailservice.findAll();
+	@GetMapping("/customer")
+	public String index(HttpServletRequest request, Model model) {
+		List<User> list = userService.findAll();
+		List<User> list2 = new ArrayList<>();
+		for (User u : list) {
+			if (u.getRole() != null && u.getRole().getRoleName().equals("USER"))
+				list2.add(u);
 		}
-		model.addAttribute("orderdetaillist", list);
-		model.addAttribute("orderId", orderId);
+		model.addAttribute("list", list2);
 
 		// Lấy tất cả các cookie từ request
 		Cookie[] cookies = request.getCookies();
@@ -59,12 +50,12 @@ public class OrderDetailController {
 			User user = u.get();
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/orderdetail/index"; // Trả về trang index.html
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				//return "seller/customer/index"; // Trả về trang index.html
 			}
 		}
 
 		return "403";
-	}
 
+	}
 }

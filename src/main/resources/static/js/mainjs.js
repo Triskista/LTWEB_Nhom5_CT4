@@ -4,9 +4,16 @@
 
 //Hàm đăng xuất
 $("#logout").click(function() {
-	localStorage.clear();
-	window.location.href = "/login";
+    // Xóa tất cả dữ liệu trong localStorage
+    localStorage.clear();
+
+    // Xóa cookie "userEmail" (cùng tên cookie bạn đã đặt)
+    document.cookie = "userEmail=; path=/; max-age=0;";
+
+    // Chuyển hướng người dùng đến trang đăng nhập
+    window.location.href = "/login";
 });
+
 
 
 $(document).ready(function() {
@@ -25,7 +32,7 @@ $(document).ready(function() {
 			var json = JSON.stringify(data, null, 4);
 			// $('#profile').html(json);
 			$('#email').html(data.email);
-			//document.cookie = `userEmail=${data.email}; path=/;`;
+			document.cookie = `userEmail=${data.email}; path=/;`;
 			//console.log("SUCCESS : ", data);
 			//alert('Hello ' + data.email + '! You have successfully accessed to /api/profile.');
 		},

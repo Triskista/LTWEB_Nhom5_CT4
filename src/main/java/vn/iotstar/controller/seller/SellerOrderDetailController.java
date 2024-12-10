@@ -1,4 +1,4 @@
-package vn.iotstar.controller.admin;
+package vn.iotstar.controller.seller;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,8 @@ import vn.iotstar.service.UserService;
 
 @Controller
 
-@RequestMapping("/admin")
-public class OrderDetailController {
+@RequestMapping("/seller")
+public class SellerOrderDetailController {
 	@Autowired
 	private OrderDetailService orderdetailservice;
 	@Autowired
@@ -59,12 +59,13 @@ public class OrderDetailController {
 			User user = u.get();
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/orderdetail/index"; // Trả về trang index.html
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/orderdetail/index"; // Trả về trang index.html
 			}
 		}
 
 		return "403";
+
 	}
 
 }

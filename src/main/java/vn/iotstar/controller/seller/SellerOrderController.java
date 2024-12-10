@@ -1,4 +1,4 @@
-package vn.iotstar.controller.admin;
+package vn.iotstar.controller.seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin")
-public class OrderController {
+@RequestMapping("/seller")
+public class SellerOrderController {
 	@Autowired
 	private OrderService orderservice;
 	@Autowired
@@ -70,11 +70,12 @@ public class OrderController {
 			User user = u.get();
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/order/index"; // Trả về trang index.html
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/order/index"; // Trả về trang index.html
 			}
 		}
 
 		return "403";
+
 	}
 }

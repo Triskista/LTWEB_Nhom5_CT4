@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security6">
-<head th:replace="~{admin/fragments/head :: head}"></head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{seller/fragments/head :: head}"></head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
   <!-- Header -->
-  <div th:replace="~{admin/fragments/header :: header}"></div>
+  <div th:replace="~{seller/fragments/header :: header}"></div>
   <!-- =============================================== -->
 
   <!-- Sidebar -->
-  <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
+  <div th:replace="~{seller/fragments/sidebar :: sidebar}"></div>
   <!-- =============================================== -->
 
   <!-- Content Wrapper -->
   <div class="content-wrapper">
-    <section class="content-header">    
+    <section class="content-header">
+      <h1>
+        Blank page
+        <small>it all starts here</small>
+      </h1>
+      
+      <!-- Hiển thị email tại đây -->
+      <div id="email">
+        <p>Email của bạn là: <span th:text="${email}"></span></p>
+      </div>
+      
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       </ol>
@@ -30,12 +40,12 @@
     </section>
   </div>
 
-  <div th:replace="~{admin/fragments/footer :: footer}"></div>
+  <div th:replace="~{seller/fragments/footer :: footer}"></div>
 
 </div>
 
 <!-- jQuery 3 -->
-<div th:replace="~{admin/fragments/script :: script}"></div>
+<div th:replace="~{seller/fragments/script :: script}"></div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="/js/mainjs.js"></script>
 </body>

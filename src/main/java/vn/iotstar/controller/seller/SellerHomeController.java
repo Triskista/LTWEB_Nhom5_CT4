@@ -1,45 +1,38 @@
-package vn.iotstar.controller.admin;
+package vn.iotstar.controller.seller;
 
-import java.util.List;
+import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import vn.iotstar.entity.OrderDetail;
+import vn.iotstar.entity.Role;
 import vn.iotstar.entity.User;
-import vn.iotstar.service.OrderDetailService;
 import vn.iotstar.service.UserService;
 
 @Controller
+@RequestMapping("/seller")
+public class SellerHomeController {
 
-@RequestMapping("/admin")
-public class OrderDetailController {
-	@Autowired
-	private OrderDetailService orderdetailservice;
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/orderdetail")
-	public String index(@RequestParam(value = "orderId", required = false) Integer orderId, HttpServletRequest request,
-			Model model) {
-		List<OrderDetail> list;
-		if (orderId != null) {
-			// Search by Order ID
-			list = orderdetailservice.getOrderDetailsByOrderId(orderId);
-		} else {
-			// If no search term is provided, return all records
-			list = orderdetailservice.findAll();
-		}
-		model.addAttribute("orderdetaillist", list);
-		model.addAttribute("orderId", orderId);
-
+	@RequestMapping("")
+	public String admint(HttpServletRequest request, Model model) {
 		// Lấy tất cả các cookie từ request
 		Cookie[] cookies = request.getCookies();
 		String userEmail = null;
@@ -59,12 +52,28 @@ public class OrderDetailController {
 			User user = u.get();
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/orderdetail/index"; // Trả về trang index.html
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/index"; // Trả về trang index.html
 			}
 		}
 
 		return "403";
+
+	}
+
+	@RequestMapping("/product-add")
+	public String add_product() {
+		return "seller/product/add";
+	}
+
+	@RequestMapping("/product-edit")
+	public String edit_product() {
+		return "seller/product/edit";
+	}
+
+	@RequestMapping("/customer-add")
+	public String add_customer() {
+		return "seller/customer/add";
 	}
 
 }

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/fragments/head :: head"></head>
+<head th:replace="seller/fragments/head :: head"></head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
 
-		<div th:replace="admin/fragments/header :: header"></div>
+		<div th:replace="seller/fragments/header :: header"></div>
 		<!-- =============================================== -->
 
 		<!-- Left side column. contains the sidebar -->
-		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<div th:replace="seller/fragments/sidebar :: sidebar"></div>
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
@@ -20,7 +20,7 @@
 					Quản Lý Chi Tiết Đơn Hàng <small>Xem chi tiết các đơn hàng</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang
+					<li><a href="/seller"><i class="fa fa-dashboard"></i> Trang
 							chủ</a></li>
 					<li class="active">Danh sách chi tiết đơn hàng</li>
 				</ol>
@@ -40,7 +40,7 @@
 							<div class="row">
 								
 								<div class="col-sm-6">
-									<form method="get" th:action="@{/admin/orderdetail}">
+									<form method="get" th:action="@{/seller/orderdetail}">
 										<div id="example1_filter" class="dataTables_filter">
 											<label>Tìm kiếm theo Order ID: <input type="number"
 												name="orderId" class="form-control input-sm"
@@ -102,13 +102,13 @@
 		</div>
 		<!-- /.content-wrapper -->
 
-		<div th:replace="admin/fragments/footer :: footer"></div>
+		<div th:replace="seller/fragments/footer :: footer"></div>
 
 	</div>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
-	<div th:replace="admin/fragments/script :: script"></div>
+	<div th:replace="seller/fragments/script :: script"></div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script src="/js/mainjs.js"></script>

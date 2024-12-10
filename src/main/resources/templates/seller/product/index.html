@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="admin/fragments/head :: head"></head>
+<head th:replace="seller/fragments/head :: head"></head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<!-- Site wrapper -->
 	<div class="wrapper">
 
-		<div th:replace="admin/fragments/header :: header"></div>
+		<div th:replace="seller/fragments/header :: header"></div>
 		<!-- =============================================== -->
 
 		<!-- Left side column. contains the sidebar -->
-		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<div th:replace="seller/fragments/sidebar :: sidebar"></div>
 		<!-- =============================================== -->
 
 		<!-- Content Wrapper. Contains page content -->
@@ -20,7 +20,7 @@
 					Quản Lý Danh Sách Sản Phẩm <small>Xem chi tiết các sản phẩm</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/admin"><i class="fa fa-dashboard"></i> Trang
+					<li><a href="/seller"><i class="fa fa-dashboard"></i> Trang
 							Chủ</a></li>
 					<li class="active">Quản Lý Sản Phẩm</li>
 				</ol>
@@ -48,11 +48,12 @@
 								<div class="row">
 									<div class="col-sm-6">
 										<label>Tìm Kiếm Theo Doanh Mục Hoặc Tên Sản Phẩm:</label>
-										<form action="/admin/product" method="get">
+										<form action="/seller/product" method="get">
 											<div class="input-group">
 												<input type="text" name="search"
-													class="form-control input-sm" aria-controls="example1">
-												<span class="input-group-btn">
+													class="form-control input-sm"
+													aria-controls="example1"> <span
+													class="input-group-btn">
 
 													<button type="submit" class="btn btn-primary btn-sm">Tìm
 														kiếm</button>
@@ -70,7 +71,7 @@
 										role="grid" aria-describedby="example1_info">
 										<thead>
 											<tr role="row">
-												<th class="sorting_asc" tabindex="0"
+											<th class="sorting_asc" tabindex="0"
 													aria-controls="example1" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Product ID: activate to sort column descending"
@@ -83,7 +84,7 @@
 													rowspan="1" colspan="1"
 													aria-label="Category ID: activate to sort column ascending"
 													style="width: 100px;">Category Name</th>
-
+												
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Description: activate to sort column ascending"
@@ -96,12 +97,12 @@
 													rowspan="1" colspan="1"
 													aria-label="Price: activate to sort column ascending"
 													style="width: 130px;">Price</th>
-
+												
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Stock: activate to sort column ascending"
 													style="width: 50px;">Stock</th>
-
+												
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Action: activate to sort column ascending"
@@ -117,9 +118,9 @@
 												<td th:text="${product.price}"></td>
 												<td th:text="${product.stock}"></td>
 												<td><a
-													th:href="@{/admin/product-edit/{productId}(productId=${product.productId})}"
+													th:href="@{/seller/product-edit/{productId}(productId=${product.productId})}"
 													class="btn btn-success"> Edit</a> <a
-													th:href="@{/admin/product-delete/{productId}(productId=${product.productId})}"
+													th:href="@{/seller/product-delete/{productId}(productId=${product.productId})}"
 													onclick="return confirm('Bạn có chắc chắn không')"
 													class="btn btn-danger"> Delete</a></td>
 											</tr>
@@ -137,13 +138,13 @@
 		</div>
 		<!-- /.content-wrapper -->
 
-		<div th:replace="admin/fragments/footer :: footer"></div>
+		<div th:replace="seller/fragments/footer :: footer"></div>
 
 	</div>
 	<!-- ./wrapper -->
 
 	<!-- jQuery 3 -->
-	<div th:replace="admin/fragments/script :: script"></div>
+	<div th:replace="seller/fragments/script :: script"></div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script src="/js/mainjs.js"></script>
