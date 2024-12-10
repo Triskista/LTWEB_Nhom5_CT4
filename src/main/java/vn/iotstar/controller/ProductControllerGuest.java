@@ -1,6 +1,5 @@
 package vn.iotstar.controller;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,73 +27,44 @@ import vn.iotstar.service.UserService;
 
 @Controller
 public class ProductControllerGuest {
-    @Autowired
-    private CategoryService categoryService;
-    
-    @Autowired
-    private ProductService productService;
+	@Autowired
+	private CategoryService categoryService;
 
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
 	private UserService userService;
 	
 	@GetMapping("/")
 	public String showGuestIndexPage(
-	        HttpServletRequest request,
 	        @RequestParam(value = "search", required = false) String search,
 	        @RequestParam(value = "page", defaultValue = "0") int page, // Trang hiện tại
 	        @RequestParam(value = "size", defaultValue = "8") int size, // Số sản phẩm mỗi trang
 	        Model model) {
 
-	    // Lấy tất cả các cookie từ request
-	    Cookie[] cookies = request.getCookies();
-	    String userEmail = null;
+	    // Lấy danh sách danh mục
+	    List<Category> categories = categoryService.findAll();
+	    model.addAttribute("categories", categories);
 
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if ("userEmail".equals(cookie.getName())) {
-	                userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-	                break;
-	            }
-	        }
+	    // Lấy danh sách sản phẩm với phân trang
+	    Page<Product> productsPage;
+	    if (search != null && !search.isEmpty()) {
+	        productsPage = productService.searchProducts(search, PageRequest.of(page, size));
+	    } else {
+	        productsPage = productService.findAll(PageRequest.of(page, size));
 	    }
 
-	    if (userEmail != null) {
-	        Optional<User> optionalUser = userService.getUserByEmail(userEmail);
+	    model.addAttribute("productlist", productsPage.getContent());
+	    model.addAttribute("totalPages", productsPage.getTotalPages());
+	    model.addAttribute("currentPage", productsPage.getNumber());
+	    model.addAttribute("size", size); // Thêm size vào model
+	    model.addAttribute("search", search); // Thêm search vào model
 
-	        if (optionalUser.isPresent()) {
-	            User user = optionalUser.get();
-	            model.addAttribute("userEmail", userEmail); // Thêm email vào model
-	            model.addAttribute("username", user.getUsername2());
-
-	            // Kiểm tra vai trò người dùng
-	            if (user.getRole() != null && "USER".equals(user.getRole().getRoleName())) {
-
-	                // Lấy danh sách danh mục
-	                List<Category> categories = categoryService.findAll();
-	                model.addAttribute("categories", categories);
-
-	                // Lấy danh sách sản phẩm với phân trang
-	                Page<Product> productsPage;
-	                if (search != null && !search.isEmpty()) {
-	                    productsPage = productService.searchProducts(search, PageRequest.of(page, size));
-	                } else {
-	                    productsPage = productService.findAll(PageRequest.of(page, size));
-	                }
-
-	                model.addAttribute("productlist", productsPage.getContent());
-	                model.addAttribute("totalPages", productsPage.getTotalPages());
-	                model.addAttribute("currentPage", productsPage.getNumber());
-	                model.addAttribute("size", size); // Thêm size vào model
-	                model.addAttribute("search", search); // Thêm search vào model
-
-	                return "index"; // Gọi template user/index.html
-	            }
-	        }
-	    }
-
-	    return "403"; // Trả về trang 403 nếu không đủ điều kiện
+	    return "index"; // Gọi template user/index.html
 	}
+
+
 
 	@GetMapping("/{categoryName}")
 	public String indexByGuest(
@@ -122,7 +92,4 @@ public class ProductControllerGuest {
 	    return "user/category";
 	}
 
-
-
-	
 }

@@ -50,6 +50,9 @@ public interface ProductService {
     Boolean delete(Integer id);
 
     Product findByProductId(Integer id);
+	
+	Page<Product> searchProducts(String search, int pageNumber, int pageSize);
+    Page<Product> findAll(int pageNumber, int pageSize);
 
     List<Product> searchProducts(String search);
 

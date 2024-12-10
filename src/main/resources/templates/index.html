@@ -297,32 +297,44 @@
 
 			<div class="clr"></div>
 
+
 			<!-- Tab Content -->
 			<div class="tabbable tabs">
-				<div class="tab-content label-primary">
-					<!-- Tab hiển thị All -->
-					<div class="tab-pane active" id="All">
-						<ul class="thumbnails" id="productList">
-							<li class="span3" th:each="product : ${productlist}">
-								<div class="thumbnail">
-									<div class="blockDtl">
-										<!-- Hiển thị thông tin sản phẩm -->
-										<h4 th:text="${product.productName}">Product Name</h4>
-										<p th:text="${product.description}">Product Description</p>
-										<p>
-											Price: <span th:text="${product.price}">Price</span>
-										</p>
-										<p>
-											Stock: <span th:text="${product.stock}">Stock</span>
-										</p>
-										<img th:src="@{${product.image}}" alt="Product Image" />
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+            <div class="tab-content label-primary">
+                <!-- Tab hiển thị All -->
+                <div class="tab-pane active" id="All">
+                    <ul class="thumbnails" id="productList">
+                        <li class="span3" th:each="product : ${productlist}">
+                            <div class="thumbnail">
+                                <a th:href="@{/user/index/{categoryName}/{productId}(
+                                    categoryName=${product.category.categoryName}, 
+                                    productId=${product.productId})}">
+                                    <img th:src="@{${product.image}}" alt="Product Image" />
+                                </a>
+                                <div class="blockDtl">
+                                    <!-- Hiển thị thông tin sản phẩm -->
+                                    <h4 th:text="${product.productName}">Product Name</h4>
+                                    <p th:text="${product.description}">Product Description</p>
+                                    <p>
+                                        Price: <span th:text="${product.price}">Price</span>
+                                    </p>
+                                    <p>
+                                        Stock: <span th:text="${product.stock}">Stock</span>
+                                    </p>
+                                    <!-- Liên kết chi tiết sản phẩm -->
+                                    <a class="btn btn-primary" 
+                                       th:href="@{/user/index/{categoryName}/{productId}(
+                                           categoryName=${product.category.categoryName}, 
+                                           productId=${product.productId})}">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 <div class="pagination-container">
     <ul class="pagination">
         <!-- Nút quay lại -->

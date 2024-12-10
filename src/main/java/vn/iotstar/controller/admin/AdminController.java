@@ -237,6 +237,9 @@ public class AdminController {
 	        if (userOptional.isPresent()) {
 	            User user = userOptional.get();
 	            model.addAttribute("user", user);
+	            String username = user.getUsername2();
+				model.addAttribute("username", username);
+	            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
 	            return "admin/profile"; // Trả về trang profile.html
 	        }
 	    }

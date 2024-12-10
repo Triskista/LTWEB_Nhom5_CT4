@@ -25,8 +25,8 @@ public class OrderDetail {
     private Integer quantity;
 
     @Column(nullable = false)
-    private Double price;
+    private float price;
 
     @Column(nullable = false)
-    private Double total;
+    private float total;
 }

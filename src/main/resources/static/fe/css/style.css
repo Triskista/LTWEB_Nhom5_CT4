@@ -96,6 +96,49 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
   z-index: 1000;
   padding: 5px;
 }
+.username {
+  position: fixed;
+  top: 50px; /* Vị trí sẽ ở dưới .user-profile */
+  right: 10px;
+  z-index: 999; /* Đảm bảo username sẽ ở dưới user-profile */
+  padding: 5px;
+  font-size: 16px; /* Cỡ chữ có thể thay đổi tùy ý */
+  background-color: transparent; /* Phông nền trong suốt */
+  border-radius: 5px;
+  color: black; /* Màu chữ cam */
+}
+
+
+
+.dropdown-menu {
+  display: none; /* Ẩn menu mặc định */
+  position: absolute; /* Định vị tương đối với phần tử cha (.user-profile) */
+  top: 100%; /* Đặt bên dưới biểu tượng */
+  left: -130px; /* Căn chỉnh sang phải */
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  width: 150px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.dropdown-item {
+  background: none;
+  border: none;
+  color: orange; /* Màu chữ cam */
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%; /* Làm cho các nút lấp đầy chiều rộng của menu thả xuống */
+  text-align: left; /* Căn chỉnh văn bản sang trái */
+  display: block; /* Đảm bảo các nút hoạt động như các phần tử khối */
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Hiệu ứng hover */
+  border-radius: 5px;
+}
 
 .user-icon {
   width: 32px;
@@ -116,31 +159,39 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
   align-items: center;
   justify-content: center;
 }
-#bảng category
-/* Thêm vào trong file CSS hoặc trong thẻ <style> của bạn */
+/* Điều chỉnh khung chứa danh mục */
+#CategorySection .thumbnail {
+    text-align: center; /* Căn giữa nội dung trong khung */
+    padding: 15px;
+    border: 1px solid #ddd; /* Viền nhẹ để phân biệt từng danh mục */
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
+}
 
-/* Điều chỉnh kích thước ảnh cho danh mục */
+/* Căn chỉnh và giới hạn kích thước hình ảnh danh mục */
 #CategorySection .thumbnail img {
-    width: 100%; /* Hoặc bạn có thể đặt giá trị cụ thể như 200px */
-    height: auto; /* Đảm bảo tỷ lệ ảnh không bị biến dạng */
-    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung mà không bị kéo dài */
-    max-width: 300px; /* Đặt chiều rộng tối đa cho hình ảnh trong danh mục */
-    margin-bottom: 10px; /* Thêm khoảng cách giữa ảnh và tên danh mục */
+    display: block;
+    margin: 0 auto; /* Căn giữa hình ảnh */
+    width: auto; /* Đảm bảo giữ tỷ lệ gốc */
+    max-width: 100%; /* Đảm bảo không vượt quá khung chứa */
+    height: 200px; /* Đặt chiều cao cố định, nếu cần */
+    object-fit: cover; /* Cắt ảnh để vừa với khung */
 }
 
-/* Điều chỉnh kích thước ảnh cho sản phẩm */
-#CategorySection .thumbnails .span3 img {
-    width: 100px; /* Đặt chiều rộng ảnh sản phẩm */
-    height: 100px; /* Đặt chiều cao cho ảnh sản phẩm */
-    object-fit: cover; /* Đảm bảo ảnh không bị kéo dài, ảnh lấp đầy khung */
-    margin-bottom: 10px; /* Khoảng cách giữa ảnh và thông tin sản phẩm */
+/* Tiêu đề và nội dung danh mục */
+#CategorySection .thumbnail h4 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
 }
 
-/* Kích thước ảnh khi hover (nếu muốn làm nổi bật khi di chuột lên hình ảnh) */
-#CategorySection .thumbnail img:hover {
-    transform: scale(1.1); /* Phóng to ảnh khi hover */
-    transition: transform 0.3s ease-in-out;
+#CategorySection .thumbnail p {
+    font-size: 0.9em;
+    color: #666;
 }
+
 #Contract
 /* Basic styles for the Contact Section */
 #contactSection {
@@ -231,7 +282,7 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
     cursor: not-allowed;
     opacity: 0.6; /* Làm mờ nút bị disabled */
 }
-
+#chi tiết sản phẩm 
 
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}
