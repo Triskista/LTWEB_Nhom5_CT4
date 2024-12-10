@@ -58,7 +58,10 @@ public class HomeController {
     public String showRegisterPage() {
         return "register"; // Gọi file register.html trong src/main/resources/templates/
     }
-
+    @GetMapping("/user/product")
+    public String showProductPage() {
+        return "user/product"; // Gọi file register.html trong src/main/resources/templates/
+    }
     @GetMapping("/user/index")
     public String showUserIndexPage(
             HttpServletRequest request, 
