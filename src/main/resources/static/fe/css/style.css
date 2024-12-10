@@ -283,6 +283,75 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
     opacity: 0.6; /* Làm mờ nút bị disabled */
 }
 #chi tiết sản phẩm 
+/* Bố cục chung của thanh tìm kiếm */
+#CategorySection .row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#CategorySection label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333; /* Màu chữ */
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Input tìm kiếm */
+#CategorySection .input-group input[type="text"] {
+    border: 2px solid #007bff; /* Viền xanh nhạt */
+    border-radius: 25px 0 0 25px; /* Góc bo tròn cho input */
+    padding: 10px 15px; /* Tăng kích thước vùng nhập */
+    font-size: 14px;
+    color: #555; /* Màu chữ */
+    box-shadow: none; /* Loại bỏ shadow mặc định */
+    transition: all 0.3s ease; /* Hiệu ứng hover */
+}
+
+/* Hiệu ứng khi hover vào input */
+#CategorySection .input-group input[type="text"]:focus {
+    border-color: #0056b3; /* Đổi màu viền khi focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hiệu ứng ánh sáng */
+}
+
+/* Nút tìm kiếm */
+#CategorySection .input-group-btn button {
+    border-radius: 0 25px 25px 0; /* Góc bo tròn cho nút */
+    padding: 10px 20px; /* Tăng kích thước nút */
+    background-color: #007bff; /* Màu nền xanh */
+    color: #fff; /* Màu chữ */
+    font-size: 14px;
+    border: 2px solid #007bff; /* Viền */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng hover */
+}
+
+/* Hiệu ứng khi hover vào nút */
+#CategorySection .input-group-btn button:hover {
+    background-color: #0056b3; /* Màu nền xanh đậm */
+    border-color: #0056b3; /* Viền xanh đậm */
+}
+
+/* Định dạng toàn bộ khung input + nút */
+#CategorySection .input-group {
+    max-width: 500px; /* Đặt chiều rộng tối đa cho khung */
+    margin: 0 auto; /* Căn giữa khung */
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow nhẹ */
+}
+
+/* Responsive cho thiết bị nhỏ */
+@media (max-width: 768px) {
+    #CategorySection .input-group {
+        max-width: 100%; /* Chiều rộng tối đa */
+    }
+
+    #CategorySection label {
+        font-size: 14px;
+    }
+}
 
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}

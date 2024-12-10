@@ -277,29 +277,46 @@
 	<!-- Our Category Section -->
 	<!-- Our Category Section -->
 	<!-- Our Category Section -->
-	<div id="CategorySection">
-		<h1 class="cntr">Our Category</h1>
-		<div class="container">
-			<!-- Tabs for Categories -->
-			<ul class="nav nav-pills d-flex justify-content-center"
-				id="categoryTabs">
-				<!-- Nút "All" để hiển thị tất cả sản phẩm -->
-				<li class="nav-item"><a class="nav-link active"
-					href="/user/index" data-category="All">All</a></li>
-				<!-- Loop over categories để tạo tab động -->
-				<li th:each="category, stat : ${categories}" class="nav-item">
-					<a class="nav-link" th:classappend="${stat.index == 0} ? 'active'"
-					th:href="@{/user/index/{categoryName}(categoryName=${category.categoryName})}"
-					th:text="${category.categoryName}"
-					th:attr="data-category=${category.categoryName}"> </a>
-				</li>
-			</ul>
+<!-- Our Category Section -->
+<div id="CategorySection">
+    <h1 class="cntr">Our Category</h1>
 
-			<div class="clr"></div>
+    <!-- Thanh tìm kiếm -->
+    <div class="row">
+        <div class="col-sm-6 mx-auto">
+            <label>Tìm kiếm theo danh mục hoặc tên sản phẩm:</label>
+            <form action="/#CategorySection" method="get">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control input-sm" placeholder="Nhập tên sản phẩm hoặc danh mục">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-sm">Tìm kiếm</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
 
+    <div class="container">
+        <!-- Tabs for Categories -->
+        <ul class="nav nav-pills d-flex justify-content-center" id="categoryTabs">
+            <!-- Nút "All" để hiển thị tất cả sản phẩm -->
+            <li class="nav-item">
+                <a class="nav-link active" href="/user/index" data-category="All">All</a>
+            </li>
+            <!-- Loop over categories để tạo tab động -->
+            <li th:each="category, stat : ${categories}" class="nav-item">
+                <a class="nav-link" th:classappend="${stat.index == 0} ? 'active'"
+                   th:href="@{/user/index/{categoryName}(categoryName=${category.categoryName})}"
+                   th:text="${category.categoryName}"
+                   th:attr="data-category=${category.categoryName}"> </a>
+            </li>
+        </ul>
 
-			<!-- Tab Content -->
-			<div class="tabbable tabs">
+        <div class="clr"></div>
+
+        <!-- Tab Content -->
+        <div class="tabbable tabs">
             <div class="tab-content label-primary">
                 <!-- Tab hiển thị All -->
                 <div class="tab-pane active" id="All">
@@ -335,38 +352,34 @@
                 </div>
             </div>
         </div>
-<div class="pagination-container">
-    <ul class="pagination">
-        <!-- Nút quay lại -->
-        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-            <a class="page-link" 
-               th:href="@{|/?page=${currentPage - 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Previous</a>
-        </li>
 
-        <!-- Các nút trang -->
-        <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}" class="page-item"
-            th:classappend="${page == currentPage} ? 'active'">
-            <a class="page-link" 
-               th:href="@{|/?page=${page}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}" 
-               th:text="${page + 1}"></a>
-        </li>
+        <!-- Phân trang -->
+        <div class="pagination-container">
+            <ul class="pagination">
+                <!-- Nút quay lại -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" 
+                       th:href="@{|/?page=${currentPage - 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Previous</a>
+                </li>
 
-        <!-- Nút tiếp theo -->
-        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-            <a class="page-link" 
-               th:href="@{|/?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
-        </li>
-    </ul>
+                <!-- Các nút trang -->
+                <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}" class="page-item"
+                    th:classappend="${page == currentPage} ? 'active'">
+                    <a class="page-link" 
+                       th:href="@{|/?page=${page}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}" 
+                       th:text="${page + 1}"></a>
+                </li>
+
+                <!-- Nút tiếp theo -->
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" 
+                       th:href="@{|/?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
-
-
-
-
-
-			
-		</div>
-	</div>
 
 	<script>
     // JavaScript to handle tab switching
@@ -418,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (category === "All") {
                 // Cập nhật URL cho tab "All" với hash fragment
-                history.pushState(null, '', `/index#CategorySection`);
+            	window.location.href = `/#CategorySection`;
             } else {
                 // Giữ nguyên hành vi cho các tab khác
                 window.location.href = `/${category}`;
