@@ -17,6 +17,11 @@
 
     <!-- Category Section -->
     <div id="CategorySection">
+    <div id="headerSection">
+        <div class="container">
+            <h1 class="brand cntr">TULIP</h1>
+        </div>
+    </div>
         <h1 th:text="(${categoryName != null ? categoryName : 'All Categories'})" style="text-align: center; margin: 0 auto; display: block;"></h1>
         <div class="container">
             <ul class="nav nav-pills">
@@ -160,11 +165,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="footerMenu">
-		<a href="#carouselSection">Home </a> <a href="#ourServices">What
-			we do?</a> <a href="#CategorySection">Category</a> 
-		<a href="#contactSection">Support</a>
-	</div>
+<div id="footerMenu">
+    <a href="http://localhost:8090/user/index#carouselSection">Home</a>
+    <a href="#ourServices">What we do?</a>
+    <a href="#CategorySection">Category</a>
+    <a href="#contactSection">Support</a>
+</div>
+
+
 	<p>
 		<small>www.tuplipllc.com &copy; 2013 All rights reserved.</small>
 	</p>
