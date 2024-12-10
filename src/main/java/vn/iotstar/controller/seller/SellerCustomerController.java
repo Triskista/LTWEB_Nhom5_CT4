@@ -51,7 +51,7 @@ public class SellerCustomerController {
 			String username2 = user.getUsername2();
 			model.addAttribute("username", username2);
 			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
-				return "seller/customer/index"; // Trả về trang index.html
+				//return "seller/customer/index"; // Trả về trang index.html
 			}
 		}
 

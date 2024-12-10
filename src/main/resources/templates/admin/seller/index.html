@@ -83,6 +83,8 @@
 
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1" style="width: 100px;">Role</th>
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1" style="width: 100px;">Action</th>
 											</tr>
 
 											<tr th:each="seller : ${list}">
@@ -95,7 +97,17 @@
 												<td th:if="${!seller.status}"><span
 													class="label label-danger">Inactive</span></td>
 												<td th:text="${seller.role.roleName}"></td>
+												
+												<td><a
+													th:href="@{/admin/seller-edit(id=${seller.userId})}"
+													class="btn btn-primary">Sửa</a> <a
+													th:href="@{/admin/seller-delete(id=${seller.userId})}"
+													class="btn btn-danger"
+													onclick="return confirm('Bạn có chắc chắn muốn xóa?');">Xóa</a>
+												</td>
 											</tr>
+
+
 										</thead>
 									</table>
 								</div>

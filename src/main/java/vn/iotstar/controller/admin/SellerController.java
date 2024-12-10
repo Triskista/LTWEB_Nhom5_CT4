@@ -149,4 +149,88 @@ public class SellerController {
 		}
 	}
 
+	@GetMapping("/seller-edit")
+	public String showEditPage(@RequestParam("id") Integer id, Model model) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isPresent()) {
+			model.addAttribute("user", userOptional.get());
+			return "admin/seller/edit"; // Trang edit.html
+		} else {
+			model.addAttribute("error", "Nhân viên không tồn tại.");
+			return "redirect:/admin/seller";
+		}
+	}
+
+	@PostMapping("/seller-edit")
+	public String updateUser(@ModelAttribute("user") User user, @RequestParam("oldPassword") String oldPassword,
+			Model model) {
+		// Tìm người dùng hiện tại từ cơ sở dữ liệu
+		Optional<User> existingUser = userService.findById(user.getUserId());
+		if (existingUser.isPresent()) {
+			User currentUser = existingUser.get();
+
+			// Kiểm tra mật khẩu cũ
+			if (!passwordEncoder.matches(oldPassword, currentUser.getPassword())) {
+				model.addAttribute("error", "Mật khẩu cũ không chính xác.");
+				return "admin/seller/edit"; // Trả về trang edit với thông báo lỗi
+			}
+
+			// Kiểm tra email trùng (trừ chính user đang sửa)
+			Optional<User> existingUserEmail = userService.getUserByEmail(user.getEmail());
+			if (existingUserEmail.isPresent() && !existingUserEmail.get().getUserId().equals(user.getUserId())) {
+				model.addAttribute("error", "Email đã tồn tại.");
+				return "admin/seller/edit";
+			}
+
+			// Kiểm tra định dạng số điện thoại
+			String phone = user.getPhone();
+			if (!phone.matches("^0\\d{9}$")) {
+				model.addAttribute("error",
+						"Số điện thoại không hợp lệ. Số điện thoại phải có 10 chữ số và bắt đầu bằng 0.");
+				return "admin/seller/edit";
+			}
+
+			// Kiểm tra mật khẩu mới (nếu người dùng nhập mật khẩu mới)
+			String newPassword = user.getPassword();
+			if (!newPassword.isEmpty()) {
+				// Kiểm tra độ mạnh của mật khẩu
+				if (!newPassword.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.,])[A-Za-z\\d@$!%*?&]{8,}$")) {
+					model.addAttribute("error",
+							"Mật khẩu không hợp lệ. Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.");
+					return "admin/seller/edit";
+				}
+
+				// Mã hóa mật khẩu mới nếu hợp lệ và khác với mật khẩu cũ
+				if (!passwordEncoder.matches(newPassword, currentUser.getPassword())) {
+					currentUser.setPassword(passwordEncoder.encode(newPassword));
+				} else {
+					model.addAttribute("error", "Mật khẩu mới không được trùng với mật khẩu cũ.");
+					return "admin/seller/edit";
+				}
+			}
+
+			// Cập nhật thông tin cơ bản
+			currentUser.setUsername(user.getUsername());
+			currentUser.setEmail(user.getEmail());
+			currentUser.setPhone(user.getPhone());
+			userService.saveUser(currentUser);
+
+			return "redirect:/admin/seller";
+		} else {
+			model.addAttribute("error", "Không tìm thấy người dùng.");
+			return "admin/seller/edit";
+		}
+	}
+
+	@GetMapping("/seller-delete")
+	public String deleteUser(@RequestParam("id") Integer id, Model model) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isPresent()) {
+			userService.deleteUserById(id);
+		} else {
+			model.addAttribute("error", "Nhân viên không tồn tại.");
+		}
+		return "redirect:/admin/seller";
+	}
+
 }
