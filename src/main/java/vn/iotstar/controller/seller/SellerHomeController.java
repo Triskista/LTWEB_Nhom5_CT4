@@ -34,31 +34,31 @@ public class SellerHomeController {
 	@RequestMapping("")
 	public String admint(HttpServletRequest request, Model model) {
 		// Lấy tất cả các cookie từ request
-        Cookie[] cookies = request.getCookies();
-        String userEmail = null;
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userEmail".equals(cookie.getName())) {
-                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-                    break;
-                }
-            }
-        }
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+					break;
+				}
+			}
+		}
+		if (userEmail != null) {
+			Optional<User> u = userService.getUserByEmail(userEmail);
+			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
 
-        if (userEmail != null) {
-        	Optional<User> u = userService.getUserByEmail(userEmail);
-            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
-            
-            User user = u.get();
-            String username = user.getUsername2();
-            model.addAttribute("username", username);
-        } else {
-            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
-        }
-		
-		
-		return "seller/index";
+			User user = u.get();
+			String username2 = user.getUsername2();
+			model.addAttribute("username", username2);
+			if (user.getRole() != null && user.getRole().getRoleName().equals("SELLER")) {
+				return "seller/index"; // Trả về trang index.html
+			}
+		}
+
+		return "403";
+
 	}
 
 	@RequestMapping("/product-add")
@@ -70,7 +70,6 @@ public class SellerHomeController {
 	public String edit_product() {
 		return "seller/product/edit";
 	}
-
 
 	@RequestMapping("/customer-add")
 	public String add_customer() {

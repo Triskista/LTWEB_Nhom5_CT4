@@ -33,7 +33,8 @@ public class ProductController {
 	private UserService userService;
 
 	@GetMapping("/product")
-	public String index(@RequestParam(value = "search", required = false) String search,HttpServletRequest request, Model model) {
+	public String index(@RequestParam(value = "search", required = false) String search, HttpServletRequest request,
+			Model model) {
 		List<Product> list;
 
 		if (search != null && !search.isEmpty()) {
@@ -44,31 +45,30 @@ public class ProductController {
 		}
 
 		model.addAttribute("list", list);
-		
-		
+
 		// Lấy tất cả các cookie từ request
-        Cookie[] cookies = request.getCookies();
-        String userEmail = null;
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userEmail".equals(cookie.getName())) {
-                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-                    break;
-                }
-            }
-        }
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+					break;
+				}
+			}
+		}
 
-        if (userEmail != null) {
-        	Optional<User> u = userService.getUserByEmail(userEmail);
-            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
-            
-            User user = u.get();
-            String username = user.getUsername2();
-            model.addAttribute("username", username);
-        } else {
-            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
-        }
+		if (userEmail != null) {
+			Optional<User> u = userService.getUserByEmail(userEmail);
+			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+
+			User user = u.get();
+			String username = user.getUsername2();
+			model.addAttribute("username", username);
+		} else {
+			model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
+		}
 		return "admin/product/index";
 	}
 
@@ -78,32 +78,33 @@ public class ProductController {
 		List<Category> categories = categoryService.findAll(); // Lấy danh sách Category
 		model.addAttribute("product", product);
 		model.addAttribute("categories", categories);
-		
+
 		// Lấy tất cả các cookie từ request
-        Cookie[] cookies = request.getCookies();
-        String userEmail = null;
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userEmail".equals(cookie.getName())) {
-                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-                    break;
-                }
-            }
-        }
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+					break;
+				}
+			}
+		}
+		if (userEmail != null) {
+			Optional<User> u = userService.getUserByEmail(userEmail);
+			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
 
-        if (userEmail != null) {
-        	Optional<User> u = userService.getUserByEmail(userEmail);
-            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
-            
-            User user = u.get();
-            String username = user.getUsername2();
-            model.addAttribute("username", username);
-        } else {
-            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
-        }
-		
-		return "admin/product/add";
+			User user = u.get();
+			String username2 = user.getUsername2();
+			model.addAttribute("username", username2);
+			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+				return "admin/product/add"; // Trả về trang index.html
+			}
+		}
+
+		return "403";
+
 	}
 
 	@PostMapping("/product-add")
@@ -121,33 +122,32 @@ public class ProductController {
 		List<Category> categories = categoryService.findAll();
 		model.addAttribute("categories", categories);
 		model.addAttribute("product", product);
-		
+
 		// Lấy tất cả các cookie từ request
-        Cookie[] cookies = request.getCookies();
-        String userEmail = null;
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userEmail".equals(cookie.getName())) {
-                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-                    break;
-                }
-            }
-        }
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+					break;
+				}
+			}
+		}
+		if (userEmail != null) {
+			Optional<User> u = userService.getUserByEmail(userEmail);
+			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
 
-        if (userEmail != null) {
-        	Optional<User> u = userService.getUserByEmail(userEmail);
-            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model     
-            
-            User user = u.get();
-            String username = user.getUsername2();
-            model.addAttribute("username", username);
-        } else {
-            model.addAttribute("userEmail", "Không tìm thấy email"); // Nếu không có cookie
-        }
-		
-		
-		return "admin/product/edit";
+			User user = u.get();
+			String username2 = user.getUsername2();
+			model.addAttribute("username", username2);
+			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+				return "admin/product/edit"; // Trả về trang index.html
+			}
+		}
+
+		return "403";
 	}
 
 	@PostMapping("/product-edit")
