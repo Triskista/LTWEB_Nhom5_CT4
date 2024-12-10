@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Flowers Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link id="callCss" rel="stylesheet" href="/fe/css/bootstrap.min.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="/fe/css/style.css" type="text/css" media="screen" />
+    <link href="/fe/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/fe/font-awesome/css/font-awesome.min.css">
+    <!-- Imbeded font from Google -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+</head>
+<body data-spy="scroll" data-target=".navbar">
+
+    <!-- Category Section -->
+    <div id="CategorySection">
+        <h1 th:text="(${categoryName != null ? categoryName : 'All Categories'})" style="text-align: center; margin: 0 auto; display: block;"></h1>
+        <div class="container">
+            <ul class="nav nav-pills">
+                <li th:each="category : ${categories}"
+                    th:classappend="${category.categoryName == categoryName} ? 'active' : ''">
+                    <a th:href="@{'/user/index/' + ${category.categoryName}}" th:text="${category.categoryName}"></a>
+                </li>
+            </ul>
+
+            <div class="clr"></div>
+            <div class="tabbable tabs">
+                <div class="tab-content label-primary">
+                    <!-- Display Category Information -->
+                    <div class="tab-pane active">
+                        <ul class="thumbnails">
+                            <li th:each="category : ${categories}" class="span3">
+                                <div class="thumbnail">
+                                    <div class="blockDtl">
+                                        <!-- Thay đổi product.image thành hình ảnh mặc định hoặc bỏ qua nếu không có -->
+                                        <a href="#"><img th:src="@{${category.image != null ? category.image : '/images/default-category.jpg'}}" alt="Category Image"></a>
+                                        <h4 th:text="${category.categoryName}">Category Name</h4>
+                                        <!-- Không sử dụng category.description vì bạn chưa có trường này trong dữ liệu -->
+                                        <p>No description available for this category.</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <h2 th:text="'Products in: ' + (${categoryName != null ? categoryName : 'All Categories'})"></h2>
+                <ul class="thumbnails">
+                    <!-- Display Products in a Grid -->
+                    <li th:each="product : ${list}" class="span3">
+                        <div class="thumbnail">
+                            <div class="blockDtl">
+                                <!-- Product Information -->
+                                <h4 th:text="${product.productName}">Product Name</h4>
+                                <p th:text="${product.description}">Product Description</p>
+                                <p>Price: <span th:text="${product.price}">Price</span></p>
+                                <p>Stock: <span th:text="${product.stock}">Stock</span></p>
+                                <img th:src="@{${product.image}}" alt="Product Image"/>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".category-link").click(function (e) {
+                e.preventDefault();
+                const categoryName = $(this).data("category-name");
+                $.ajax({
+                    url: `/api/products/${categoryName}`,
+                    method: "GET",
+                    success: function (products) {
+                        const tbody = $("#productTable tbody");
+                        tbody.empty();
+                        products.forEach(product => {
+                            tbody.append(`
+                                <tr>
+                                    <td>${product.productId}</td>
+                                    <td>${product.productName}</td>
+                                    <td>${product.category.categoryName}</td>
+                                    <td>${product.description}</td>
+                                    <td><img th:src="${product.image}" style="width: 50px; height: auto;" alt="Product Image"></td>
+                                    <td>${product.price}</td>
+                                </tr>
+                            `);
+                        });
+                    },
+                    error: function () {
+                        alert("Failed to load products. Please try again later.");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="/fe/js/jquery-1.9.1.min.js"></script>
+    <script src="/fe/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/fe/js/jquery.scrollTo-1.4.3.1-min.js" type="text/javascript"></script>
+    <script src="/fe/js/jquery.easing-1.3.min.js"></script>
+    <script src="/fe/js/default.js"></script>
+</body>
+</html>

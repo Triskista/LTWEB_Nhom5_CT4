@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,44 +31,61 @@ public class OrderDetailController {
 	private UserService userService;
 
 	@GetMapping("/orderdetail")
-	public String index(@RequestParam(value = "orderId", required = false) Integer orderId, HttpServletRequest request,
-			Model model) {
-		List<OrderDetail> list;
-		if (orderId != null) {
-			// Search by Order ID
-			list = orderdetailservice.getOrderDetailsByOrderId(orderId);
-		} else {
-			// If no search term is provided, return all records
-			list = orderdetailservice.findAll();
-		}
-		model.addAttribute("orderdetaillist", list);
-		model.addAttribute("orderId", orderId);
+    public String index(@RequestParam(value = "orderId", required = false) Integer orderId, 
+                        @RequestParam(value = "page", defaultValue = "0") int page, 
+                        @RequestParam(value = "size", defaultValue = "5") int size, 
+                        HttpServletRequest request, Model model) {
+        
+        // Cấu hình phân trang với Pageable
+        Pageable pageable = PageRequest.of(page, size, Sort.by("orderDetailId").ascending()); // Phân trang theo "orderDetailId"
+        
+        Page<OrderDetail> pageResult;
 
-		// Lấy tất cả các cookie từ request
-		Cookie[] cookies = request.getCookies();
-		String userEmail = null;
+        if (orderId != null) {
+            // Tìm kiếm theo Order ID với phân trang
+            pageResult = orderdetailservice.getOrderDetailsByOrderId(orderId, pageable);
+        } else {
+            // Nếu không có tìm kiếm, lấy tất cả OrderDetail với phân trang
+            pageResult = orderdetailservice.findAll(pageable);
+        }
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("userEmail".equals(cookie.getName())) {
-					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-					break;
-				}
-			}
-		}
-		if (userEmail != null) {
-			Optional<User> u = userService.getUserByEmail(userEmail);
-			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+        // Thêm các dữ liệu vào Model để hiển thị
+        model.addAttribute("orderdetaillist", pageResult.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageResult.getTotalPages());
+        model.addAttribute("totalItems", pageResult.getTotalElements());
+        model.addAttribute("orderId", orderId);
 
-			User user = u.get();
-			String username2 = user.getUsername2();
-			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/orderdetail/index"; // Trả về trang index.html
-			}
-		}
+        // Lấy cookie và thông tin người dùng
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        
+        if (userEmail != null) {
+            Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail);
 
-		return "403";
-	}
+            if (u.isPresent()) {
+                User user = u.get();
+                String username2 = user.getUsername2();
+                model.addAttribute("username", username2);
+
+                // Kiểm tra quyền của người dùng
+                if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+                    return "admin/orderdetail/index";
+                }
+            }
+        }
+
+        // Nếu không phải admin, trả về trang 403
+        return "403";
+    }
 
 }

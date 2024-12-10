@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="seller/fragments/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="seller/fragments/header :: header"></div>
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="seller/fragments/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Quản Lý Danh Sách Sản Phẩm <small>Xem chi tiết các sản phẩm</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="/seller"><i class="fa fa-dashboard"></i> Trang
+							Chủ</a></li>
+					<li class="active">Quản Lý Sản Phẩm</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Danh Sách Sản Phẩm</h3>
+						<div>
+							<a class="btn btn-success" href="product-add"> Thêm Mới Sản
+								Phẩm </a>
+						</div>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<div id="example1_wrapper"
+							class="dataTables_wrapper form-inline dt-bootstrap">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="dataTables_length" id="example1_length"></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<label>Tìm Kiếm Theo Doanh Mục Hoặc Tên Sản Phẩm:</label>
+										<form action="/seller/product" method="get">
+											<div class="input-group">
+												<input type="text" name="search"
+													class="form-control input-sm"
+													aria-controls="example1"> <span
+													class="input-group-btn">
+
+													<button type="submit" class="btn btn-primary btn-sm">Tìm
+														kiếm</button>
+												</span>
+											</div>
+										</form>
+									</div>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<table id="example1"
+										class="table table-bordered table-striped dataTable"
+										role="grid" aria-describedby="example1_info">
+										<thead>
+											<tr role="row">
+											<th class="sorting_asc" tabindex="0"
+													aria-controls="example1" rowspan="1" colspan="1"
+													aria-sort="ascending"
+													aria-label="Product ID: activate to sort column descending"
+													style="width: 80px;">Product ID</th>
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Product Name: activate to sort column ascending"
+													style="width: 70px;">Product Name</th>
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Category ID: activate to sort column ascending"
+													style="width: 100px;">Category Name</th>
+												
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Description: activate to sort column ascending"
+													style="width: 267px;">Description</th>
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Images: activate to sort column ascending"
+													style="width: 236px;">Images</th>
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Price: activate to sort column ascending"
+													style="width: 130px;">Price</th>
+												
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Stock: activate to sort column ascending"
+													style="width: 50px;">Stock</th>
+												
+												<th class="sorting" tabindex="0" aria-controls="example1"
+													rowspan="1" colspan="1"
+													aria-label="Action: activate to sort column ascending"
+													style="width: 50px;">Action</th>
+											</tr>
+
+											<tr th:each="product : ${list}">
+												<td th:text="${product.productId}"></td>
+												<td th:text="${product.productName}"></td>
+												<td th:text="${product.category.categoryName}"></td>
+												<td th:text="${product.description}"></td>
+												<td th:text="${product.image}"></td>
+												<td th:text="${product.price}"></td>
+												<td th:text="${product.stock}"></td>
+												<td><a
+													th:href="@{/seller/product-edit/{productId}(productId=${product.productId})}"
+													class="btn btn-success"> Edit</a> <a
+													th:href="@{/seller/product-delete/{productId}(productId=${product.productId})}"
+													onclick="return confirm('Bạn có chắc chắn không')"
+													class="btn btn-danger"> Delete</a></td>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+							<div class="row"></div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div th:replace="seller/fragments/footer :: footer"></div>
+
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="seller/fragments/script :: script"></div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script src="/js/mainjs.js"></script>
+</body>
+</html>

@@ -38,7 +38,7 @@
 						<div id="example1_wrapper"
 							class="dataTables_wrapper form-inline dt-bootstrap">
 							<div class="row">
-								
+
 								<div class="col-sm-6">
 									<form th:action="@{/admin/order}" method="get">
 										<div>
@@ -75,20 +75,10 @@
 												<td th:text="${order.totalPrice}"></td>
 												<td th:text="${order.user.username}"></td>
 										</tbody>
-										<tfoot>
-											<tr>
-												<th>Order ID</th>
-												<th>Date</th>
-												<th>Total Price</th>
-												<th>User Name</th>
-											</tr>
-										</tfoot>
 									</table>
 								</div>
 							</div>
-							<div class="row">
-								
-							</div>
+							<div class="row"></div>
 						</div>
 					</div>
 				</div>
@@ -105,5 +95,8 @@
 
 	<!-- jQuery 3 -->
 	<div th:replace="admin/fragments/script :: script"></div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script src="/js/mainjs.js"></script>
 </body>
 </html>

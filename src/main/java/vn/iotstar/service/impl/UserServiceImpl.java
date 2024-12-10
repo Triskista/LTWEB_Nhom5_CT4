@@ -82,6 +82,16 @@ public class UserServiceImpl implements UserService {
 		userRepository.deleteById(id);
 		
 	}
+
+	@Override
+	public Page<User> getUsersByRole(String roleName, Pageable pageable) {
+		return userRepository.findByRole_RoleName(roleName, pageable);
+	}
+
+	@Override
+	public Page<User> findByRoleName(String roleName, Pageable pageable) {
+		return userRepository.findByRole_RoleName(roleName, pageable);
+	}
     
     /*@Override
     public User addUser(User user) {

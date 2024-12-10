@@ -21,4 +21,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	List<Order> findByUserUsernameAndDate(String username, Date date);
 
 	Page<Order> findByUserUsernameContaining(String userName, Pageable pageable);
+	
+	Page<Order> findByUserUsernameAndDate(String username, Date date, Pageable pageable);
 }

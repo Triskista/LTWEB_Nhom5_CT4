@@ -26,38 +26,47 @@ public class CustomerController {
 	private UserService userService;
 
 	@GetMapping("/customer")
-	public String index(HttpServletRequest request, Model model) {
-		List<User> list = userService.findAll();
-		List<User> list2 = new ArrayList<>();
-		for (User u : list) {
-			if (u.getRole() != null && u.getRole().getRoleName().equals("USER"))
-				list2.add(u);
-		}
-		model.addAttribute("list", list2);
-		// Lấy tất cả các cookie từ request
-		Cookie[] cookies = request.getCookies();
-		String userEmail = null;
+    public String index(HttpServletRequest request, Model model,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        
+        // Cấu hình Pageable cho phân trang
+        Pageable pageable = PageRequest.of(page, size);
+        
+        // Lấy danh sách người dùng có role là "USER"
+        Page<User> userPage = userService.findByRoleName("USER", pageable);
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("userEmail".equals(cookie.getName())) {
-					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-					break;
-				}
-			}
-		}
-		if (userEmail != null) {
-			Optional<User> u = userService.getUserByEmail(userEmail);
-			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+        // Chuyển dữ liệu vào model
+        model.addAttribute("list", userPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", userPage.getTotalPages());
+        model.addAttribute("totalItems", userPage.getTotalElements());
+        model.addAttribute("size", size);
 
-			User user = u.get();
-			String username = user.getUsername2();
-			model.addAttribute("username", username);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/customer/index"; // Trả về trang index.html
-			}
-		}
+        // Lấy thông tin người dùng từ cookie
+        Cookie[] cookies = request.getCookies();
+        String userEmail = null;
 
-		return "403";
-	}
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userEmail".equals(cookie.getName())) {
+                    userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+                    break;
+                }
+            }
+        }
+
+        if (userEmail != null) {
+            Optional<User> u = userService.getUserByEmail(userEmail);
+            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+
+            User user = u.get();
+            String username = user.getUsername2();
+            model.addAttribute("username", username);
+            if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+                return "admin/customer/index"; // Trả về trang index.html
+            }
+        }
+
+        return "403"; // Nếu không phải Admin
+    }
 }

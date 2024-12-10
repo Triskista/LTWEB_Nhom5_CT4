@@ -69,13 +69,42 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:each="order : ${list}">
+											<tr th:each="order : ${orderPage.content}">
 												<td th:text="${order.orderId}"></td>
 												<td th:text="${order.date}"></td>
 												<td th:text="${order.totalPrice}"></td>
 												<td th:text="${order.user.username}"></td>
 										</tbody>
 									</table>
+
+									<!-- Phần phân trang -->
+									<div>
+										<ul class="pagination">
+											<!-- Nút Previous -->
+											<li th:classappend="${currentPage == 0} ? 'disabled'"><a
+												th:if="${currentPage > 0}"
+												th:href="@{/admin/order(page=${currentPage - 1}, size=${size})}"
+												aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+											</a> <span th:if="${currentPage == 0}" aria-hidden="true">&laquo;</span>
+											</li>
+
+											<!-- Số trang -->
+											<li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+												th:classappend="${i == currentPage} ? 'active'"><a
+												th:href="@{/admin/order(page=${i}, size=${size})}"
+												th:text="${i + 1}"></a></li>
+
+											<!-- Nút Next -->
+											<li
+												th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+												<a th:if="${currentPage + 1 < totalPages}"
+												th:href="@{/admin/order(page=${currentPage + 1}, size=${size})}"
+												aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+											</a> <span th:if="${currentPage + 1 == totalPages}"
+												aria-hidden="true">&raquo;</span>
+											</li>
+										</ul>
+									</div>
 								</div>
 							</div>
 							<div class="row"></div>

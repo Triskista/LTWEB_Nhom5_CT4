@@ -71,10 +71,12 @@
 
 							<!-- Image -->
 							<div class="form-group">
-								<label for="productImage">Image</label> <input type="file"
-									id="productImage" th:field="*{image}" required>
-								<p class="help-block">Upload an image for the product.</p>
+								<label for="productImage">Image URL</label> <input type="text"
+									class="form-control" id="productImage" th:field="*{image}"
+									placeholder="Enter image URL" required>
+								<p class="help-block">Paste the image URL here.</p>
 							</div>
+
 						</div>
 						<!-- /.box-body -->
 
