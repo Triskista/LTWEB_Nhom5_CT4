@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="seller/fragments/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="seller/fragments/header :: header"></div>
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="seller/fragments/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					Quản Lý Đơn Hàng <small>Xem các đơn hàng</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="/seller"><i class="fa fa-dashboard"></i> Trang
+							chủ</a></li>
+					<li class="active">Danh sách đơn hàng</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title">Danh Sách Đơn Hàng</h3>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<div id="example1_wrapper"
+							class="dataTables_wrapper form-inline dt-bootstrap">
+							<div class="row">
+								
+								<div class="col-sm-6">
+									<form th:action="@{/seller/order}" method="get">
+										<div>
+											<label for="username">Tìm theo Username:</label> <input
+												type="text" id="username" name="username"
+												placeholder="Nhập username">
+										</div>
+										<div>
+											<label for="date">Tìm theo Date:</label> <input type="date"
+												id="date" name="date">
+										</div>
+										<button type="submit">Tìm kiếm</button>
+									</form>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<table id="example1"
+										class="table table-bordered table-striped dataTable"
+										role="grid" aria-describedby="example1_info">
+										<thead>
+											<tr role="row">
+												<th style="width: 80px;">Order ID</th>
+												<th style="width: 150px;">Date</th>
+												<th style="width: 130px;">Total Price</th>
+												<th style="width: 100px;">User Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="order : ${list}">
+												<td th:text="${order.orderId}"></td>
+												<td th:text="${order.date}"></td>
+												<td th:text="${order.totalPrice}"></td>
+												<td th:text="${order.user.username}"></td>
+										</tbody>
+										<tfoot>
+											<tr>
+												<th>Order ID</th>
+												<th>Date</th>
+												<th>Total Price</th>
+												<th>User Name</th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div th:replace="seller/fragments/footer :: footer"></div>
+
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="seller/fragments/script :: script"></div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script src="/js/mainjs.js"></script>
+</body>
+</html>

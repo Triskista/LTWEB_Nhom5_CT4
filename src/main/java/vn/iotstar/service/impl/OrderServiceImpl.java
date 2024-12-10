@@ -96,4 +96,26 @@ public class OrderServiceImpl implements OrderService {
 	    return orderRepository.findByUserUsernameAndDate(username, date);
 	}
 
+	@Override
+	public Page<Order> findByDate(Date date, Pageable pageable) {
+		return orderRepository.findByDateContaining(date, pageable);
+	}
+
+	@Override
+	public Page<Order> findByUserUsername(String userName, Pageable pageable) {
+		// Trả về danh sách đơn hàng theo tên người dùng, phân trang
+        return orderRepository.findByUserUsernameContaining(userName, pageable);
+	}
+
+	@Override
+	public Page<Order> findByUsernameAndDate(String username, Date date, Pageable pageable) {
+	    // Sử dụng phương thức phân trang từ repository
+	    return orderRepository.findByUserUsernameAndDate(username, date, pageable);
+	}
+
+	@Override
+	public Page<Order> findOrders(Pageable pageable) {
+		return orderRepository.findAll(pageable);
+	}
+
 }

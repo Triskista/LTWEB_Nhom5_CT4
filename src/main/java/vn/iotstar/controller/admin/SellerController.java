@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -34,41 +38,45 @@ public class SellerController {
 	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/seller")
-	public String index(HttpServletRequest request, Model model) {
-		List<User> list = userService.findAll();
-		List<User> list2 = new ArrayList<>();
-		for (User u : list) {
-			if (u.getRole() != null && u.getRole().getRoleName().equals("SELLER"))
-				list2.add(u);
-		}
-		model.addAttribute("list", list2);
+	public String index(@RequestParam(value = "page", defaultValue = "0") int page, 
+	                    @RequestParam(value = "size", defaultValue = "5") int size, 
+	                    HttpServletRequest request, Model model) {
+	    // Cấu hình phân trang với Pageable
+	    Pageable pageable = PageRequest.of(page, size, Sort.by("userId").ascending()); // phân trang theo userId
 
-		// Lấy tất cả các cookie từ request
-		Cookie[] cookies = request.getCookies();
-		String userEmail = null;
+	    Page<User> pageResult = userService.getUsersByRole("SELLER", pageable); // Lấy các SELLER với phân trang
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("userEmail".equals(cookie.getName())) {
-					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
-					break;
-				}
-			}
-		}
-		if (userEmail != null) {
-			Optional<User> u = userService.getUserByEmail(userEmail);
-			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+	    // Lọc danh sách SELLER
+	    model.addAttribute("list", pageResult.getContent()); // Lấy nội dung của trang hiện tại
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", pageResult.getTotalPages());
+	    model.addAttribute("totalItems", pageResult.getTotalElements());
 
-			User user = u.get();
-			String username2 = user.getUsername2();
-			model.addAttribute("username", username2);
-			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
-				return "admin/seller/index"; // Trả về trang index.html
-			}
-		}
+	    // Lấy tất cả các cookie từ request
+	    Cookie[] cookies = request.getCookies();
+	    String userEmail = null;
 
-		return "403";
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("userEmail".equals(cookie.getName())) {
+	                userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+	                break;
+	            }
+	        }
+	    }
+	    if (userEmail != null) {
+	        Optional<User> u = userService.getUserByEmail(userEmail);
+	        model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
 
+	        User user = u.get();
+	        String username2 = user.getUsername2();
+	        model.addAttribute("username", username2);
+	        if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+	            return "admin/seller/index"; // Trả về trang index.html
+	        }
+	    }
+
+	    return "403";
 	}
 
 	@GetMapping("/seller-add")

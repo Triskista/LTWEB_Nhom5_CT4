@@ -3,6 +3,7 @@ package vn.iotstar.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -59,5 +60,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public List<OrderDetail> getOrderDetailsWithinPriceRange(Double minPrice, Double maxPrice) {
         return orderDetailRepository.findByPriceBetween(minPrice, maxPrice);
     }
+
+	@Override
+	public Page<OrderDetail> getOrderDetailsPage(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+        return orderDetailRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<OrderDetail> getOrderDetailsByOrderId(Integer orderId, Pageable pageable) {
+		return orderDetailRepository.findByOrder_OrderId(orderId, pageable);
+	}
     
 }

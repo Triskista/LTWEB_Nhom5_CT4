@@ -29,4 +29,8 @@ public interface UserService {
 	List<User> findAll();
 	Optional<User> findById(Integer id);
 	void deleteUserById(Integer id);
+	
+	Page<User> getUsersByRole(String roleName, Pageable pageable);
+	
+	Page<User> findByRoleName(String roleName, Pageable pageable);
 }

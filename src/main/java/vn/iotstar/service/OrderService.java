@@ -42,4 +42,16 @@ public interface OrderService {
 	List<Order> findAll();
 
 	long count();
+	
+	 // Phân trang danh sách đơn hàng theo ngày
+    Page<Order> findByDate(Date date, Pageable pageable);
+
+    // Phân trang danh sách đơn hàng theo tên người dùng
+    Page<Order> findByUserUsername(String userName, Pageable pageable);
+
+    // Phân trang danh sách đơn hàng theo username và date
+    Page<Order> findByUsernameAndDate(String username, Date date, Pageable pageable);
+    
+    Page<Order> findOrders(Pageable pageable);
+
 }

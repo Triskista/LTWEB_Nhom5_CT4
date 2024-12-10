@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+
+		<div th:replace="admin/fragments/header :: header"></div>
+		<!-- =============================================== -->
+
+		<!-- Left side column. contains the sidebar -->
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Cập nhật thông tin nhân viên</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form role="form" method="post" th:action="@{/admin/seller-edit}"
+						th:object="${user}">
+						<div class="box-body">
+							<div th:if="${error}" class="alert alert-danger">
+								<p th:text="${error}"></p>
+							</div>
+							<input type="hidden" th:field="*{userId}">
+							<div class="form-group">
+								<label for="email">Email:</label> <input type="text"
+									class="form-control" id="email" name="email"
+									th:field="*{email}" readonly>
+							</div>
+							<div class="form-group">
+								<label for="phone">Số điện thoại</label> <input type="text"
+									class="form-control" id="phone" name="phone"
+									th:field="*{phone}" required>
+							</div>
+							<div>
+								<label for="oldPassword">Mật khẩu cũ:</label> <input
+									type="password" id="oldPassword" name="oldPassword" required />
+							</div>
+							<div>
+								<label for="password">Mật khẩu mới:</label> <input
+									type="password" id="password" name="password" />
+							</div>
+						</div>
+						<div class="box-footer">
+							<button type="submit" class="btn btn-primary">Cập Nhật</button>
+						</div>
+					</form>
+
+				</div>
+
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+
+		<div th:replace="admin/fragments/footer :: footer"></div>
+
+	</div>
+	<!-- ./wrapper -->
+
+	<!-- jQuery 3 -->
+	<div th:replace="admin/fragments/script :: script"></div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script src="/js/mainjs.js"></script>
+</body>
+</html>

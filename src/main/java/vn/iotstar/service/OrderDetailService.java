@@ -31,5 +31,11 @@ public interface OrderDetailService {
 
 
 	List<OrderDetail> findAll();
+	
+    
+    Page<OrderDetail> getOrderDetailsPage(int page, int size);
+    
+    Page<OrderDetail> getOrderDetailsByOrderId(Integer orderId, Pageable pageable);
+
 
 }
