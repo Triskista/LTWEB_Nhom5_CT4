@@ -150,6 +150,16 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> searchProducts(String search) {
 	    return productRepository.findByProductNameContainingIgnoreCaseOrCategory_CategoryNameContainingIgnoreCase(search, search);
 	}
+	@Override
+	public List<Product> findByCategoryName(String categoryName) {
+	    return productRepository.findByCategory_CategoryName(categoryName);
+	}
+	@Override
+	public List<Product> findByCategoryId(Integer categoryId) {
+	    return productRepository.findByCategory_CategoryId(categoryId);
+	}
+
+
 
 	@Override
 	public Page<Product> searchProducts(String search, int pageNumber, int pageSize) {

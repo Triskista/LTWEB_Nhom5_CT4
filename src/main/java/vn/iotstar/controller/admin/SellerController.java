@@ -150,15 +150,37 @@ public class SellerController {
 	}
 
 	@GetMapping("/seller-edit")
-	public String showEditPage(@RequestParam("id") Integer id, Model model) {
+	public String showEditPage(@RequestParam("id") Integer id, HttpServletRequest request, Model model) {
 		Optional<User> userOptional = userService.findById(id);
-		if (userOptional.isPresent()) {
-			model.addAttribute("user", userOptional.get());
-			return "admin/seller/edit"; // Trang edit.html
-		} else {
-			model.addAttribute("error", "Nhân viên không tồn tại.");
-			return "redirect:/admin/seller";
+
+		// Lấy tất cả các cookie từ request
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
+
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+					break;
+				}
+			}
 		}
+		if (userEmail != null) {
+			Optional<User> u = userService.getUserByEmail(userEmail);
+			model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+
+			User user = u.get();
+			String username2 = user.getUsername2();
+			model.addAttribute("username", username2);
+			model.addAttribute("user", userOptional.get());
+			if (user.getRole() != null && user.getRole().getRoleName().equals("ADMIN")) {
+				return "admin/seller/edit"; // Trả về trang index.html
+			}
+		}
+
+		return "403";
+
+		
 	}
 
 	@PostMapping("/seller-edit")

@@ -12,45 +12,53 @@ import vn.iotstar.entity.Product;
 
 public interface ProductService {
 
-	Product save(Product entity);
+    Product save(Product entity);
 
-	List<Product> findAll();
+    List<Product> findAll();
 
-	Page<Product> findAll(Pageable pageable);
+    Page<Product> findAll(Pageable pageable);
 
-	List<Product> findAll(Sort sort);
+    List<Product> findAll(Sort sort);
 
-	List<Product> findAllById(Iterable<Integer> ids);
+    List<Product> findAllById(Iterable<Integer> ids);
 
-	Optional<Product> findById(Integer id);
+    Optional<Product> findById(Integer id);
 
-	<S extends Product> Optional<S> findOne(Example<S> example);
+    <S extends Product> Optional<S> findOne(Example<S> example);
 
-	long count();
+    long count();
 
-	Boolean delete(Integer id);
+    void delete(Product entity);
 
-	void delete(Product entity);
+    Optional<Product> findByProductName(String productName);
 
-	Optional<Product> findByProductName(String productName);
+    List<Product> findByProductNameContaining(String productName);
 
-	List<Product> findByProductNameContaining(String productName);
+    Page<Product> findByProductNameContaining(String name, Pageable pageable);
 
-	Page<Product> findByProductNameContaining(String name, Pageable pageable);
+    List<Product> findByPriceBetween(Float minPrice, Float maxPrice);
 
-	List<Product> findByPriceBetween(Float minPrice, Float maxPrice);
+    List<Product> findAllByOrderByPriceAsc();
 
-	List<Product> findAllByOrderByPriceAsc();
+    List<Product> findAllByOrderByProductNameAsc();
 
-	List<Product> findAllByOrderByProductNameAsc();
+    Boolean create(Product product);
 
-	Boolean create(Product product);
+    Boolean delete(Integer id);
 
-	Product findByProductId(Integer id);
+    Product findByProductId(Integer id);
 
+<<<<<<< HEAD
 	public List<Product> searchProducts(String search);
 	
 	Page<Product> searchProducts(String search, int pageNumber, int pageSize);
     Page<Product> findAll(int pageNumber, int pageSize);
+=======
+    List<Product> searchProducts(String search);
+
+    List<Product> findByCategoryName(String categoryName);
+
+    List<Product> findByCategoryId(Integer categoryId);
+>>>>>>> 07b202e73e36251df281a67acdaf382eb5059b9c
 
 }

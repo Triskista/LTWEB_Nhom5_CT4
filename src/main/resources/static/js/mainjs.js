@@ -210,9 +210,3 @@ $(document).ready(function() {
 	});
 });
 
-
-
-
-
-
-
