@@ -52,8 +52,12 @@ h4 {
 			<!-- Registration Form -->
 			<div class="col-md-6">
 
-				<form id="formregister" class="form-horizontal" method="POST" action="/user/profile" >
+				<form id="formregister" class="form-horizontal" method="POST"
+					action="/user/profile">
 					<fieldset>
+						<div th:if="${error}" class="alert alert-danger">
+							<p th:text="${error}"></p>
+						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-4" for="email">Email</label>
 							<div class="col-sm-8">

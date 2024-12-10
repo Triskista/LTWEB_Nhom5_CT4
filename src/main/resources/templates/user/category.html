@@ -54,15 +54,30 @@
                     <!-- Display Products in a Grid -->
                     <li th:each="product : ${list}" class="span3">
                         <div class="thumbnail">
-                            <div class="blockDtl">
-                                <!-- Product Information -->
-                                <h4 th:text="${product.productName}">Product Name</h4>
-                                <p th:text="${product.description}">Product Description</p>
-                                <p>Price: <span th:text="${product.price}">Price</span></p>
-                                <p>Stock: <span th:text="${product.stock}">Stock</span></p>
-                                <img th:src="@{${product.image}}" alt="Product Image"/>
+                                <a th:href="@{/user/index/{categoryName}/{productId}(
+                                    categoryName=${product.category.categoryName}, 
+                                    productId=${product.productId})}">
+                                    <img th:src="@{${product.image}}" alt="Product Image" />
+                                </a>
+                                <div class="blockDtl">
+                                    <!-- Hiển thị thông tin sản phẩm -->
+                                    <h4 th:text="${product.productName}">Product Name</h4>
+                                    <p th:text="${product.description}">Product Description</p>
+                                    <p>
+                                        Price: <span th:text="${product.price}">Price</span>
+                                    </p>
+                                    <p>
+                                        Stock: <span th:text="${product.stock}">Stock</span>
+                                    </p>
+                                    <!-- Liên kết chi tiết sản phẩm -->
+                                    <a class="btn btn-primary" 
+                                       th:href="@{/user/index/{categoryName}/{productId}(
+                                           categoryName=${product.category.categoryName}, 
+                                           productId=${product.productId})}">
+                                        View Details
+                                    </a>
+                                </div>
                             </div>
-                        </div>
                     </li>
                 </ul>
             </div>
