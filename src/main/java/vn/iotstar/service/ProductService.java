@@ -34,7 +34,10 @@ public interface ProductService {
 
     List<Product> findByProductNameContaining(String productName);
 
-    Page<Product> findByProductNameContaining(String name, Pageable pageable);
+    Page<Product> searchProducts(String search, Pageable pageable);
+
+    // Tìm sản phẩm theo tên danh mục với phân trang
+    Page<Product> findByCategoryName(String categoryName, Pageable pageable);
 
     List<Product> findByPriceBetween(Float minPrice, Float maxPrice);
 

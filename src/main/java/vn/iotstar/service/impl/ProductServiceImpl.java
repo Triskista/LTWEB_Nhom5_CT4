@@ -99,10 +99,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> findByProductNameContaining(String name, Pageable pageable) {
-        return productRepository.findByProductNameContaining(name, pageable);
+    public Page<Product> searchProducts(String search, Pageable pageable) {
+        // Gọi repository để tìm sản phẩm theo tên có chứa từ khóa
+        return productRepository.findByProductNameContaining(search, pageable);
     }
 
+    @Override
+    public Page<Product> findByCategoryName(String categoryName, Pageable pageable) {
+        // Gọi repository để tìm sản phẩm theo tên danh mục
+        return productRepository.findByCategoryName(categoryName, pageable);
+    }
+    
+    
     @Override
     public List<Product> findByPriceBetween(Float minPrice, Float maxPrice) {
         return productRepository.findByPriceBetween(minPrice, maxPrice);

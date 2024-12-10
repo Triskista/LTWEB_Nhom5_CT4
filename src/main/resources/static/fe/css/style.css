@@ -192,6 +192,46 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
         width: 100%;
     }
 }
+#phân trang 
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Canh giữa các nút */
+    margin-top: 20px; /* Khoảng cách trên nút phân trang */
+}
+
+.pagination {
+    list-style: none; /* Xóa chấm đầu dòng */
+    padding: 0;
+    display: flex; /* Hiển thị các phần tử theo hàng ngang */
+    gap: 5px; /* Khoảng cách giữa các nút */
+}
+
+.pagination .page-item {
+    display: inline-block; /* Đặt mỗi nút thành inline-block */
+}
+
+.pagination .page-item .page-link {
+    display: inline-block;
+    padding: 10px 15px; /* Kích thước của nút */
+    text-decoration: none; /* Xóa gạch dưới */
+    color: #007bff; /* Màu của liên kết */
+    border: 1px solid #dee2e6; /* Viền của nút */
+    border-radius: 5px; /* Bo góc */
+    background-color: #fff; /* Màu nền */
+    cursor: pointer;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Màu nền của nút đang active */
+    color: #fff; /* Màu chữ của nút đang active */
+    border-color: #007bff; /* Viền của nút đang active */
+}
+
+.pagination .page-item.disabled .page-link {
+    cursor: not-allowed;
+    opacity: 0.6; /* Làm mờ nút bị disabled */
+}
+
 
 #welcomeSection{padding:44px 0}
 #headerSection {border-bottom:1px solid #fff;position: fixed;top: 0;left: 0;display: inline-block;width: 100%;z-index: 1;transition: all 800ms;z-index: 9999;}
