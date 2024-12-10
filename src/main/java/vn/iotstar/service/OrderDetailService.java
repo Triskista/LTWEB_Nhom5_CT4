@@ -10,6 +10,9 @@ import vn.iotstar.entity.OrderDetail;
 
 public interface OrderDetailService {
 	
+	
+    void save(OrderDetail orderDetail);
+
 	//lấy đơn hàng chi tiết từ orderid
     List<OrderDetail> getOrderDetailsByOrderId(Integer orderId);
     
@@ -31,5 +34,6 @@ public interface OrderDetailService {
 
 
 	List<OrderDetail> findAll();
+
 
 }

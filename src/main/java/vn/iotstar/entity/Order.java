@@ -20,7 +20,7 @@ public class Order {
     private Date date;
 
     @Column(nullable = false)
-    private Double totalPrice;
+    private float totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)

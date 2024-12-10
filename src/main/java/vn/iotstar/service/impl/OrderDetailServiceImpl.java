@@ -18,7 +18,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
-	//lấy đơn hàng chi tiết từ orderid
+    
+    public void save(OrderDetail orderDetail) {
+        orderDetailRepository.save(orderDetail);
+    }
+
+    //lấy đơn hàng chi tiết từ orderid
     @Override
     public List<OrderDetail> getOrderDetailsByOrderId(Integer orderId) {
         return orderDetailRepository.findByOrder_OrderId(orderId);
