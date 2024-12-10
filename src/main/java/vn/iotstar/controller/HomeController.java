@@ -282,13 +282,19 @@ public class HomeController {
 	            }
 	        }
 	    }
-
+	    
 	    if (userEmail != null) {
 	        // Lấy thông tin người dùng từ email
 	        Optional<User> userOptional = userService.getUserByEmail(userEmail);
 	        if (userOptional.isPresent()) {
 	            User user = userOptional.get();
-
+	         // Kiểm tra định dạng số điện thoại
+				String phone = updatedUser.getPhone();
+				if (!phone.matches("^0\\d{9}$")) {
+					model.addAttribute("error",
+							"Số điện thoại không hợp lệ. Số điện thoại phải có 10 chữ số và bắt đầu bằng 0.");
+					return "profile";
+				}
 	            // Cập nhật thông tin
 	            user.setPhone(updatedUser.getPhone());
 
