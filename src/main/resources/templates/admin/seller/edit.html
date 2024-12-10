@@ -30,8 +30,9 @@
 							</div>
 							<input type="hidden" th:field="*{userId}">
 							<div class="form-group">
-								<label for="email">Email:</label> <input type="email" id="email"
-									name="email" value="${user.email}" readonly />
+								<label for="email">Email:</label> <input type="text"
+									class="form-control" id="email" name="email"
+									th:field="*{email}" readonly>
 							</div>
 							<div class="form-group">
 								<label for="phone">Số điện thoại</label> <input type="text"

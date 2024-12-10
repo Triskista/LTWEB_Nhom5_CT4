@@ -14,12 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import vn.iotstar.entity.Category;
 import vn.iotstar.entity.Product;
@@ -59,19 +61,7 @@ public class HomeController {
         return "login"; // Gọi file login.html trong src/main/resources/templates/
     }
     
-    @GetMapping("/user/profile")
-    public String authenticatedUser(Model model) {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            User currentUser = (User) authentication.getPrincipal();
-            model.addAttribute("user", currentUser);
-            return "profile";  // Trả về trang profile.html
-        } catch (Exception e) {
-            e.printStackTrace();  // In lỗi ra console để dễ dàng debug
-            return "error";  // Có thể trả về trang lỗi nếu có lỗi xảy ra
-        }
-    }
-
+    
     
     @GetMapping("/register")
     public String showRegisterPage() {
@@ -243,4 +233,77 @@ public class HomeController {
 
 		return "user/category"; // Đường dẫn tới template
 	}
+	
+	
+	
+	@GetMapping("user/profile")
+	public String showProfilePage(HttpServletRequest request, Model model) {
+	    // Lấy email từ cookie
+	    Cookie[] cookies = request.getCookies();
+	    String userEmail = null;
+
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("userEmail".equals(cookie.getName())) {
+	                userEmail = cookie.getValue();
+	                break;
+	            }
+	        }
+	    }
+
+	    if (userEmail != null) {
+	        // Lấy thông tin người dùng từ email
+	        Optional<User> userOptional = userService.getUserByEmail(userEmail);
+	        if (userOptional.isPresent()) {
+	            User user = userOptional.get();
+	            model.addAttribute("user", user);
+	            String username = user.getUsername2();
+				model.addAttribute("username", username);
+	            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+	            return "profile"; // Trả về trang profile.html
+	        }
+	    }
+
+	    return "403"; // Nếu không tìm thấy thông tin, trả về lỗi
+	}
+	
+	@PostMapping("user/profile")
+	public String updateProfile(@ModelAttribute("user") User updatedUser, HttpServletRequest request, Model model) {
+	    // Lấy email từ cookie
+	    Cookie[] cookies = request.getCookies();
+	    String userEmail = null;
+
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("userEmail".equals(cookie.getName())) {
+	                userEmail = cookie.getValue();
+	                break;
+	            }
+	        }
+	    }
+
+	    if (userEmail != null) {
+	        // Lấy thông tin người dùng từ email
+	        Optional<User> userOptional = userService.getUserByEmail(userEmail);
+	        if (userOptional.isPresent()) {
+	            User user = userOptional.get();
+
+	            // Cập nhật thông tin
+	            user.setPhone(updatedUser.getPhone());
+
+	            
+	            // Lưu thông tin
+	            userService.saveUser(user);
+	            model.addAttribute("success", "Cập nhật thành công.");
+
+	            return "profile";
+	        }
+	    }
+
+	    return "403"; // Nếu không tìm thấy thông tin, trả về lỗi
+	}
+	
+	
+	
+	
 }
