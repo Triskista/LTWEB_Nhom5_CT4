@@ -154,12 +154,48 @@ h2 {
     </div>
 
     <div class="total">
-        Tổng cộng: <span th:text="${totalAmount}"></span> VNĐ
-    </div>
+    Tổng cộng: <span id="totalAmount" th:text="${totalAmount}"></span> VNĐ
+</div>
 
-    <form th:action="@{/user/place-order}" method="post">
-        <button type="submit" class="checkout">Đặt hàng</button>
-    </form>
+<form id="orderForm" th:action="@{/user/place-order}" method="post">
+    <button type="submit" class="checkout">Đặt hàng</button>
+</form>
+
+<script>
+    // Lắng nghe sự kiện khi form được submit
+    document.getElementById("orderForm").addEventListener("submit", function (event) {
+        // Lấy giá trị của `totalAmount`
+        const totalAmount = parseFloat(document.getElementById("totalAmount").innerText.trim());
+
+        // Kiểm tra nếu `totalAmount` bằng 0
+        if (totalAmount === 0) {
+            event.preventDefault(); // Ngăn không cho form gửi dữ liệu
+            // Chuyển hướng đến trang user/index#CategorySection
+            alert("Không thể đặt hàng vì tổng tiền là 0 VNĐ.");
+            window.location.href = "/user/index#CategorySection";
+        }
+    });
+</script>
+
+ <!--    <table id="example1"
+			class="table table-bordered table-striped dataTable" role="grid"
+			aria-describedby="example1_info">
+			<thead>
+				<tr role="row">
+					<th style="width: 80px;">Order ID</th>
+					<th style="width: 150px;">Date</th>
+					<th style="width: 130px;">Total Price</th>
+					<th style="width: 100px;">User Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="order : ${list}">
+					<td th:text="${order.orderId}"></td>
+					<td th:text="${order.date}"></td>
+					<td th:text="${order.totalPrice}"></td>
+					<td th:text="${order.user.username}"></td>
+			</tbody>
+		</table> -->
 </div>
 
 

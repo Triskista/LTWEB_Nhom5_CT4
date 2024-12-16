@@ -287,12 +287,12 @@
     <!-- Thanh tìm kiếm -->
     <div class="row">
         <div class="col-sm-6 mx-auto">
-            <label>Tìm kiếm theo danh mục hoặc tên sản phẩm:</label>
+            <label>Search by category or product name:</label>
             <form action="/user/index#CategorySection" method="get">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control input-sm" placeholder="Nhập tên sản phẩm hoặc danh mục">
+                    <input type="text" name="search" class="form-control input-sm" placeholder="Enter the product or category name">
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-sm">Tìm kiếm</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
                     </span>
                 </div>
             </form>
@@ -376,7 +376,7 @@
                 <!-- Nút tiếp theo -->
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
                     <a class="page-link" 
-                       th:href="@{|user/index/?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
+                       th:href="@{|/user/index?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
                 </li>
             </ul>
         </div>

@@ -119,10 +119,7 @@
 												<td th:text="${product.stock}"></td>
 												<td><a
 													th:href="@{/seller/product-edit/{productId}(productId=${product.productId})}"
-													class="btn btn-success"> Edit</a> <a
-													th:href="@{/seller/product-delete/{productId}(productId=${product.productId})}"
-													onclick="return confirm('Bạn có chắc chắn không')"
-													class="btn btn-danger"> Delete</a></td>
+													class="btn btn-success"> Edit</a> </td>
 											</tr>
 										</thead>
 									</table>

@@ -63,8 +63,8 @@
 												<th style="width: 130px;">Price</th>
 												<th style="width: 100px;">Quantity</th>
 												<th style="width: 130px;">Total</th>
-												<th style="width: 80px;">Order ID</th>
-												<th style="width: 80px;">Product ID</th>
+												<th style="width: 80px;">Email</th>
+												<th style="width: 80px;">Product Name</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -73,20 +73,11 @@
 												<td th:text="${orderdetail.price}"></td>
 												<td th:text="${orderdetail.quantity}"></td>
 												<td th:text="${orderdetail.total}"></td>
-												<td th:text="${orderdetail.order.orderId}"></td>
-												<td th:text="${orderdetail.product.productId}"></td>
+												<td th:text="${orderdetail.order.user.username}"></td>
+												<td th:text="${orderdetail.product.productName}"></td>
 											</tr>
 										</tbody>
-										<tfoot>
-											<tr>
-												<th>Order Detail ID</th>
-												<th>Price</th>
-												<th>Quantity</th>
-												<th>Total</th>
-												<th>Order ID</th>
-												<th>Product ID</th>
-											</tr>
-										</tfoot>
+										
 									</table>
 								</div>
 							</div>
