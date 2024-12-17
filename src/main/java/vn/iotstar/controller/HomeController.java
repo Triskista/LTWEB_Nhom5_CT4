@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,16 +49,16 @@ import vn.iotstar.service.UserService;
 
 @Controller
 public class HomeController {
-    @Autowired
-    private CategoryService categoryService;
-    
-    @Autowired
-    private ProductService productService;
-    
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderDetailService orderDetailService;
+	@Autowired
+	private CategoryService categoryService;
+
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private OrderDetailService orderDetailService;
 
 	@Autowired
 	private UserService userService;
@@ -70,168 +72,165 @@ public class HomeController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login"; // Gọi file login.html trong src/main/resources/templates/
-    }
-    
-    
-    @GetMapping("/register")
-    public String showRegisterPage() {
-        return "register"; // Gọi file register.html trong src/main/resources/templates/
-    }
-    
-    @GetMapping("/user/index")
-    public String showUserIndexPage(
-    		 HttpServletRequest request,
- 	        @RequestParam(value = "search", required = false) String search,
- 	        @RequestParam(value = "page", defaultValue = "0") int page, // Trang hiện tại
- 	        @RequestParam(value = "size", defaultValue = "8") int size, // Số sản phẩm mỗi trang
- 	        Model model) {
+	@GetMapping("/login")
+	public String showLoginPage() {
+		return "login"; // Gọi file login.html trong src/main/resources/templates/
+	}
 
- 	    // Lấy tất cả các cookie từ request
- 	    Cookie[] cookies = request.getCookies();
- 	    String userEmail = null;
+	@GetMapping("/register")
+	public String showRegisterPage() {
+		return "register"; // Gọi file register.html trong src/main/resources/templates/
+	}
 
- 	    if (cookies != null) {
- 	        for (Cookie cookie : cookies) {
- 	            if ("userEmail".equals(cookie.getName())) {
- 	                userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
- 	                break;
- 	            }
- 	        }
- 	    }
+	@GetMapping("/user/index")
+	public String showUserIndexPage(HttpServletRequest request,
+			@RequestParam(value = "search", required = false) String search,
+			@RequestParam(value = "page", defaultValue = "0") int page, // Trang hiện tại
+			@RequestParam(value = "size", defaultValue = "8") int size, // Số sản phẩm mỗi trang
+			Model model) {
 
- 	    if (userEmail != null) {
- 	        Optional<User> optionalUser = userService.getUserByEmail(userEmail);
+		// Lấy tất cả các cookie từ request
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
- 	        if (optionalUser.isPresent()) {
- 	            User user = optionalUser.get();
- 	            model.addAttribute("userEmail", userEmail); // Thêm email vào model
- 	            model.addAttribute("username", user.getUsername2());
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+					break;
+				}
+			}
+		}
 
- 	            // Kiểm tra vai trò người dùng
- 	            if (user.getRole() != null && "USER".equals(user.getRole().getRoleName())) {
+		if (userEmail != null) {
+			Optional<User> optionalUser = userService.getUserByEmail(userEmail);
 
- 	                // Lấy danh sách danh mục
- 	                List<Category> categories = categoryService.findAll();
- 	                model.addAttribute("categories", categories);
+			if (optionalUser.isPresent()) {
+				User user = optionalUser.get();
+				model.addAttribute("userEmail", userEmail); // Thêm email vào model
+				model.addAttribute("username", user.getUsername2());
 
- 	                // Lấy danh sách sản phẩm với phân trang
- 	                Page<Product> productsPage;
- 	                if (search != null && !search.isEmpty()) {
- 	                    productsPage = productService.searchProducts(search, PageRequest.of(page, size));
- 	                } else {
- 	                    productsPage = productService.findAll(PageRequest.of(page, size));
- 	                }
+				// Kiểm tra vai trò người dùng
+				if (user.getRole() != null && "USER".equals(user.getRole().getRoleName())) {
 
- 	                model.addAttribute("productlist", productsPage.getContent());
- 	                model.addAttribute("totalPages", productsPage.getTotalPages());
- 	                model.addAttribute("currentPage", productsPage.getNumber());
- 	                model.addAttribute("size", size); // Thêm size vào model
- 	                model.addAttribute("search", search); // Thêm search vào model
+					// Lấy danh sách danh mục
+					List<Category> categories = categoryService.findAll();
+					model.addAttribute("categories", categories);
 
- 	                return "user/index"; // Gọi template user/index.html
- 	            }
- 	        }
- 	    }
+					// Lấy danh sách sản phẩm với phân trang
+					Page<Product> productsPage;
+					if (search != null && !search.isEmpty()) {
+						productsPage = productService.searchProducts(search, PageRequest.of(page, size));
+					} else {
+						productsPage = productService.findAll(PageRequest.of(page, size));
+					}
 
- 	    return "403"; 
-    }// Trả về trang 403 nếu không đủ điều kiện    }
-    
-    @GetMapping("/current-user")
-    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
-        if (authentication == null) {
-            return ResponseEntity.status(403).body("No user is logged in.");
-        }
-        
-        // Lấy tên người dùng
-        String username = authentication.getName();
-        
-        // Lấy danh sách các role (authorities)
-        Object roles = authentication.getAuthorities();
+					model.addAttribute("productlist", productsPage.getContent());
+					model.addAttribute("totalPages", productsPage.getTotalPages());
+					model.addAttribute("currentPage", productsPage.getNumber());
+					model.addAttribute("size", size); // Thêm size vào model
+					model.addAttribute("search", search); // Thêm search vào model
 
-        return ResponseEntity.ok().body("Username: " + username + ", Roles: " + roles);
-    }
-    
-    
-    
-    // Display the form
-    @RequestMapping(value="/forgot-password", method=RequestMethod.GET)
-    public ModelAndView displayResetPassword(ModelAndView modelAndView, User user) {
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("forgotPassword");
-        return modelAndView;
-    }
+					return "user/index"; // Gọi template user/index.html
+				}
+			}
+		}
 
-    // Receive the address and send an email
-    @RequestMapping(value="/forgot-password", method=RequestMethod.POST)
-    public ModelAndView forgotUserPassword(ModelAndView modelAndView, User user) {
-        User existingUser = userRepository.findByEmailIgnoreCase(user.getEmail());
-        if (existingUser != null) {
-            // Create token
-            ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
+		return "403";
+	}// Trả về trang 403 nếu không đủ điều kiện }
 
-            // Save it
-            confirmationTokenRepository.save(confirmationToken);
+	@GetMapping("/current-user")
+	public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+		if (authentication == null) {
+			return ResponseEntity.status(403).body("No user is logged in.");
+		}
 
-            // Create the email
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(existingUser.getEmail());
-            mailMessage.setSubject("Complete Password Reset!");
-            mailMessage.setFrom("test-email@gmail.com");
-            mailMessage.setText("To complete the password reset process, please click here: "
-              + "http://localhost:8090/confirm-reset?token="+confirmationToken.getConfirmationToken());
+		// Lấy tên người dùng
+		String username = authentication.getName();
 
-            // Send the email
-            emailSenderService.sendEmail(mailMessage);
+		// Lấy danh sách các role (authorities)
+		Object roles = authentication.getAuthorities();
 
-            modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
-            modelAndView.setViewName("login");
+		return ResponseEntity.ok().body("Username: " + username + ", Roles: " + roles);
+	}
 
-        } else {
-            modelAndView.addObject("message", "This email address does not exist!");
-            modelAndView.setViewName("error");
-        }
-        return modelAndView;
-    }
-    
-    
- // Endpoint to confirm the token
-    @RequestMapping(value="/confirm-reset", method= {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token")String confirmationToken) {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+	// Display the form
+	@RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
+	public ModelAndView displayResetPassword(ModelAndView modelAndView, User user) {
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("forgotPassword");
+		return modelAndView;
+	}
 
-        if (token != null) {
-            User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
-            userRepository.save(user);
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("emailId", user.getEmail());
-            modelAndView.setViewName("resetPassword");
-        } else {
-            modelAndView.addObject("message", "The link is invalid or broken!");
-            modelAndView.setViewName("error");
-        }
-        return modelAndView;
-    }
+	// Receive the address and send an email
+	@RequestMapping(value = "/forgot-password", method = RequestMethod.POST)
+	public ModelAndView forgotUserPassword(ModelAndView modelAndView, User user) {
+		User existingUser = userRepository.findByEmailIgnoreCase(user.getEmail());
+		if (existingUser != null) {
+			// Create token
+			ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
 
-    // Endpoint to update a user's password
-    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
-    public ModelAndView resetUserPassword(ModelAndView modelAndView, User user) {
-        if (user.getEmail() != null) {
-            // Use email to find user
-            User tokenUser = userRepository.findByEmailIgnoreCase(user.getEmail());
-            tokenUser.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(tokenUser);
-            modelAndView.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
-            modelAndView.setViewName("login");
-        } else {
-            modelAndView.addObject("message","The link is invalid or broken!");
-            modelAndView.setViewName("error");
-        }
-        return modelAndView;
-    }
-    
+			// Save it
+			confirmationTokenRepository.save(confirmationToken);
+
+			// Create the email
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+			mailMessage.setTo(existingUser.getEmail());
+			mailMessage.setSubject("Complete Password Reset!");
+			mailMessage.setFrom("test-email@gmail.com");
+			mailMessage.setText("To complete the password reset process, please click here: "
+					+ "http://localhost:8090/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+
+			// Send the email
+			emailSenderService.sendEmail(mailMessage);
+
+			modelAndView.addObject("message",
+					"Request to reset password received. Check your inbox for the reset link.");
+			modelAndView.setViewName("success");
+
+		} else {
+			modelAndView.addObject("message", "This email address does not exist!");
+			modelAndView.setViewName("error");
+		}
+		return modelAndView;
+	}
+
+	// Endpoint to confirm the token
+	@RequestMapping(value = "/confirm-reset", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
+		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+		if (token != null) {
+			User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
+			userRepository.save(user);
+			modelAndView.addObject("user", user);
+			modelAndView.addObject("emailId", user.getEmail());
+			modelAndView.setViewName("resetPassword");
+		} else {
+			modelAndView.addObject("message", "The link is invalid or broken!");
+			modelAndView.setViewName("error");
+		}
+		return modelAndView;
+	}
+
+	// Endpoint to update a user's password
+	@RequestMapping(value = "/reset-password", method = RequestMethod.POST)
+	public ModelAndView resetUserPassword(ModelAndView modelAndView, User user) {
+		if (user.getEmail() != null) {
+			// Use email to find user
+			User tokenUser = userRepository.findByEmailIgnoreCase(user.getEmail());
+			tokenUser.setPassword(passwordEncoder.encode(user.getPassword()));
+			userRepository.save(tokenUser);
+			modelAndView.addObject("message",
+					"Password successfully reset. You can now log in with the new credentials.");
+			modelAndView.setViewName("login");
+		} else {
+			modelAndView.addObject("message", "The link is invalid or broken!");
+			modelAndView.setViewName("error");
+		}
+		return modelAndView;
+	}
+
 	@GetMapping("/user/index/{categoryName}")
 	public String indexByCategory(@PathVariable("categoryName") String categoryName,
 			@RequestParam(value = "search", required = false) String search, Model model) {
@@ -250,231 +249,296 @@ public class HomeController {
 
 		return "user/category"; // Đường dẫn tới template
 	}
+
 	@GetMapping("/user/index/{categoryName}/{productId}")
-	public String showProductPage(@PathVariable("categoryName") String categoryName, 
-	                              @PathVariable("productId") Integer productId, 
-	                              Model model) {
-	    // Sử dụng phương thức findByProductId để lấy thông tin sản phẩm
-	    Product product = productService.findByProductId(productId);
-	    if (product != null) {
-	        model.addAttribute("product", product);
-	        model.addAttribute("categoryName", categoryName); // Truyền thêm tên danh mục
-	        return "user/product"; // Trả về trang product.html
-	    } else {
-	        return "error"; // Trả về trang lỗi nếu không tìm thấy sản phẩm
-	    }
+	public String showProductPage(@PathVariable("categoryName") String categoryName,
+			@PathVariable("productId") Integer productId, Model model) {
+		// Sử dụng phương thức findByProductId để lấy thông tin sản phẩm
+		Product product = productService.findByProductId(productId);
+		if (product != null) {
+			model.addAttribute("product", product);
+			model.addAttribute("categoryName", categoryName); // Truyền thêm tên danh mục
+			return "user/product"; // Trả về trang product.html
+		} else {
+			return "error"; // Trả về trang lỗi nếu không tìm thấy sản phẩm
+		}
 	}
+
 	private Map<Integer, Integer> cart = new HashMap<>(); // Giỏ hàng tạm lưu trong bộ điều khiển
 
 	@GetMapping("/user/cart")
 	public String showCartPage(Model model) {
-	    List<Product> productsInCart = new ArrayList<>();
-	    List<Integer> quantitiesInCart = new ArrayList<>();
-	    float grandTotal = 0;
+		List<Product> productsInCart = new ArrayList<>();
+		List<Integer> quantitiesInCart = new ArrayList<>();
+		float grandTotal = 0;
 
-	    for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
-	        Product product = productService.findByProductId(entry.getKey());
-	        if (product != null) {
-	            productsInCart.add(product);
-	            quantitiesInCart.add(entry.getValue());
-	            grandTotal += product.getPrice() * entry.getValue();
-	        }
-	    }
+		for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+			Product product = productService.findByProductId(entry.getKey());
+			if (product != null) {
+				productsInCart.add(product);
+				quantitiesInCart.add(entry.getValue());
+				grandTotal += product.getPrice() * entry.getValue();
+			}
+		}
 
-	    model.addAttribute("cartItems", productsInCart);
-	    model.addAttribute("quantities", quantitiesInCart);
-	    model.addAttribute("totalAmount", grandTotal);
-	    return "user/cart";  // Trả về trang giỏ hàng
+		model.addAttribute("cartItems", productsInCart);
+		model.addAttribute("quantities", quantitiesInCart);
+		model.addAttribute("totalAmount", grandTotal);
+		return "user/cart"; // Trả về trang giỏ hàng
 	}
-
 
 	@PostMapping("/user/add-to-cart")
-	public String addToCart(@RequestParam("productId") Integer productId, 
-	                        @RequestParam("quantity") Integer quantity, Model model) {
+	public String addToCart(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity,
+			Model model) {
 
-	    // Lấy sản phẩm theo ID
-	    Product product = productService.findByProductId(productId);
+		// Lấy sản phẩm theo ID
+		Product product = productService.findByProductId(productId);
 
-	    if (product != null) {
-	        // Thêm sản phẩm vào giỏ hàng (hoặc cập nhật số lượng nếu sản phẩm đã có trong giỏ)
-	        cart.put(productId, cart.getOrDefault(productId, 0) + quantity);
-	    }
+		if (product != null) {
+			// Thêm sản phẩm vào giỏ hàng (hoặc cập nhật số lượng nếu sản phẩm đã có trong
+			// giỏ)
+			cart.put(productId, cart.getOrDefault(productId, 0) + quantity);
+		}
 
-	    // Sau khi thêm vào giỏ hàng, chuyển hướng đến trang giỏ hàng
-	    return "redirect:/user/cart";
+		// Sau khi thêm vào giỏ hàng, chuyển hướng đến trang giỏ hàng
+		return "redirect:/user/cart";
 	}
+
 	@PostMapping("/user/update-cart")
-	public String updateCart(@RequestParam("productId") Integer productId, 
-	                         @RequestParam("quantity") Integer quantity,
-	                         Model model) {
+	public String updateCart(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity,
+			Model model) {
 
-	    if (quantity <= 0) {
-	        cart.remove(productId); // Nếu số lượng là 0 hoặc âm, xóa sản phẩm khỏi giỏ hàng
-	    } else {
-	        cart.put(productId, quantity); // Cập nhật số lượng mới cho sản phẩm
-	    }
+		if (quantity <= 0) {
+			cart.remove(productId); // Nếu số lượng là 0 hoặc âm, xóa sản phẩm khỏi giỏ hàng
+		} else {
+			cart.put(productId, quantity); // Cập nhật số lượng mới cho sản phẩm
+		}
 
-	    return "redirect:/user/cart"; // Quay lại trang giỏ hàng
+		return "redirect:/user/cart"; // Quay lại trang giỏ hàng
 	}
 
 	@PostMapping("/user/place-order")
 	public String placeOrder(HttpServletRequest request, Model model) {
-	    try {
-	        // Lấy userId từ cookie
-	        Cookie[] cookies = request.getCookies();
-	        String userEmail = null;
-	        if (cookies != null) {
-	            for (Cookie cookie : cookies) {
-	                if ("userEmail".equals(cookie.getName())) {
-	                    userEmail = cookie.getValue();
-	                    break;
-	                }
-	            }
-	        }
+		try {
+			// Lấy userId từ cookie
+			Cookie[] cookies = request.getCookies();
+			String userEmail = null;
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if ("userEmail".equals(cookie.getName())) {
+						userEmail = cookie.getValue();
+						break;
+					}
+				}
+			}
 
-	        if (userEmail == null) {
-	            model.addAttribute("error", "Bạn cần đăng nhập để đặt hàng.");
-	            return "user/cart"; // Quay lại trang giỏ hàng nếu chưa đăng nhập
-	        }
+			if (userEmail == null) {
+				model.addAttribute("error", "Bạn cần đăng nhập để đặt hàng.");
+				return "user/cart"; // Quay lại trang giỏ hàng nếu chưa đăng nhập
+			}
 
-	        Optional<User> optionalUser = userService.getUserByEmail(userEmail);
-	        if (!optionalUser.isPresent()) {
-	            model.addAttribute("error", "Không tìm thấy tài khoản người dùng.");
-	            return "user/cart";
-	        }
+			Optional<User> optionalUser = userService.getUserByEmail(userEmail);
+			if (!optionalUser.isPresent()) {
+				model.addAttribute("error", "Không tìm thấy tài khoản người dùng.");
+				return "user/cart";
+			}
 
-	        User user = optionalUser.get();
+			User user = optionalUser.get();
 
-	        // Tạo một đơn hàng mới
-	        Order order = new Order();
-	        order.setUser(user);
-	        order.setDate(new Date());
-	        order.setTotalPrice(0.0f); // Sẽ tính sau
-	        orderService.save(order);
+			// Tạo một đơn hàng mới
+			Order order = new Order();
+			order.setUser(user);
+			order.setDate(new Date());
+			order.setTotalPrice(0.0f); // Sẽ tính sau
+			orderService.save(order);
 
-	        // Lưu chi tiết đơn hàng và cập nhật kho sản phẩm
-	        float totalPrice = 0;
-	        for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
-	            Integer productId = entry.getKey();
-	            Integer quantity = entry.getValue();
+			// Lưu chi tiết đơn hàng và cập nhật kho sản phẩm
+			float totalPrice = 0;
+			for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+				Integer productId = entry.getKey();
+				Integer quantity = entry.getValue();
 
-	            Product product = productService.findByProductId(productId);
-	            if (product == null || product.getStock() < quantity) {
-	                model.addAttribute("error", "Không đủ hàng trong kho cho sản phẩm: " + product.getProductName());
-	                return "user/cart"; // Quay lại giỏ hàng nếu không đủ hàng
-	            }
+				Product product = productService.findByProductId(productId);
+				if (product == null || product.getStock() < quantity) {
+					model.addAttribute("error", "Không đủ hàng trong kho cho sản phẩm: " + product.getProductName());
+					return "user/cart"; // Quay lại giỏ hàng nếu không đủ hàng
+				}
 
-	            // Giảm số lượng tồn kho
-	            product.setStock(product.getStock() - quantity);
-	            productService.save(product);
+				// Giảm số lượng tồn kho
+				product.setStock(product.getStock() - quantity);
+				productService.save(product);
 
-	            // Lưu chi tiết đơn hàng
-	            OrderDetail orderDetail = new OrderDetail();
-	            orderDetail.setOrder(order);
-	            orderDetail.setProduct(product);
-	            orderDetail.setQuantity(quantity);
-	            orderDetail.setPrice(product.getPrice());
-	            orderDetail.setTotal(product.getPrice() * quantity);
-	            orderDetailService.save(orderDetail);
+				// Lưu chi tiết đơn hàng
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setOrder(order);
+				orderDetail.setProduct(product);
+				orderDetail.setQuantity(quantity);
+				orderDetail.setPrice(product.getPrice());
+				orderDetail.setTotal(product.getPrice() * quantity);
+				orderDetailService.save(orderDetail);
 
-	            totalPrice += orderDetail.getTotal();
-	        }
+				totalPrice += orderDetail.getTotal();
+			}
 
-	        // Cập nhật tổng giá trị đơn hàng
-	        order.setTotalPrice(totalPrice);
-	        orderService.save(order);
+			// Cập nhật tổng giá trị đơn hàng
+			order.setTotalPrice(totalPrice);
+			orderService.save(order);
 
-	        // Xóa giỏ hàng sau khi đặt hàng thành công
-	        cart.clear();
+			// Xóa giỏ hàng sau khi đặt hàng thành công
+			cart.clear();
 
-	        // Thông báo thành công và chuyển hướng về trang sản phẩm
-	        model.addAttribute("message", "Đặt hàng thành công!");
-	        return "redirect:/user/index"; // Chuyển hướng về trang sản phẩm
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        model.addAttribute("error", "Đã xảy ra lỗi khi đặt hàng.");
-	        return "user/cart";
-	    }
+			// Thông báo thành công và chuyển hướng về trang sản phẩm
+			model.addAttribute("message", "Đặt hàng thành công!");
+			return "redirect:/user/index"; // Chuyển hướng về trang sản phẩm
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("error", "Đã xảy ra lỗi khi đặt hàng.");
+			return "user/cart";
+		}
 	}
 
-	
-	
-	
 	@GetMapping("user/profile")
 	public String showProfilePage(HttpServletRequest request, Model model) {
-	    // Lấy email từ cookie
-	    Cookie[] cookies = request.getCookies();
-	    String userEmail = null;
+		// Lấy email từ cookie
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if ("userEmail".equals(cookie.getName())) {
-	                userEmail = cookie.getValue();
-	                break;
-	            }
-	        }
-	    }
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue();
+					break;
+				}
+			}
+		}
 
-	    if (userEmail != null) {
-	        // Lấy thông tin người dùng từ email
-	        Optional<User> userOptional = userService.getUserByEmail(userEmail);
-	        if (userOptional.isPresent()) {
-	            User user = userOptional.get();
-	            model.addAttribute("user", user);
-	            String username = user.getUsername2();
+		if (userEmail != null) {
+			// Lấy thông tin người dùng từ email
+			Optional<User> userOptional = userService.getUserByEmail(userEmail);
+			if (userOptional.isPresent()) {
+				User user = userOptional.get();
+				model.addAttribute("user", user);
+				String username = user.getUsername2();
 				model.addAttribute("username", username);
-	            model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
-	            return "profile"; // Trả về trang profile.html
-	        }
-	    }
+				model.addAttribute("userEmail", userEmail); // Thêm dữ liệu vào model
+				return "profile"; // Trả về trang profile.html
+			}
+		}
 
-	    return "403"; // Nếu không tìm thấy thông tin, trả về lỗi
+		return "403"; // Nếu không tìm thấy thông tin, trả về lỗi
 	}
-	
-	
+
 	@PostMapping("user/profile")
 	public String updateProfile(@ModelAttribute("user") User updatedUser, HttpServletRequest request, Model model) {
-	    // Lấy email từ cookie
-	    Cookie[] cookies = request.getCookies();
-	    String userEmail = null;
+		// Lấy email từ cookie
+		Cookie[] cookies = request.getCookies();
+		String userEmail = null;
 
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if ("userEmail".equals(cookie.getName())) {
-	                userEmail = cookie.getValue();
-	                break;
-	            }
-	        }
-	    }
-	    
-	    if (userEmail != null) {
-	        // Lấy thông tin người dùng từ email
-	        Optional<User> userOptional = userService.getUserByEmail(userEmail);
-	        if (userOptional.isPresent()) {
-	            User user = userOptional.get();
-	         // Kiểm tra định dạng số điện thoại
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("userEmail".equals(cookie.getName())) {
+					userEmail = cookie.getValue();
+					break;
+				}
+			}
+		}
+
+		if (userEmail != null) {
+			// Lấy thông tin người dùng từ email
+			Optional<User> userOptional = userService.getUserByEmail(userEmail);
+			if (userOptional.isPresent()) {
+				User user = userOptional.get();
+				// Kiểm tra định dạng số điện thoại
 				String phone = updatedUser.getPhone();
 				if (!phone.matches("^0\\d{9}$")) {
 					model.addAttribute("error",
 							"Số điện thoại không hợp lệ. Số điện thoại phải có 10 chữ số và bắt đầu bằng 0.");
 					return "profile";
 				}
-	            // Cập nhật thông tin
-	            user.setPhone(updatedUser.getPhone());
+				// Cập nhật thông tin
+				user.setPhone(updatedUser.getPhone());
 
-	            
-	            // Lưu thông tin
-	            userService.saveUser(user);
-	            model.addAttribute("success", "Cập nhật thành công.");
+				// Lưu thông tin
+				userService.saveUser(user);
+				model.addAttribute("success", "Cập nhật thành công.");
 
-	            return "profile";
-	        }
-	    }
+				return "profile";
+			}
+		}
 
-	    return "403"; // Nếu không tìm thấy thông tin, trả về lỗi
+		return "403"; // Nếu không tìm thấy thông tin, trả về lỗi
 	}
-	
-	
-	
-	
+
+	// Hiển thị form đăng ký
+	@RequestMapping(value = "/register1", method = RequestMethod.GET)
+	public ModelAndView displayRegistrationForm(ModelAndView modelAndView, User user) {
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("register1");
+		return modelAndView;
+	}
+
+	// Nhận email, tạo token và gửi email xác nhận
+	@RequestMapping(value = "/register1", method = RequestMethod.POST)
+	public ModelAndView registerUser(ModelAndView modelAndView, @RequestParam("email") String email) {
+		// Kiểm tra email đã tồn tại trong database
+		if (userRepository.findByEmailIgnoreCase(email) != null) {
+			modelAndView.addObject("message", "Email đã được đăng ký. Vui lòng sử dụng email khác.");
+			modelAndView.setViewName("error");
+			return modelAndView;
+		}
+
+		// Tạo ConfirmationToken
+		ConfirmationToken confirmationToken = new ConfirmationToken();
+		confirmationToken.setConfirmationToken(UUID.randomUUID().toString());
+		confirmationToken.setCreatedDate(new Date());
+		confirmationToken.setEmail(email);
+		confirmationTokenRepository.save(confirmationToken);
+
+		// Gửi email xác nhận
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(email);
+		mailMessage.setSubject("Xác nhận đăng ký tài khoản");
+		mailMessage.setFrom("test-email@gmail.com");
+		mailMessage.setText("Vui lòng nhấn vào liên kết sau để hoàn tất đăng ký: "
+				+ "http://localhost:8090/confirm-registration?token=" + confirmationToken.getConfirmationToken());
+
+		emailSenderService.sendEmail(mailMessage);
+
+		modelAndView.addObject("message", "Email xác nhận đã được gửi đến " + email);
+		modelAndView.setViewName("success");
+		return modelAndView;
+	}
+
+	// Xác nhận token và cho phép hoàn tất đăng ký
+	@RequestMapping(value = "/confirm-registration", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView confirmUserRegistration(ModelAndView modelAndView, @RequestParam("token") String token) {
+		// Tìm token trong database
+		ConfirmationToken confirmationToken = confirmationTokenRepository.findByConfirmationToken(token);
+
+		if (confirmationToken != null) {
+			String email = confirmationToken.getEmail(); // Giả sử bạn có phương thức getEmail() trong ConfirmationToken
+
+			modelAndView.addObject("email", email); // Thêm email vào model
+			modelAndView.setViewName("register");
+		} else {
+			modelAndView.addObject("message", "Token không hợp lệ hoặc đã hết hạn.");
+			modelAndView.setViewName("error");
+		}
+		return modelAndView;
+
+	}
+
+	// Hoàn tất đăng ký và lưu người dùng vào database
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ModelAndView completeRegistration(ModelAndView modelAndView, @RequestParam("email") String email) {
+		// Ở đây bạn có thể thực hiện các thao tác cần thiết với email, ví dụ lưu người
+		// dùng vào database
+
+		// Sau khi hoàn tất đăng ký, thông báo cho người dùng
+		modelAndView.addObject("message", "Đăng ký tài khoản thành công. Bạn có thể đăng nhập ngay bây giờ.");
+		modelAndView.setViewName("login");
+
+		return modelAndView;
+	}
+
 }

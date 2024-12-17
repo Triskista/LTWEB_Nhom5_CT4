@@ -159,31 +159,39 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
   align-items: center;
   justify-content: center;
 }
-#bảng category
-/* Thêm vào trong file CSS hoặc trong thẻ <style> của bạn */
+/* Điều chỉnh khung chứa danh mục */
+#CategorySection .thumbnail {
+    text-align: center; /* Căn giữa nội dung trong khung */
+    padding: 15px;
+    border: 1px solid #ddd; /* Viền nhẹ để phân biệt từng danh mục */
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ */
+}
 
-/* Điều chỉnh kích thước ảnh cho danh mục */
+/* Căn chỉnh và giới hạn kích thước hình ảnh danh mục */
 #CategorySection .thumbnail img {
-    width: 100%; /* Hoặc bạn có thể đặt giá trị cụ thể như 200px */
-    height: auto; /* Đảm bảo tỷ lệ ảnh không bị biến dạng */
-    object-fit: cover; /* Đảm bảo ảnh lấp đầy khung mà không bị kéo dài */
-    max-width: 300px; /* Đặt chiều rộng tối đa cho hình ảnh trong danh mục */
-    margin-bottom: 10px; /* Thêm khoảng cách giữa ảnh và tên danh mục */
+    display: block;
+    margin: 0 auto; /* Căn giữa hình ảnh */
+    width: auto; /* Đảm bảo giữ tỷ lệ gốc */
+    max-width: 100%; /* Đảm bảo không vượt quá khung chứa */
+    height: 200px; /* Đặt chiều cao cố định, nếu cần */
+    object-fit: cover; /* Cắt ảnh để vừa với khung */
 }
 
-/* Điều chỉnh kích thước ảnh cho sản phẩm */
-#CategorySection .thumbnails .span3 img {
-    width: 100px; /* Đặt chiều rộng ảnh sản phẩm */
-    height: 100px; /* Đặt chiều cao cho ảnh sản phẩm */
-    object-fit: cover; /* Đảm bảo ảnh không bị kéo dài, ảnh lấp đầy khung */
-    margin-bottom: 10px; /* Khoảng cách giữa ảnh và thông tin sản phẩm */
+/* Tiêu đề và nội dung danh mục */
+#CategorySection .thumbnail h4 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
 }
 
-/* Kích thước ảnh khi hover (nếu muốn làm nổi bật khi di chuột lên hình ảnh) */
-#CategorySection .thumbnail img:hover {
-    transform: scale(1.1); /* Phóng to ảnh khi hover */
-    transition: transform 0.3s ease-in-out;
+#CategorySection .thumbnail p {
+    font-size: 0.9em;
+    color: #666;
 }
+
 #Contract
 /* Basic styles for the Contact Section */
 #contactSection {
@@ -233,6 +241,115 @@ h1.brand {padding: 0;height: 75px;padding-top: 75px;margin: -104px auto 0;width:
 @media (max-width: 768px) {
     .span6 {
         width: 100%;
+    }
+}
+#phân trang 
+.pagination-container {
+    display: flex;
+    justify-content: center; /* Canh giữa các nút */
+    margin-top: 20px; /* Khoảng cách trên nút phân trang */
+}
+
+.pagination {
+    list-style: none; /* Xóa chấm đầu dòng */
+    padding: 0;
+    display: flex; /* Hiển thị các phần tử theo hàng ngang */
+    gap: 5px; /* Khoảng cách giữa các nút */
+}
+
+.pagination .page-item {
+    display: inline-block; /* Đặt mỗi nút thành inline-block */
+}
+
+.pagination .page-item .page-link {
+    display: inline-block;
+    padding: 10px 15px; /* Kích thước của nút */
+    text-decoration: none; /* Xóa gạch dưới */
+    color: #007bff; /* Màu của liên kết */
+    border: 1px solid #dee2e6; /* Viền của nút */
+    border-radius: 5px; /* Bo góc */
+    background-color: #fff; /* Màu nền */
+    cursor: pointer;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Màu nền của nút đang active */
+    color: #fff; /* Màu chữ của nút đang active */
+    border-color: #007bff; /* Viền của nút đang active */
+}
+
+.pagination .page-item.disabled .page-link {
+    cursor: not-allowed;
+    opacity: 0.6; /* Làm mờ nút bị disabled */
+}
+#chi tiết sản phẩm 
+/* Bố cục chung của thanh tìm kiếm */
+#CategorySection .row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#CategorySection label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333; /* Màu chữ */
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Input tìm kiếm */
+#CategorySection .input-group input[type="text"] {
+    border: 2px solid #007bff; /* Viền xanh nhạt */
+    border-radius: 25px 0 0 25px; /* Góc bo tròn cho input */
+    padding: 10px 15px; /* Tăng kích thước vùng nhập */
+    font-size: 14px;
+    color: #555; /* Màu chữ */
+    box-shadow: none; /* Loại bỏ shadow mặc định */
+    transition: all 0.3s ease; /* Hiệu ứng hover */
+}
+
+/* Hiệu ứng khi hover vào input */
+#CategorySection .input-group input[type="text"]:focus {
+    border-color: #0056b3; /* Đổi màu viền khi focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hiệu ứng ánh sáng */
+}
+
+/* Nút tìm kiếm */
+#CategorySection .input-group-btn button {
+    border-radius: 0 25px 25px 0; /* Góc bo tròn cho nút */
+    padding: 10px 20px; /* Tăng kích thước nút */
+    background-color: #007bff; /* Màu nền xanh */
+    color: #fff; /* Màu chữ */
+    font-size: 14px;
+    border: 2px solid #007bff; /* Viền */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng hover */
+}
+
+/* Hiệu ứng khi hover vào nút */
+#CategorySection .input-group-btn button:hover {
+    background-color: #0056b3; /* Màu nền xanh đậm */
+    border-color: #0056b3; /* Viền xanh đậm */
+}
+
+/* Định dạng toàn bộ khung input + nút */
+#CategorySection .input-group {
+    max-width: 500px; /* Đặt chiều rộng tối đa cho khung */
+    margin: 0 auto; /* Căn giữa khung */
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow nhẹ */
+}
+
+/* Responsive cho thiết bị nhỏ */
+@media (max-width: 768px) {
+    #CategorySection .input-group {
+        max-width: 100%; /* Chiều rộng tối đa */
+    }
+
+    #CategorySection label {
+        font-size: 14px;
     }
 }
 

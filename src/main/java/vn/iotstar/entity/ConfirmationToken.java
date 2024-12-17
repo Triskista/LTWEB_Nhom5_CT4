@@ -34,11 +34,14 @@ public class ConfirmationToken {
 	@Column(name = "confirmation_token")
 	private String confirmationToken;
 
+	@Column(name = "email")
+    private String email;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-	@JoinColumn(nullable = false, name = "userId")
+	@JoinColumn(nullable = true, name = "userId")
 	private User user;
 
 	public ConfirmationToken(User user) {

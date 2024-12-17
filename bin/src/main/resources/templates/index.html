@@ -277,54 +277,109 @@
 	<!-- Our Category Section -->
 	<!-- Our Category Section -->
 	<!-- Our Category Section -->
-	<div id="CategorySection">
-		<h1 class="cntr">Our Category</h1>
-		<div class="container">
-			<!-- Tabs for Categories -->
-			<ul class="nav nav-pills d-flex justify-content-center"
-				id="categoryTabs">
-				<!-- Nút "All" để hiển thị tất cả sản phẩm -->
-				<li class="nav-item"><a class="nav-link active"
-					href="/user/index" data-category="All">All</a></li>
-				<!-- Loop over categories để tạo tab động -->
-				<li th:each="category, stat : ${categories}" class="nav-item">
-					<a class="nav-link" th:classappend="${stat.index == 0} ? 'active'"
-					th:href="@{/user/index/{categoryName}(categoryName=${category.categoryName})}"
-					th:text="${category.categoryName}"
-					th:attr="data-category=${category.categoryName}"> </a>
-				</li>
-			</ul>
+<!-- Our Category Section -->
+<div id="CategorySection">
+    <h1 class="cntr">Our Category</h1>
 
-			<div class="clr"></div>
+    <!-- Thanh tìm kiếm -->
+    <div class="row">
+        <div class="col-sm-6 mx-auto">
+            <label>Search by category or product name:</label>
+            <form action="/#CategorySection" method="get">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control input-sm" placeholder="Enter the product or category name">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
 
-			<!-- Tab Content -->
-			<div class="tabbable tabs">
-				<div class="tab-content label-primary">
-					<!-- Tab hiển thị All -->
-					<div class="tab-pane active" id="All">
-						<ul class="thumbnails" id="productList">
-							<li class="span3" th:each="product : ${productlist}">
-								<div class="thumbnail">
-									<div class="blockDtl">
-										<!-- Hiển thị thông tin sản phẩm -->
-										<h4 th:text="${product.productName}">Product Name</h4>
-										<p th:text="${product.description}">Product Description</p>
-										<p>
-											Price: <span th:text="${product.price}">Price</span>
-										</p>
-										<p>
-											Stock: <span th:text="${product.stock}">Stock</span>
-										</p>
-										<img th:src="@{${product.image}}" alt="Product Image" />
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <!-- Tabs for Categories -->
+        <ul class="nav nav-pills d-flex justify-content-center" id="categoryTabs">
+            <!-- Nút "All" để hiển thị tất cả sản phẩm -->
+            <li class="nav-item">
+                <a class="nav-link active" href="/user/index" data-category="All">All</a>
+            </li>
+            <!-- Loop over categories để tạo tab động -->
+            <li th:each="category, stat : ${categories}" class="nav-item">
+                <a class="nav-link" th:classappend="${stat.index == 0} ? 'active'"
+                   th:href="@{/user/index/{categoryName}(categoryName=${category.categoryName})}"
+                   th:text="${category.categoryName}"
+                   th:attr="data-category=${category.categoryName}"> </a>
+            </li>
+        </ul>
+
+        <div class="clr"></div>
+
+        <!-- Tab Content -->
+        <div class="tabbable tabs">
+            <div class="tab-content label-primary">
+                <!-- Tab hiển thị All -->
+                <div class="tab-pane active" id="All">
+                    <ul class="thumbnails" id="productList">
+                        <li class="span3" th:each="product : ${productlist}">
+                            <div class="thumbnail">
+                                <a th:href="@{/user/index/{categoryName}/{productId}(
+                                    categoryName=${product.category.categoryName}, 
+                                    productId=${product.productId})}">
+                                    <img th:src="@{${product.image}}" alt="Product Image" />
+                                </a>
+                                <div class="blockDtl">
+                                    <!-- Hiển thị thông tin sản phẩm -->
+                                    <h4 th:text="${product.productName}">Product Name</h4>
+                                    <p th:text="${product.description}">Product Description</p>
+                                    <p>
+                                        Price: <span th:text="${product.price}">Price</span>
+                                    </p>
+                                    <p>
+                                        Stock: <span th:text="${product.stock}">Stock</span>
+                                    </p>
+                                    <!-- Liên kết chi tiết sản phẩm -->
+                                    <a class="btn btn-primary" 
+                                       th:href="@{/user/index/{categoryName}/{productId}(
+                                           categoryName=${product.category.categoryName}, 
+                                           productId=${product.productId})}">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination-container">
+            <ul class="pagination">
+                <!-- Nút quay lại -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" 
+                       th:href="@{|/?page=${currentPage - 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Previous</a>
+                </li>
+
+                <!-- Các nút trang -->
+                <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}" class="page-item"
+                    th:classappend="${page == currentPage} ? 'active'">
+                    <a class="page-link" 
+                       th:href="@{|/?page=${page}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}" 
+                       th:text="${page + 1}"></a>
+                </li>
+
+                <!-- Nút tiếp theo -->
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" 
+                       th:href="@{|/?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 	<script>
     // JavaScript to handle tab switching
@@ -334,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Hàm tải sản phẩm theo danh mục
     function loadProducts(category) {
-        fetch(`/user/index/${category}`)
+    	fetch(`/user/index/${encodeURIComponent(category)}`)
             .then(response => response.json())
             .then(data => {
                 productList.innerHTML = ''; // Xóa danh sách sản phẩm hiện tại
@@ -376,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (category === "All") {
                 // Cập nhật URL cho tab "All" với hash fragment
-                history.pushState(null, '', `/index#CategorySection`);
+            	window.location.href = `/#CategorySection`;
             } else {
                 // Giữ nguyên hành vi cho các tab khác
                 window.location.href = `/${category}`;

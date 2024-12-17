@@ -38,7 +38,7 @@
 					</ul>
 				</div>
 				<div class="cart-item">
-					<a href="#CartSection">🛒 Cart</a>
+					<a href="/user/cart">🛒 Cart</a>
 				</div>
 				<div class="user-profile">
 					<a href="javascript:void(0);" class="user-icon-link"
@@ -281,57 +281,108 @@
 		</div>
 	</div>
 
-	<!-- Our Category Section -->
-	<!-- Our Category Section -->
-	<!-- Our Category Section -->
-	<div id="CategorySection">
-		<h1 class="cntr">Our Category</h1>
-		<div class="container">
-			<!-- Tabs for Categories -->
-			<ul class="nav nav-pills d-flex justify-content-center"
-				id="categoryTabs">
-				<!-- Nút "All" để hiển thị tất cả sản phẩm -->
-				<li class="nav-item"><a class="nav-link active"
-					href="/user/index" data-category="All">All</a></li>
-				<!-- Loop over categories để tạo tab động -->
-				<li th:each="category, stat : ${categories}" class="nav-item">
-					<a class="nav-link" th:classappend="${stat.index == 0} ? 'active'"
-					th:href="@{/user/index/{categoryName}(categoryName=${category.categoryName})}"
-					th:text="${category.categoryName}"
-					th:attr="data-category=${category.categoryName}"> </a>
-				</li>
-			</ul>
+<div id="CategorySection">
+    <h1 class="cntr">Our Category</h1>
 
-			<div class="clr"></div>
+    <!-- Thanh tìm kiếm -->
+    <div class="row">
+        <div class="col-sm-6 mx-auto">
+            <label>Search by category or product name:</label>
+            <form action="/user/index#CategorySection" method="get">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control input-sm" placeholder="Enter the product or category name">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
 
-			<!-- Tab Content -->
-			<div class="tabbable tabs">
-				<div class="tab-content label-primary">
-					<!-- Tab hiển thị All -->
-					<div class="tab-pane active" id="All">
-						<ul class="thumbnails" id="productList">
-							<li class="span3" th:each="product : ${productlist}">
-								<div class="thumbnail">
-									<div class="blockDtl">
-										<!-- Hiển thị thông tin sản phẩm -->
-										<h4 th:text="${product.productName}">Product Name</h4>
-										<p th:text="${product.description}">Product Description</p>
-										<p>
-											Price: <span th:text="${product.price}">Price</span>
-										</p>
-										<p>
-											Stock: <span th:text="${product.stock}">Stock</span>
-										</p>
-										<img th:src="@{${product.image}}" alt="Product Image" />
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <!-- Tabs for Categories -->
+        <ul class="nav nav-pills d-flex justify-content-center" id="categoryTabs">
+            <!-- Nút "All" để hiển thị tất cả sản phẩm -->
+            <li class="nav-item">
+                <a class="nav-link active" href="/user/index" data-category="All">All</a>
+            </li>
+            <!-- Loop over categories để tạo tab động -->
+            <li th:each="category, stat : ${categories}" class="nav-item">
+                <a class="nav-link" th:classappend="${stat.index == 0} ? 'active'"
+                   th:href="@{/user/index/{categoryName}(categoryName=${category.categoryName})}"
+                   th:text="${category.categoryName}"
+                   th:attr="data-category=${category.categoryName}"> </a>
+            </li>
+        </ul>
+
+        <div class="clr"></div>
+
+        <!-- Tab Content -->
+        <div class="tabbable tabs">
+            <div class="tab-content label-primary">
+                <!-- Tab hiển thị All -->
+                <div class="tab-pane active" id="All">
+                    <ul class="thumbnails" id="productList">
+                        <li class="span3" th:each="product : ${productlist}">
+                            <div class="thumbnail">
+                                <a th:href="@{/user/index/{categoryName}/{productId}(
+                                    categoryName=${product.category.categoryName}, 
+                                    productId=${product.productId})}">
+                                    <img th:src="@{${product.image}}" alt="Product Image" />
+                                </a>
+                                <div class="blockDtl">
+                                    <!-- Hiển thị thông tin sản phẩm -->
+                                    <h4 th:text="${product.productName}">Product Name</h4>
+                                    <p th:text="${product.description}">Product Description</p>
+                                    <p>
+                                        Price: <span th:text="${product.price}">Price</span>
+                                    </p>
+                                    <p>
+                                        Stock: <span th:text="${product.stock}">Stock</span>
+                                    </p>
+                                    <!-- Liên kết chi tiết sản phẩm -->
+                                    <a class="btn btn-primary" 
+                                       th:href="@{/user/index/{categoryName}/{productId}(
+                                           categoryName=${product.category.categoryName}, 
+                                           productId=${product.productId})}">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination-container">
+            <ul class="pagination">
+                <!-- Nút quay lại -->
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" 
+                       th:href="@{|/user/index?page=${currentPage - 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Previous</a>
+                </li>
+
+                <!-- Các nút trang -->
+                <li th:each="page : ${#numbers.sequence(0, totalPages - 1)}" class="page-item"
+                    th:classappend="${page == currentPage} ? 'active'">
+                    <a class="page-link" 
+                       th:href="@{|/user/index?page=${page}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}" 
+                       th:text="${page + 1}"></a>
+                </li>
+
+                <!-- Nút tiếp theo -->
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" 
+                       th:href="@{|/user/index?page=${currentPage + 1}&size=${size ?: 8}&search=${search ?: ''}#CategorySection|}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 	<script>
     // JavaScript to handle tab switching
@@ -383,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (category === "All") {
                 // Cập nhật URL cho tab "All" với hash fragment
-                history.pushState(null, '', `/user/index#CategorySection`);
+            	window.location.href = `/user/index#CategorySection`;
             } else {
                 // Giữ nguyên hành vi cho các tab khác
                 window.location.href = `/user/index/${category}`;
@@ -398,80 +449,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
-	<!-- End Category -->
-	<!-- Contact Section -->
-	<div id="contactSection">
-		<h1 class="cntr">Contact Us</h1>
-		<div class="container">
-			<div class="row">
-				<div class="span9">
-					<div class="alert alert-error">( * )Lorem ipsum dolor sit
-						amet, consectetur adipiscing elit.</div>
-					<form class="form-horizontal">
-						<fieldset>
-							<div class="control-group">
-								<label class="control-label" for="input01">Name</label>
-								<div class="controls">
-									<input type="text" class="input-xlarge" id="input01">
+<!-- Contact Section -->
+<div id="contactSection">
+    <h1 class="cntr">Contact Us</h1>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <div class="contact-info">
+                    <h4>Tulip LLC - Los Angeles</h4>
+                    <p>102 W. 1st St. Los Angeles, CA 90011</p>
+                    <p>Phone: 1234567891</p>
+                    <p>Fax: 109876543212</p>
+                    <p>Email: <a href="mailto:info@tulipllc.com">info@tulipllc.com</a></p>
+                    <p>Website: <a href="http://www.tulipllc.com" target="_blank">www.tulipllc.com</a></p>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="contact-info">
+                    <h4>Tulip LLC - New York</h4>
+                    <p>231 NY. Mage St. Newyork, NY 80021</p>
+                    <p>Phone: 3467236346</p>
+                    <p>Fax: 7453734734</p>
+                    <p>Email: <a href="mailto:info@tulipllc.com">info@tulipllc.com</a></p>
+                    <p>Website: <a href="http://www.tulipllc.com" target="_blank">www.tulipllc.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="input11">Email</label>
-								<div class="controls">
-									<input type="text" class="input-xlarge" id="input11">
-
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="textarea">Messages</label>
-								<div class="controls">
-									<textarea class="input-xlarge" id="textarea" rows="3"
-										style="height: 65px"></textarea>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="optionsCheckbox">Send
-									me a copy</label>
-								<div class="controls">
-									<label class="checkbox"> <input type="checkbox"
-										id="optionsCheckbox" value="option1">
-									</label>
-								</div>
-							</div>
-							<div class="form-actions">
-								<button type="submit" class="btn btn-success">send
-									messages</button>
-								<button class="btn">Cancel</button>
-							</div>
-						</fieldset>
-					</form>
-				</div>
-				<div class="span3">
-					<div>
-						<h4>Tulip LLC</h4>
-						<p>
-							Tulip LLC Los Angeles 102 W. 1st St. Los Angeles, CA 90011<br>
-							Phone: 1234567891<br> Fax: 109876543212<br> Email: <a
-								href="mailto:info@tulipllc.com">info@tulipllc.com</a><br>
-							website: <a href="http://www.tulipllc.com">www.tulipllc.com</a>
-						</p>
-					</div>
-					<br> <br>
-					<div>
-						<h4>Tulip LLC</h4>
-						<p>
-							Tulip LLC, Newyork 231 NY. Mage St. Newyork, NY 80021<br>
-							Phone: 3467236346<br> Fax: 7453734734<br> Email: <a
-								href="mailto:info@tulipllc.com">info@tulipllc.com</a><br>
-							website: <a href="http://www.tulipllc.com">www.tulipllc.com</a>
-						</p>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
 	<!-- Wrapper end -->
 
 	<div id="footerSection">
@@ -482,16 +488,14 @@ document.addEventListener('DOMContentLoaded', function () {
 					target="_blank"></a>
 
 				<!-- Twitter Icon -->
-				<a class="twitter"
-					href="https://x.com/Hkt124567892?t=75ZV1dDnDf-M8NrUyf-4fg&s=09"
-					target="_blank"></a>
+				<a class="twitter" href="https://x.com/Hkt124567892?t=75ZV1dDnDf-M8NrUyf-4fg&s=09" target="_blank"></a>
 			</div>
 		</div>
 	</div>
 	<div id="footerMenu">
 		<a href="#carouselSection">Home </a> <a href="#ourServices">What
-			we do?</a> <a href="#CategorySection">Category</a> <a
-			href="#contactSection">Support</a>
+			we do?</a> <a href="#CategorySection">Category</a> 
+		<a href="#contactSection">Support</a>
 	</div>
 	<p>
 		<small>www.tuplipllc.com &copy; 2013 All rights reserved.</small>
