@@ -33,4 +33,6 @@ public interface UserService {
 	Page<User> getUsersByRole(String roleName, Pageable pageable);
 	
 	Page<User> findByRoleName(String roleName, Pageable pageable);
+	
+	Page<User> findAll(Pageable pageable);
 }

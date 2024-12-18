@@ -1,6 +1,5 @@
 package vn.iotstar.controller.admin;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class OrderDetailController {
 	@GetMapping("/orderdetail")
     public String index(@RequestParam(value = "orderId", required = false) Integer orderId, 
                         @RequestParam(value = "page", defaultValue = "0") int page, 
-                        @RequestParam(value = "size", defaultValue = "5") int size, 
+                        @RequestParam(value = "size", defaultValue = "10") int size, 
                         HttpServletRequest request, Model model) {
         
         // Cấu hình phân trang với Pageable

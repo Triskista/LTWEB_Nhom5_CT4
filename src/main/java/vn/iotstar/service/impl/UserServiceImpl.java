@@ -92,6 +92,11 @@ public class UserServiceImpl implements UserService {
 	public Page<User> findByRoleName(String roleName, Pageable pageable) {
 		return userRepository.findByRole_RoleName(roleName, pageable);
 	}
+
+	@Override
+	public Page<User> findAll(Pageable pageable) {
+		return userRepository.findAll(pageable);
+	}
     
     /*@Override
     public User addUser(User user) {
