@@ -1,6 +1,7 @@
 package vn.iotstar.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.Date;
@@ -21,6 +22,10 @@ public class Order {
 
     @Column(nullable = false)
     private float totalPrice;
+
+    @Column(name = "address", columnDefinition = "nvarchar(255)")
+	@NotEmpty(message = "khong duoc rong")
+    private String address;
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)

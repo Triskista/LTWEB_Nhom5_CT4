@@ -84,18 +84,19 @@ h2 {
 }
 </style>
 <style>
-    .quantity-decrease, .quantity-increase {
-        padding: 5px 10px;
-        background-color: #ff6f61;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 1.2em;
-        margin: 0 5px;
-    }
-    .quantity-decrease:hover, .quantity-increase:hover {
-        background-color: #e64a44;
-    }
+.quantity-decrease, .quantity-increase {
+	padding: 5px 10px;
+	background-color: #ff6f61;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 1.2em;
+	margin: 0 5px;
+}
+
+.quantity-decrease:hover, .quantity-increase:hover {
+	background-color: #e64a44;
+}
 </style>
 
 </head>
@@ -110,74 +111,94 @@ h2 {
 	</nav>
 
 	<div class="cart-container">
-    <!-- Thêm thông báo thành công hoặc lỗi tại đây -->
-    <div>
-        <!-- Hiển thị thông báo lỗi nếu có -->
-        <div th:if="${error}" style="color: red; text-align: center; font-weight: bold; margin-bottom: 20px;">
-            <p th:text="${error}"></p>
-        </div>
-        <!-- Hiển thị thông báo thành công nếu có -->
-        <div th:if="${message}" style="color: green; text-align: center; font-weight: bold; margin-bottom: 20px;">
-            <p th:text="${message}"></p>
-        </div>
-    </div>
-    
-    <h2>Giỏ Hàng</h2>
-    <div class="cart-items">
-        <!-- Lặp qua các sản phẩm trong giỏ hàng -->
-        <div th:each="product, iterStat : ${cartItems}">
-            <div class="cart-item">
-                <img th:src="${product.image}" alt="Sản phẩm" />
-                <div class="item-details">
-                    <span th:text="${product.productName}"></span> 
-                    <span>Giá: <span th:text="${product.price}"></span> VNĐ</span>
-                </div>
-                
-                <!-- Hiển thị số lượng của sản phẩm -->
-                <div class="item-quantity">
-                    <form th:action="@{/user/update-cart}" method="post">
-                        <input type="hidden" name="productId" th:value="${product.productId}" />
-                        
-                        <span>Số lượng: </span>
-                        <button type="submit" name="quantity" th:value="${quantities[iterStat.index] - 1}" class="quantity-decrease">-</button>
-                        <span th:text="${quantities[iterStat.index]}"></span>
-                        <button type="submit" name="quantity" th:value="${quantities[iterStat.index] + 1}" class="quantity-increase">+</button>
-                    </form>
-                </div>
+		<!-- Thêm thông báo thành công hoặc lỗi tại đây -->
+		<div>
+			<!-- Hiển thị thông báo lỗi nếu có -->
+			<div th:if="${error}"
+				style="color: red; text-align: center; font-weight: bold; margin-bottom: 20px;">
+				<p th:text="${error}"></p>
+			</div>
+			<!-- Hiển thị thông báo thành công nếu có -->
+			<div th:if="${message}"
+				style="color: green; text-align: center; font-weight: bold; margin-bottom: 20px;">
+				<p th:text="${message}"></p>
+			</div>
+		</div>
 
-                <!-- Tính tổng tiền cho sản phẩm -->
-                <div class="item-total">
-                    <span th:text="${product.price * quantities[iterStat.index]}"></span> VNĐ
-                </div>
-            </div>
-        </div>
-    </div>
+		<h2>Giỏ Hàng</h2>
+		<div class="cart-items">
+			<!-- Lặp qua các sản phẩm trong giỏ hàng -->
+			<div th:each="product, iterStat : ${cartItems}">
+				<div class="cart-item">
+					<img th:src="${product.image}" alt="Sản phẩm" />
+					<div class="item-details">
+						<span th:text="${product.productName}"></span> <span>Giá: <span
+							th:text="${product.price}"></span> VNĐ
+						</span>
+					</div>
 
-    <div class="total">
-    Tổng cộng: <span id="totalAmount" th:text="${totalAmount}"></span> VNĐ
-</div>
+					<!-- Hiển thị số lượng của sản phẩm -->
+					<div class="item-quantity">
+						<form th:action="@{/user/update-cart}" method="post">
+							<input type="hidden" name="productId"
+								th:value="${product.productId}" /> <span>Số lượng: </span>
+							<button type="submit" name="quantity"
+								th:value="${quantities[iterStat.index] - 1}"
+								class="quantity-decrease">-</button>
+							<span th:text="${quantities[iterStat.index]}"></span>
+							<button type="submit" name="quantity"
+								th:value="${quantities[iterStat.index] + 1}"
+								class="quantity-increase">+</button>
+						</form>
+					</div>
 
-<form id="orderForm" th:action="@{/user/place-order}" method="post">
-    <button type="submit" class="checkout">Đặt hàng</button>
-</form>
+					<!-- Tính tổng tiền cho sản phẩm -->
+					<div class="item-total">
+						<span th:text="${product.price * quantities[iterStat.index]}"></span>
+						VNĐ
+					</div>
+				</div>
+			</div>
+		</div>
 
-<script>
-    // Lắng nghe sự kiện khi form được submit
-    document.getElementById("orderForm").addEventListener("submit", function (event) {
-        // Lấy giá trị của `totalAmount`
-        const totalAmount = parseFloat(document.getElementById("totalAmount").innerText.trim());
+		<div class="total">
+			Tổng cộng: <span id="totalAmount" th:text="${totalAmount}"></span>
+			VNĐ
+		</div>
 
-        // Kiểm tra nếu `totalAmount` bằng 0
-        if (totalAmount === 0) {
-            event.preventDefault(); // Ngăn không cho form gửi dữ liệu
-            // Chuyển hướng đến trang user/index#CategorySection
-            alert("Không thể đặt hàng vì tổng tiền là 0 VNĐ.");
-            window.location.href = "/user/index#CategorySection";
-        }
-    });
-</script>
+		<form id="orderForm" th:action="@{/user/place-order}" method="post">
+			<div>
+				<label for="address">Địa chỉ giao hàng:</label> <input type="text"
+					id="address" name="address" placeholder="Nhập địa chỉ giao hàng"
+					required>
+			</div>
+			<button type="submit" class="checkout">Đặt hàng</button>
+		</form>
 
-    <table id="example1"
+
+		<script>
+			// Lắng nghe sự kiện khi form được submit
+			document
+					.getElementById("orderForm")
+					.addEventListener(
+							"submit",
+							function(event) {
+								// Lấy giá trị của `totalAmount`
+								const totalAmount = parseFloat(document
+										.getElementById("totalAmount").innerText
+										.trim());
+
+								// Kiểm tra nếu `totalAmount` bằng 0
+								if (totalAmount === 0) {
+									event.preventDefault(); // Ngăn không cho form gửi dữ liệu
+									// Chuyển hướng đến trang user/index#CategorySection
+									alert("Không thể đặt hàng vì tổng tiền là 0 VNĐ.");
+									window.location.href = "/user/index#CategorySection";
+								}
+							});
+		</script>
+
+		<table id="example1"
 			class="table table-bordered table-striped dataTable" role="grid"
 			aria-describedby="example1_info">
 			<thead>
@@ -186,6 +207,7 @@ h2 {
 					<th style="width: 150px;">Date</th>
 					<th style="width: 130px;">Total Price</th>
 					<th style="width: 100px;">User Name</th>
+					<th style="width: 200px;">Address</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -194,46 +216,53 @@ h2 {
 					<td th:text="${order.date}"></td>
 					<td th:text="${order.totalPrice}"></td>
 					<td th:text="${order.user.username}"></td>
+					<td th:text="${order.address}"></td>
+				</tr>
 			</tbody>
-		</table> 
-</div>
+		</table>
+	</div>
 
 
 
 
 
 	<script>
-	let cart = {
-		    1: { price: 0, quantity: 1 },
-		    2: { price: 0, quantity: 1 }
+		let cart = {
+			1 : {
+				price : 0,
+				quantity : 1
+			},
+			2 : {
+				price : 0,
+				quantity : 1
+			}
 		};
 
 		function updateCart() {
-		    let grandTotal = 0;
-		    for (let id in cart) {
-		        const item = cart[id];
-		        const total = item.price * item.quantity;
-		        document.getElementById(`quantity-${id}`).innerText = item.quantity;
-		        document.getElementById(`total-${id}`).innerText = `${total.toLocaleString()} VNĐ`;
-		        grandTotal += total;
-		    }
-		    document.getElementById("grand-total").innerText = `${grandTotal.toLocaleString()} VNĐ`;
+			let grandTotal = 0;
+			for ( let id in cart) {
+				const item = cart[id];
+				const total = item.price * item.quantity;
+				document.getElementById(`quantity-${id}`).innerText = item.quantity;
+				document.getElementById(`total-${id}`).innerText = `${total.toLocaleString()} VNĐ`;
+				grandTotal += total;
+			}
+			document.getElementById("grand-total").innerText = `${grandTotal.toLocaleString()} VNĐ`;
 		}
 
 		function increaseQuantity(id) {
-		    cart[id].quantity++;
-		    updateCart();
+			cart[id].quantity++;
+			updateCart();
 		}
 
 		function decreaseQuantity(id) {
-		    if (cart[id].quantity > 1) {
-		        cart[id].quantity--;
-		        updateCart();
-		    }
+			if (cart[id].quantity > 1) {
+				cart[id].quantity--;
+				updateCart();
+			}
 		}
 
 		updateCart();
-
 	</script>
 </body>
 </html>

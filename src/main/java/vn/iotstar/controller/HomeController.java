@@ -353,84 +353,86 @@ public class HomeController {
 	}
 
 	@PostMapping("/user/place-order")
-	public String placeOrder(HttpServletRequest request, Model model) {
-		try {
-			// Lấy userId từ cookie
-			Cookie[] cookies = request.getCookies();
-			String userEmail = null;
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if ("userEmail".equals(cookie.getName())) {
-						userEmail = cookie.getValue();
-						break;
-					}
-				}
-			}
+	public String placeOrder(@RequestParam("address") String address, HttpServletRequest request, Model model) {
+	    try {
+	        // Lấy userId từ cookie
+	        Cookie[] cookies = request.getCookies();
+	        String userEmail = null;
+	        if (cookies != null) {
+	            for (Cookie cookie : cookies) {
+	                if ("userEmail".equals(cookie.getName())) {
+	                    userEmail = cookie.getValue();
+	                    break;
+	                }
+	            }
+	        }
 
-			if (userEmail == null) {
-				model.addAttribute("error", "Bạn cần đăng nhập để đặt hàng.");
-				return "user/cart"; // Quay lại trang giỏ hàng nếu chưa đăng nhập
-			}
+	        if (userEmail == null) {
+	            model.addAttribute("error", "Bạn cần đăng nhập để đặt hàng.");
+	            return "user/cart"; // Quay lại trang giỏ hàng nếu chưa đăng nhập
+	        }
 
-			Optional<User> optionalUser = userService.getUserByEmail(userEmail);
-			if (!optionalUser.isPresent()) {
-				model.addAttribute("error", "Không tìm thấy tài khoản người dùng.");
-				return "user/cart";
-			}
+	        Optional<User> optionalUser = userService.getUserByEmail(userEmail);
+	        if (!optionalUser.isPresent()) {
+	            model.addAttribute("error", "Không tìm thấy tài khoản người dùng.");
+	            return "user/cart";
+	        }
 
-			User user = optionalUser.get();
+	        User user = optionalUser.get();
 
-			// Tạo một đơn hàng mới
-			Order order = new Order();
-			order.setUser(user);
-			order.setDate(new Date());
-			order.setTotalPrice(0.0f); // Sẽ tính sau
-			orderService.save(order);
+	        // Tạo một đơn hàng mới
+	        Order order = new Order();
+	        order.setUser(user);
+	        order.setDate(new Date());
+	        order.setTotalPrice(0.0f); // Sẽ tính sau
+	        order.setAddress(address); // Lưu địa chỉ vào order
+	        orderService.save(order);
 
-			// Lưu chi tiết đơn hàng và cập nhật kho sản phẩm
-			float totalPrice = 0;
-			for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
-				Integer productId = entry.getKey();
-				Integer quantity = entry.getValue();
+	        // Lưu chi tiết đơn hàng và cập nhật kho sản phẩm
+	        float totalPrice = 0;
+	        for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+	            Integer productId = entry.getKey();
+	            Integer quantity = entry.getValue();
 
-				Product product = productService.findByProductId(productId);
-				if (product == null || product.getStock() < quantity) {
-					model.addAttribute("error", "Không đủ hàng trong kho cho sản phẩm: " + product.getProductName());
-					return "user/cart"; // Quay lại giỏ hàng nếu không đủ hàng
-				}
+	            Product product = productService.findByProductId(productId);
+	            if (product == null || product.getStock() < quantity) {
+	                model.addAttribute("error", "Không đủ hàng trong kho cho sản phẩm: " + product.getProductName());
+	                return "user/cart"; // Quay lại giỏ hàng nếu không đủ hàng
+	            }
 
-				// Giảm số lượng tồn kho
-				product.setStock(product.getStock() - quantity);
-				productService.save(product);
+	            // Giảm số lượng tồn kho
+	            product.setStock(product.getStock() - quantity);
+	            productService.save(product);
 
-				// Lưu chi tiết đơn hàng
-				OrderDetail orderDetail = new OrderDetail();
-				orderDetail.setOrder(order);
-				orderDetail.setProduct(product);
-				orderDetail.setQuantity(quantity);
-				orderDetail.setPrice(product.getPrice());
-				orderDetail.setTotal(product.getPrice() * quantity);
-				orderDetailService.save(orderDetail);
+	            // Lưu chi tiết đơn hàng
+	            OrderDetail orderDetail = new OrderDetail();
+	            orderDetail.setOrder(order);
+	            orderDetail.setProduct(product);
+	            orderDetail.setQuantity(quantity);
+	            orderDetail.setPrice(product.getPrice());
+	            orderDetail.setTotal(product.getPrice() * quantity);
+	            orderDetailService.save(orderDetail);
 
-				totalPrice += orderDetail.getTotal();
-			}
+	            totalPrice += orderDetail.getTotal();
+	        }
 
-			// Cập nhật tổng giá trị đơn hàng
-			order.setTotalPrice(totalPrice);
-			orderService.save(order);
+	        // Cập nhật tổng giá trị đơn hàng
+	        order.setTotalPrice(totalPrice);
+	        orderService.save(order);
 
-			// Xóa giỏ hàng sau khi đặt hàng thành công
-			cart.clear();
+	        // Xóa giỏ hàng sau khi đặt hàng thành công
+	        cart.clear();
 
-			// Thông báo thành công và chuyển hướng về trang sản phẩm
-			model.addAttribute("message", "Đặt hàng thành công!");
-			return "redirect:/user/index"; // Chuyển hướng về trang sản phẩm
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("error", "Đã xảy ra lỗi khi đặt hàng.");
-			return "user/cart";
-		}
+	        // Thông báo thành công và chuyển hướng về trang sản phẩm
+	        model.addAttribute("message", "Đặt hàng thành công!");
+	        return "redirect:/user/index"; // Chuyển hướng về trang sản phẩm
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        model.addAttribute("error", "Đã xảy ra lỗi khi đặt hàng.");
+	        return "user/cart";
+	    }
 	}
+
 
 	@GetMapping("user/profile")
 	public String showProfilePage(HttpServletRequest request, Model model) {

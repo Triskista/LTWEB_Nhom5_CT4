@@ -66,6 +66,7 @@
 												<th style="width: 150px;">Date</th>
 												<th style="width: 130px;">Total Price</th>
 												<th style="width: 100px;">User Name</th>
+												<th style="width: 150px;">Address</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -74,6 +75,7 @@
 												<td th:text="${order.date}"></td>
 												<td th:text="${order.totalPrice}"></td>
 												<td th:text="${order.user.username}"></td>
+												<td th:text="${order.address}"></td>
 										</tbody>
 									</table>
 								</div>
