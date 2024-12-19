@@ -36,13 +36,17 @@
 					<div class="product-details-inner">
 						<div class="row">
 							<div class="col-lg-5">
-								<div class="product-large-slider">
-									<div class="pro-large-img">
-										<img th:src="${product.image}"
-											alt="[[${product.productName}]]">
-									</div>
-								</div>
-							</div>
+    <div class="product-large-slider">
+        <button class="slider-nav prev">&lt;</button>
+        <div class="pro-large-img">
+            <img th:src="${product.image}" alt="[[${product.productName}]]" class="slider-image active">
+            <img th:src="${product.image2}" alt="[[${product.productName}]]" class="slider-image">
+            <img th:src="${product.image3}" alt="[[${product.productName}]]" class="slider-image">
+        </div>
+        <button class="slider-nav next">&gt;</button>
+    </div>
+</div>
+
 							<div class="col-lg-7">
 								<div class="product-details-des">
 									<h1 class="product-name">[[${product.productName}]]</h1>
@@ -114,7 +118,38 @@
 			</div>
 		</div>
 	</div>
+    <script>
+        // JavaScript Slider Logic
+        document.addEventListener("DOMContentLoaded", () => {
+            const sliderImages = document.querySelectorAll(".slider-image");
+            const prevButton = document.querySelector(".slider-nav.prev");
+            const nextButton = document.querySelector(".slider-nav.next");
 
+            let currentIndex = 0;
+
+            // Hàm cập nhật hiển thị ảnh
+            function updateImage(index) {
+                sliderImages.forEach((img, i) => {
+                    img.classList.toggle("active", i === index);
+                });
+            }
+
+            // Xử lý nút Previous
+            prevButton.addEventListener("click", () => {
+                currentIndex = (currentIndex - 1 + sliderImages.length) % sliderImages.length;
+                updateImage(currentIndex);
+            });
+
+            // Xử lý nút Next
+            nextButton.addEventListener("click", () => {
+                currentIndex = (currentIndex + 1) % sliderImages.length;
+                updateImage(currentIndex);
+            });
+
+            // Cập nhật ban đầu
+            updateImage(currentIndex);
+        });
+    </script>
 <!-- Contact Section -->
 <div id="contactSection">
     <h1 class="cntr">Contact Us</h1>

@@ -98,7 +98,7 @@ public class HomeController {
 				if ("userEmail".equals(cookie.getName())) {
 					userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
 					break;
-				}
+				}	
 			}
 		}
 
@@ -267,25 +267,60 @@ public class HomeController {
 	private Map<Integer, Integer> cart = new HashMap<>(); // Giỏ hàng tạm lưu trong bộ điều khiển
 
 	@GetMapping("/user/cart")
-	public String showCartPage(Model model) {
-		List<Product> productsInCart = new ArrayList<>();
-		List<Integer> quantitiesInCart = new ArrayList<>();
-		float grandTotal = 0;
+	public String showCartPage(Model model, HttpServletRequest request) {
+	    List<Product> productsInCart = new ArrayList<>();
+	    List<Integer> quantitiesInCart = new ArrayList<>();
+	    List<Order> list;
+	    float grandTotal = 0;
 
-		for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
-			Product product = productService.findByProductId(entry.getKey());
-			if (product != null) {
-				productsInCart.add(product);
-				quantitiesInCart.add(entry.getValue());
-				grandTotal += product.getPrice() * entry.getValue();
-			}
-		}
+	    // Lấy tất cả các cookie từ request
+	    Cookie[] cookies = request.getCookies();
+	    String userEmail = null;
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("userEmail".equals(cookie.getName())) {
+	                userEmail = cookie.getValue(); // Lấy giá trị của cookie userEmail
+	                break;
+	            }
+	        }
+	    }
 
-		model.addAttribute("cartItems", productsInCart);
-		model.addAttribute("quantities", quantitiesInCart);
-		model.addAttribute("totalAmount", grandTotal);
-		return "user/cart"; // Trả về trang giỏ hàng
+	    if (userEmail != null) {
+	        Optional<User> optionalUser = userService.getUserByEmail(userEmail);
+
+	        if (optionalUser.isPresent()) {
+	            User user = optionalUser.get();
+	            model.addAttribute("userEmail", userEmail); // Thêm email vào model
+	            model.addAttribute("username", user.getUsername2());
+
+	            // Kiểm tra vai trò người dùng
+	            if (user.getRole() != null && "USER".equals(user.getRole().getRoleName())) {
+	                String username = user.getUsername2();
+
+	                // Lấy danh sách đơn hàng
+	                list = orderService.findByUserUsername(username);
+
+	                // Xử lý giỏ hàng
+	                for (Map.Entry<Integer, Integer> entry : cart.entrySet()) {
+	                    Product product = productService.findByProductId(entry.getKey());
+	                    if (product != null) {
+	                        productsInCart.add(product);
+	                        quantitiesInCart.add(entry.getValue());
+	                        grandTotal += product.getPrice() * entry.getValue();
+	                    }
+	                }
+
+	                model.addAttribute("list", list);
+	                model.addAttribute("cartItems", productsInCart);
+	                model.addAttribute("quantities", quantitiesInCart);
+	                model.addAttribute("totalAmount", grandTotal);
+	                return "user/cart"; // Trả về trang giỏ hàng
+	            }
+	        }
+	    }
+			return "user/cart"; // Trả về trang giỏ hàng // Trả về trang 403 nếu không đủ điều kiện
 	}
+
 
 	@PostMapping("/user/add-to-cart")
 	public String addToCart(@RequestParam("productId") Integer productId, @RequestParam("quantity") Integer quantity,
