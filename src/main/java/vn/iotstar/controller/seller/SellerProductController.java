@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,18 +36,24 @@ public class SellerProductController {
 	private UserService userService;
 
 	@GetMapping("/product")
-	public String index(@RequestParam(value = "search", required = false) String search, HttpServletRequest request,
+	public String index(
+			@RequestParam(value = "search", required = false) String search,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			HttpServletRequest request, 
 			Model model) {
-		List<Product> list;
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Product> productPage;
 
 		if (search != null && !search.isEmpty()) {
-			// Tìm kiếm theo productName hoặc categoryName
-			list = productService.searchProducts(search);
+			productPage = productService.searchProducts(search, pageable);
 		} else {
-			list = productService.findAll();
+			productPage = productService.findAll(pageable);
 		}
 
-		model.addAttribute("list", list);
+		model.addAttribute("list", productPage.getContent());
+		model.addAttribute("currentPage", productPage.getNumber());
+		model.addAttribute("totalPages", productPage.getTotalPages());
 
 		// Lấy tất cả các cookie từ request
 		Cookie[] cookies = request.getCookies();
@@ -71,7 +80,6 @@ public class SellerProductController {
 		}
 
 		return "403";
-
 	}
 
 	@GetMapping("/product-add")
@@ -106,13 +114,12 @@ public class SellerProductController {
 		}
 
 		return "403";
-
 	}
 
 	@PostMapping("/product-add")
 	public String save(@ModelAttribute("product") Product product) {
 		if (this.productService.create(product)) {
-			return "redirect:/admin/product";
+			return "redirect:/seller/product";
 		} else {
 			return "seller/product/add";
 		}
@@ -150,7 +157,6 @@ public class SellerProductController {
 		}
 
 		return "403";
-
 	}
 
 	@PostMapping("/product-edit")
@@ -170,5 +176,4 @@ public class SellerProductController {
 			return "redirect:/seller/product";
 		}
 	}
-
 }

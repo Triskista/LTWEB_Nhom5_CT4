@@ -1,6 +1,9 @@
 package vn.iotstar.controller.seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,6 @@ import vn.iotstar.service.OrderService;
 import vn.iotstar.service.UserService;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,28 +30,37 @@ public class SellerOrderController {
 	private UserService userService;
 
 	@GetMapping("/order")
-	public String index(@RequestParam(value = "username", required = false) String username,
+	public String index(
+			@RequestParam(value = "username", required = false) String username,
 			@RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-			HttpServletRequest request, Model model) {
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			HttpServletRequest request, 
+			Model model) {
 
-		List<Order> list;
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Order> orderPage;
 
 		// Kiểm tra tham số tìm kiếm
 		if (username != null && !username.isEmpty() && date != null) {
 			// Tìm kiếm theo cả username và date
-			list = orderservice.findByUsernameAndDate(username, date);
+			orderPage = orderservice.findByUsernameAndDate(username, date, pageable);
 		} else if (username != null && !username.isEmpty()) {
 			// Tìm kiếm theo username
-			list = orderservice.findByUserUsername(username);
+			orderPage = orderservice.findByUserUsername(username, pageable);
 		} else if (date != null) {
 			// Tìm kiếm theo date
-			list = orderservice.findByDate(date);
+			orderPage = orderservice.findByDate(date, pageable);
 		} else {
 			// Nếu không có tham số tìm kiếm nào, trả về toàn bộ danh sách
-			list = orderservice.findAll();
+			orderPage = orderservice.findAll(pageable);
 		}
 
-		model.addAttribute("list", list);
+		model.addAttribute("list", orderPage.getContent());
+		model.addAttribute("currentPage", orderPage.getNumber());
+		model.addAttribute("totalPages", orderPage.getTotalPages());
+		model.addAttribute("username", username);
+		model.addAttribute("date", date);
 
 		// Lấy tất cả các cookie từ request
 		Cookie[] cookies = request.getCookies();
@@ -76,6 +87,5 @@ public class SellerOrderController {
 		}
 
 		return "403";
-
 	}
 }

@@ -1,9 +1,11 @@
 package vn.iotstar.controller.seller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +29,26 @@ public class SellerOrderDetailController {
 	private UserService userService;
 
 	@GetMapping("/orderdetail")
-	public String index(@RequestParam(value = "orderId", required = false) Integer orderId, HttpServletRequest request,
+	public String index(
+			@RequestParam(value = "orderId", required = false) Integer orderId,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "size", defaultValue = "10") int size,
+			HttpServletRequest request, 
 			Model model) {
-		List<OrderDetail> list;
+		Pageable pageable = PageRequest.of(page, size);
+		Page<OrderDetail> orderDetailPage;
+
 		if (orderId != null) {
 			// Search by Order ID
-			list = orderdetailservice.getOrderDetailsByOrderId(orderId);
+			orderDetailPage = orderdetailservice.getOrderDetailsByOrderId(orderId, pageable);
 		} else {
 			// If no search term is provided, return all records
-			list = orderdetailservice.findAll();
+			orderDetailPage = orderdetailservice.findAll(pageable);
 		}
-		model.addAttribute("orderdetaillist", list);
+
+		model.addAttribute("orderdetaillist", orderDetailPage.getContent());
+		model.addAttribute("currentPage", orderDetailPage.getNumber());
+		model.addAttribute("totalPages", orderDetailPage.getTotalPages());
 		model.addAttribute("orderId", orderId);
 
 		// Lấy tất cả các cookie từ request
@@ -65,7 +76,5 @@ public class SellerOrderDetailController {
 		}
 
 		return "403";
-
 	}
-
 }

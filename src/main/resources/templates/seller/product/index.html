@@ -20,8 +20,8 @@
 					Quản Lý Danh Sách Sản Phẩm <small>Xem chi tiết các sản phẩm</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="/seller"><i class="fa fa-dashboard"></i> Trang
-							Chủ</a></li>
+					<li><a href="/seller"><i class="fa fa-dashboard"></i>
+							Trang Chủ</a></li>
 					<li class="active">Quản Lý Sản Phẩm</li>
 				</ol>
 			</section>
@@ -51,9 +51,8 @@
 										<form action="/seller/product" method="get">
 											<div class="input-group">
 												<input type="text" name="search"
-													class="form-control input-sm"
-													aria-controls="example1"> <span
-													class="input-group-btn">
+													class="form-control input-sm" aria-controls="example1">
+												<span class="input-group-btn">
 
 													<button type="submit" class="btn btn-primary btn-sm">Tìm
 														kiếm</button>
@@ -71,7 +70,7 @@
 										role="grid" aria-describedby="example1_info">
 										<thead>
 											<tr role="row">
-											<th class="sorting_asc" tabindex="0"
+												<th class="sorting_asc" tabindex="0"
 													aria-controls="example1" rowspan="1" colspan="1"
 													aria-sort="ascending"
 													aria-label="Product ID: activate to sort column descending"
@@ -84,7 +83,7 @@
 													rowspan="1" colspan="1"
 													aria-label="Category ID: activate to sort column ascending"
 													style="width: 100px;">Category Name</th>
-												
+
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Description: activate to sort column ascending"
@@ -97,12 +96,12 @@
 													rowspan="1" colspan="1"
 													aria-label="Price: activate to sort column ascending"
 													style="width: 130px;">Price</th>
-												
+
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Stock: activate to sort column ascending"
 													style="width: 50px;">Stock</th>
-												
+
 												<th class="sorting" tabindex="0" aria-controls="example1"
 													rowspan="1" colspan="1"
 													aria-label="Action: activate to sort column ascending"
@@ -119,13 +118,43 @@
 												<td th:text="${product.stock}"></td>
 												<td><a
 													th:href="@{/seller/product-edit/{productId}(productId=${product.productId})}"
-													class="btn btn-success"> Edit</a> </td>
+													class="btn btn-success"> Edit</a></td>
 											</tr>
 										</thead>
 									</table>
 								</div>
 							</div>
-							<div class="row"></div>
+							<div class="row">
+								<div class="col-sm-12">
+									<nav aria-label="Page navigation">
+										<ul class="pagination">
+											<!-- Nút Previous -->
+											<li th:classappend="${currentPage == 0} ? 'disabled'"><a
+												th:if="${currentPage > 0}"
+												th:href="@{/seller/product?page={page}&size={size}(page=${currentPage - 1}, size=${size})}"
+												aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+											</a> <span th:if="${currentPage == 0}" aria-hidden="true">&laquo;</span>
+											</li>
+
+											<!-- Số trang -->
+											<li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+												th:classappend="${i == currentPage} ? 'active'"><a
+												th:href="@{/seller/product?page={page}&size={size}(page=${i}, size=${size})}"
+												th:text="${i + 1}"></a></li>
+
+											<!-- Nút Next -->
+											<li
+												th:classappend="${currentPage + 1 == totalPages} ? 'disabled'">
+												<a th:if="${currentPage + 1 < totalPages}"
+												th:href="@{/seller/product?page={page}&size={size}(page=${currentPage + 1}, size=${size})}"
+												aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+											</a> <span th:if="${currentPage + 1 == totalPages}"
+												aria-hidden="true">&raquo;</span>
+											</li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

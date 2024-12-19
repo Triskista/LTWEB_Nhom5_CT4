@@ -1,7 +1,5 @@
 package vn.iotstar.controller.admin;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class CustomerController {
 
 	@GetMapping("/customer")
     public String index(HttpServletRequest request, Model model,
-            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         
         // Cấu hình Pageable cho phân trang
         Pageable pageable = PageRequest.of(page, size);

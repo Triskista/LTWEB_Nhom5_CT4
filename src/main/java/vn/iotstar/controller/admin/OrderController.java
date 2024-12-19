@@ -19,7 +19,6 @@ import vn.iotstar.service.OrderService;
 import vn.iotstar.service.UserService;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -34,7 +33,7 @@ public class OrderController {
     public String index(@RequestParam(value = "username", required = false) String username,
                         @RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                         @RequestParam(value = "page", defaultValue = "0") int page, // trang hiện tại
-                        @RequestParam(value = "size", defaultValue = "5") int size, // số mục trên mỗi trang
+                        @RequestParam(value = "size", defaultValue = "10") int size, // số mục trên mỗi trang
                         HttpServletRequest request, Model model) {
 
         Pageable pageable = PageRequest.of(page, size);
